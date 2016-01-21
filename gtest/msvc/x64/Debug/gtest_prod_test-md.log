@@ -1,0 +1,21 @@
+﻿Build started 1/24/2015 9:54:09 PM.
+     1>Project "C:\Users\Jerry\Documents\15 Spring\EE 380L TA\test_temp\gtest\msvc\gtest_prod_test-md.vcxproj" on node 2 (Build target(s)).
+     1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140\Microsoft.CppBuild.targets(388,5): warning MSB8028: The intermediate directory (x64\Debug\) contains files shared from another project (gtest-md.vcxproj, gtest_main-md.vcxproj, gtest_unittest-md.vcxproj).  This can lead to incorrect clean and rebuild behavior.
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\x86_amd64\CL.exe /c /I.. /I..\include /Zi /nologo /W3 /WX- /Od /D WIN32 /D _DEBUG /D _CONSOLE /D _MBCS /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"x64\Debug\\" /Fd"x64\Debug\vc140.pdb" /Gd /TP /errorReport:prompt ..\test\gtest_prod_test.cc ..\test\production.cc
+         gtest_prod_test.cc
+         production.cc
+         Generating Code...
+     1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140\Microsoft.CppBuild.targets(1184,5): warning MSB8012: TargetPath(C:\Users\Jerry\Documents\15 Spring\EE 380L TA\test_temp\gtest\msvc\x64\Debug\gtest_prod_test-md.exe) does not match the Linker's OutputFile property value (C:\Users\Jerry\Documents\15 Spring\EE 380L TA\test_temp\gtest\msvc\x64\Debug\gtest_prod_test.exe). This may cause your project to build incorrectly. To correct this, please make sure that $(OutDir), $(TargetName) and $(TargetExt) property values match the value specified in %(Link.OutputFile).
+     1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140\Microsoft.CppBuild.targets(1186,5): warning MSB8012: TargetName(gtest_prod_test-md) does not match the Linker's OutputFile property value (gtest_prod_test). This may cause your project to build incorrectly. To correct this, please make sure that $(OutDir), $(TargetName) and $(TargetExt) property values match the value specified in %(Link.OutputFile).
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\x86_amd64\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Jerry\Documents\15 Spring\EE 380L TA\test_temp\gtest\msvc\x64\Debug\gtest_prod_test.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /Debug /PDB:"C:\Users\Jerry\Documents\15 Spring\EE 380L TA\test_temp\gtest\msvc\x64\Debug\gtest_prod_test.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Jerry\Documents\15 Spring\EE 380L TA\test_temp\gtest\msvc\x64\Debug\gtest_prod_test-md.lib" /MACHINE:X64 x64\Debug\gtest_prod_test.obj
+         x64\Debug\production.obj
+         "C:\Users\Jerry\Documents\15 Spring\EE 380L TA\test_temp\gtest\msvc\x64\Debug\gtestd.lib"
+         "C:\Users\Jerry\Documents\15 Spring\EE 380L TA\test_temp\gtest\msvc\x64\Debug\gtest_main-mdd.lib"
+         gtest_prod_test-md.vcxproj -> C:\Users\Jerry\Documents\15 Spring\EE 380L TA\test_temp\gtest\msvc\x64\Debug\gtest_prod_test-md.exe
+     1>Done Building Project "C:\Users\Jerry\Documents\15 Spring\EE 380L TA\test_temp\gtest\msvc\gtest_prod_test-md.vcxproj" (Build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:04.53

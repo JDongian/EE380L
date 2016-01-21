@@ -1,0 +1,13 @@
+﻿Build started 1/24/2015 2:38:29 PM.
+     1>Project "C:\Users\Jerry\Documents\15 Spring\EE 380L TA\gtest\msvc\gtest_main.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\CL.exe /c /I.. /I..\include /Zi /nologo /W3 /WX- /O2 /Oy- /D WIN32 /D NDEBUG /D _LIB /D _MBCS /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"gtest/Release\gtest_main\\" /Fd"gtest/Release\gtest_main\gtest_main.pdb" /Gd /TP /analyze- /errorReport:prompt ..\src\gtest_main.cc
+         gtest_main.cc
+       Lib:
+         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\Lib.exe /OUT:"gtest/Release\gtest_main.lib" /NOLOGO gtest/Release\gtest_main\gtest_main.obj
+         gtest_main.vcxproj -> C:\Users\Jerry\Documents\15 Spring\EE 380L TA\gtest\msvc\gtest/Release\gtest_main.lib
+     1>Done Building Project "C:\Users\Jerry\Documents\15 Spring\EE 380L TA\gtest\msvc\gtest_main.vcxproj" (Build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:01.17

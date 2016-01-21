@@ -1,0 +1,16 @@
+﻿Build started 1/24/2015 9:54:08 PM.
+     1>Project "C:\Users\Jerry\Documents\15 Spring\EE 380L TA\test_temp\gtest\msvc\gtest_main-md.vcxproj" on node 2 (Build target(s)).
+     1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140\Microsoft.CppBuild.targets(388,5): warning MSB8028: The intermediate directory (x64\Debug\) contains files shared from another project (gtest-md.vcxproj, gtest_prod_test-md.vcxproj, gtest_unittest-md.vcxproj).  This can lead to incorrect clean and rebuild behavior.
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\x86_amd64\CL.exe /c /I.. /I..\include /Zi /nologo /W3 /WX- /Od /D WIN32 /D _DEBUG /D _LIB /D _MBCS /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"x64\Debug\\" /Fd"x64\Debug\gtest_main-md.pdb" /Gd /TP /errorReport:prompt ..\src\gtest_main.cc
+         gtest_main.cc
+     1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140\Microsoft.CppBuild.targets(1352,5): warning MSB8012: TargetPath(C:\Users\Jerry\Documents\15 Spring\EE 380L TA\test_temp\gtest\msvc\x64\Debug\gtest_main-md.lib) does not match the Library's OutputFile property value (C:\Users\Jerry\Documents\15 Spring\EE 380L TA\test_temp\gtest\msvc\x64\Debug\gtest_main-mdd.lib). This may cause your project to build incorrectly. To correct this, please make sure that $(OutDir), $(TargetName) and $(TargetExt) property values match the value specified in %(Lib.OutputFile).
+     1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140\Microsoft.CppBuild.targets(1354,5): warning MSB8012: TargetName(gtest_main-md) does not match the Library's OutputFile property value (gtest_main-mdd). This may cause your project to build incorrectly. To correct this, please make sure that $(OutDir), $(TargetName) and $(TargetExt) property values match the value specified in %(Lib.OutputFile).
+       Lib:
+         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\x86_amd64\Lib.exe /OUT:"C:\Users\Jerry\Documents\15 Spring\EE 380L TA\test_temp\gtest\msvc\x64\Debug\gtest_main-mdd.lib" /NOLOGO /MACHINE:X64 x64\Debug\gtest_main.obj
+         gtest_main-md.vcxproj -> C:\Users\Jerry\Documents\15 Spring\EE 380L TA\test_temp\gtest\msvc\x64\Debug\gtest_main-md.lib
+     1>Done Building Project "C:\Users\Jerry\Documents\15 Spring\EE 380L TA\test_temp\gtest\msvc\gtest_main-md.vcxproj" (Build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:01.57

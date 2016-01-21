@@ -1,0 +1,12 @@
+﻿Build started 1/24/2015 2:36:08 PM.
+     1>Project "C:\Users\Jerry\Documents\15 Spring\EE 380L TA\gtest\msvc\gtest_unittest-md.vcxproj" on node 3 (Build target(s)).
+     1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140\Microsoft.CppBuild.targets(388,5): warning MSB8028: The intermediate directory (x64\Release\) contains files shared from another project (gtest-md.vcxproj, gtest_main-md.vcxproj, gtest_prod_test-md.vcxproj).  This can lead to incorrect clean and rebuild behavior.
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\x86_amd64\CL.exe /c /I.. /I..\include /Zi /nologo /W3 /WX- /O2 /D WIN32 /D NDEBUG /D _CONSOLE /D _MBCS /Gm- /EHsc /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"x64\Release\\" /Fd"x64\Release\vc140.pdb" /Gd /TP /errorReport:prompt ..\test\gtest_unittest.cc
+         gtest_unittest.cc
+     1>..\test\gtest_unittest.cc : fatal error C1041: cannot open program database 'C:\Users\Jerry\Documents\15 Spring\EE 380L TA\gtest\msvc\x64\Release\vc140.pdb'; if multiple CL.EXE write to the same .PDB file, please use /FS
+     1>Done Building Project "C:\Users\Jerry\Documents\15 Spring\EE 380L TA\gtest\msvc\gtest_unittest-md.vcxproj" (Build target(s)) -- FAILED.
+
+Build FAILED.
+
+Time Elapsed 00:00:00.15
