@@ -8,13 +8,16 @@ class Complex {
 public:
 	double real;
 	double imag;
-
-	Complex(Complex const &) = default;
 	Complex(void) = default;
 	~Complex(void) = default;
-	Complex& operator=(Complex const &) = default;
+	Complex(Complex const & that) = default;
+
+	Complex& operator=(Complex const & rhs) = default;
 };
 
+void bar(Complex param) {
+
+}
 
 int main(void) {
 	cout << "Hello World\n";
@@ -23,5 +26,15 @@ int main(void) {
 	cout << std::boolalpha;
 	cout << val << endl;
 
-	Complex val1{ 1.0, 0.0 };
+	Complex val1 = { 1.0, 0.0 };
+	Complex val2(val1);
+	bar(val1);
 }
+
+//Complex foo(void) {
+//	double real_val = 42;
+//	double imag_val = 10;
+//
+//	return{ real_val, imag_val };
+//
+//}
