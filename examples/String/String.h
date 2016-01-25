@@ -5,6 +5,54 @@
  *      Author: chase
  */
 
+/* the CPP directives below (i.e., the lines starting with "#") represent a fairly standard 
+ * opening to a C/C++ header file. The directives are as follows
+ *
+ *     #ifndef STRING_H_
+ *     #define STRING_H_
+ * These two lines (and the #endif /* STRING_H_) at the end of this file are intended to ensure
+ * that the contents of this header file are included into a program at most one time.
+ * In large software systems, many files #include many other files. It is often the case that
+ * the same file can be included more than once. For example, I might build a class Customer.h
+ * that relies on Strings, and then write a program that works with both Strings and Customers
+ * My program would typically include String.h and Customer.h. However, since Customer.h depends
+ * on String.h, the Customer.h file may also include String.h -- resulting in String.h being
+ * included twice into my program. Re-definitions of structs in C/C++ can cause programs, so we
+ * seek to prevent the multiple inclusion. The #ifndef directive is "if not defined". We provide
+ * this directive with an arbitrary macro (STRING_H_ in this case), which we expect to NOT
+ * be defined. We usually use the name of the file itself (String.h) to construct the arbitrary
+ * macro to ensure that the macro was defined in some other file. Since STRING_H_ is not defined
+ * the #ifndef directive evaluates affirmatively and allows the contents of the file to be included
+ * (up to the matching #endif at the end of this file). HOWEVER, note that when the contents are
+ * included, we get a definition of the STRING_H_ macro. We define that macro to be empty,
+ * but the contents of the macro are immaterial -- the macro is now defined (defined to be empty)
+ * Note that some programmers prefer to define their macro to be something (i.e,. not empty) and 
+ * the most common practice among those programmers is to define the macro to be the constant 1
+ * e.g., you'll see a lot of codes that have the second directive looking like this
+ *
+ *      #define STRING_H_ 1
+ *
+ * Finally, many compilers are modified to provide one-time-only inclusion of files (including
+ * gcc/g++ and Visual Studio). For those compilers, a simple directive
+ * 
+ *      #pragam once
+ *
+ * is all that is required (do not need the #ifndef at all). However, most programmers still use
+ * the #ifndef technique for backwards compatibility
+ *
+ * The remainder of the directives at the top of this file are three #include directives specifying
+ * commonly used library components.
+ *
+ *    #include <cstdint> -- includes a file with typedef statements definining int32_t, int64_t and similar
+ *    #include <iostream> -- includes a file with declarations of the C++ input/output library
+ *    #include <stdexcept> -- include a file with definitions of standard exception types in C++
+ *
+ * Most programs I write will include the first two (cstdint and iostream). The order of these includes
+ * does not matter. I will include stdexcept only if my code includes exception handling (either throw
+ * or catch statements)
+ * 
+ */
+
 #ifndef STRING_H_
 #define STRING_H_
 #include <cstdint>
@@ -14,7 +62,7 @@
 /*
  * This String example assumes that the underlying computer uses little-endian byte ordering for
  * multi-byte words. That is, when a multi-byte integer (e.g., uint64_t) is stored in memory, the
- * least significant byte (i.e, the least-signficant eight bites of the number) is stored in the
+ * least significant byte (i.e, the least-signficant eight bits of the number) is stored in the
  * first byte in memory, the second-least-significant byte is stored second and so forth.
  *
  * In this implementation, the storage for characters is aligned to an eight-byte boundary and padded
@@ -26,7 +74,7 @@
  * byte encoding (e.g., its ASCII value) as the most significant byte of the integer. If two uint64_t
  * integers are read in this fashion, one integer from each of two strings, then comparing those
  * integers produces an identical result to comparing the first eight characters in the strings.
- * Note that since the storage areas are padded with zeros, prefix strings are compared correclty
+ * Note that since the storage areas are padded with zeros, prefix strings are compared correctly
  * as well. The string "abcdef" uses only six bytes with two bytes of zero. If that string were
  * compared to "abcdefaa", then the former string is "less than" the latter because of the zeros loaded
  * into the least significant bit positions.
@@ -94,7 +142,7 @@ public:
 		storage_size = word_len(len);
 		storage = new word_t[storage_size];
 
-		for (uint32_t k = 0; k < storage_size; k += 1) { storage[k] = 0; }
+		*storage = 0; // ensure the end of the string will be padded with zeros
 
 		data = reinterpret_cast<char*>(storage + storage_size);
 		for (int32_t k = 1; k <= (int32_t) len; k += 1) {
