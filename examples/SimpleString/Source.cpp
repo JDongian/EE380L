@@ -8,7 +8,7 @@ using std::endl;
 
 
 void doit(String param) {
-	cout << param[1];
+//	cout << param[1];
 }
 
 int main(void) {
@@ -17,12 +17,14 @@ int main(void) {
 	s1.operator[](0) = 'J';
 	s1[1] = 'a';
 
-	doit(s1);
+//	doit(s1);
+	String s2{ s1 + "!" };
 
+	String tmp{ " Cool beans." };
+	s2 = s2 + tmp;
 
-
-	for (uint32_t k = 0; k < s1.size(); k += 1) {
-		cout << s1[k];
+	for (uint32_t k = 0; k < s2.size(); k += 1) {
+		cout << s2[k];
 	}
 	cout << endl;
 }

@@ -40,6 +40,13 @@ public:
 		return *this;
 	}
 
+	String(String&& tmp) {
+		std::cout << "shallow copy would be OK\n";
+		this->data = tmp.data;
+		this->length = tmp.length;
+		tmp.data = nullptr;
+	}
+
 	uint32_t size(void) const { 
 		/* NOTE: this is a parameter with the following
 		 * effective declaration
@@ -78,6 +85,7 @@ public:
 	String operator+(String const& right) const {
 		String res{ *this };
 		res += right;
+		std::cout << "result constructed, ready to return\n";
 		return res;
 	}
 
