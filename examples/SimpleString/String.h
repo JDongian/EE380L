@@ -41,10 +41,14 @@ public:
 	}
 
 	String(String&& tmp) {
-		std::cout << "shallow copy would be OK\n";
-		this->data = tmp.data;
-		this->length = tmp.length;
-		tmp.data = nullptr;
+		this->my_move(std::move(tmp));
+	}
+
+	String& operator=(String&& rhs) {
+		std::cout << "move assignment!\n";
+		std::swap(this->data, rhs.data);
+		this->length = rhs.length;
+		return *this;
 	}
 
 	uint32_t size(void) const { 
@@ -137,6 +141,13 @@ private:
 	 * it's often a very short function (shorter than these comments) */
 	void destroy(void) { // WARNING -- turns *this into an un-initialized object
 		delete[] data;
+	}
+
+	void my_move(String&& tmp) {
+		std::cout << "move!\n";
+		this->data = tmp.data;
+		this->length = tmp.length;
+		tmp.data = nullptr;
 	}
 
 	String(char* data, uint32_t length) {
