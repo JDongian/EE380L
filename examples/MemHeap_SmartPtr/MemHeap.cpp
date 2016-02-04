@@ -187,6 +187,8 @@ void* allocateMemory(unsigned size_in_bytes) {
     /* OK, all done... all we need to do now is return... oh,
      * we're supposed to return a pointer, not an index.....
      */
+	std::cout << "allocating block for " << size_in_bytes << " bytes "
+		<< "at location " << &memory_pool[chunk + 1] << std::endl;
     return &memory_pool[chunk + 1];
 }
 
@@ -236,6 +238,8 @@ void mergeChunkIfOK(unsigned chunk) {
 
 void deallocateMemory(void* p) {
 	if (!p) { return;  } // special case, delete nullptr is required to be a no-op 
+
+	std::cout << "deallocating block at address " << p << std::endl;
 
     /* since the available memory is one position above the signature
      * the signature can be found at one position below the first

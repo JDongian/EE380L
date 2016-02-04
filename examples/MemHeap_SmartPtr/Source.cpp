@@ -1,8 +1,7 @@
 #include <iostream>
 #include <cstdint>
 #include <new>
-
-
+#include <memory>
 
 #include "MemHeap.h"
 
@@ -13,7 +12,7 @@ using std::endl;
 
 class Foo_nonPOD { // a trivial, but non-POD type
 public:
-	Foo_nonPOD(void) { cout << "Foo default constructor\n"; }
+	Foo_nonPOD(void) {cout << "Foo default constructor\n";}
 	~Foo_nonPOD(void) { cout << "Foo destructor\n"; }
 };
 
@@ -25,14 +24,19 @@ public:
  * run it and see if there's a difference */
 void heapDemo1(void) {
 	int* p = new int;
+	cout << "the pointer is at " << p << endl;
 	delete p;
 
 	int* parray = new int[10]; // note, since int is POD, nothing special happens when we allocate an array
-	delete[] p; 
+	cout << "the pointer is at " << parray << endl;
+	delete[] parray;
+
 
 	Foo_nonPOD* fp = new Foo_nonPOD;
+	cout << "the pointer is at " << fp << endl;
 	Foo_nonPOD* fparray = new Foo_nonPOD[10];
 	delete fp;
+	cout << "the pointer is at " << fparray << endl;
 	delete[] fparray;
 }
 
@@ -40,7 +44,6 @@ struct WTF {
 	char const* msg;
 	char const* what(void) const { return msg; }
 };
-
 
 template <typename T>
 class SmartPointer {
@@ -53,7 +56,12 @@ private:
 	ControlBlock* block;
 	T* object;
 public:
-	T& operator*(void) { if (!block) throw WTF{ "dereference of invalid SmartPointer" };  return *object; }
+	T& operator*(void) const {
+		if (!block) { throw WTF{ "dereference of uninitialized Smart Pointer" }; }
+		return *object;
+	}
+
+	SmartPointer(void) { block = nullptr; object = nullptr; }
 
 	SmartPointer<T>& operator=(T* object) {
 		block = new ControlBlock{};
@@ -63,12 +71,10 @@ public:
 	}
 
 	~SmartPointer(void) { destroy(); }
-	
-	SmartPointer(void) { block = nullptr; object = nullptr; }
 
 	/* copy semantics */
 	SmartPointer(SmartPointer<T> const& rhs) { copy(rhs); }
-	SmartPointer& operator=(SmartPointer<T> const& rhs) {
+	SmartPointer<T>& operator=(SmartPointer<T> const& rhs) {
 		if (this != &rhs) {
 			destroy();
 			copy(rhs);
@@ -77,40 +83,45 @@ public:
 	}
 
 	/* move semantics */
-	SmarPointer(SmartPointer<T> && rhs) { move(std::move(rhs)); }
+	SmartPointer(SmartPointer<T> && rhs) { move(std::move(rhs)); }
 	SmartPointer<T>& operator=(SmartPointer<T> && rhs) {
 		destroy();
-		move(rhs);
+		move(std::move(rhs));
+		return *this;
 	}
 
 private:
-	void copy(SmartPointer<T> const& rhs) { // copy constructor, duplicate the pointer -- increment ref_count
-		this->object = rhs.object;
-		this->block = rhs.block;
+	void copy(SmartPointer<T> const& rhs) {
+		object = rhs.object;
+		block = rhs.block;
 		block->ref_count += 1;
 	}
 
 	void move(SmartPointer<T> && rhs) {
-		block = rhs.block;
 		object = rhs.object;
+		block = rhs.block;
 		rhs.block = nullptr;
 	}
 
 	void destroy(void) {
-		if (!block) { return; } // no block, so exit without fanfare
+		if (!block) { return; }
+		cout << "destroying with ref_count " << block->ref_count << endl;
 
 		block->ref_count -= 1;
 		if (block->ref_count == 0) {
 			delete object;
 			delete block;
 		}
-
 	}
-
 };
 
+SmartPointer<Foo_nonPOD> doit(void) {
+	SmartPointer<Foo_nonPOD> p;
+	p = new Foo_nonPOD{};
+	return p;
+}
+
 int main(void) {
-	SmartPointer<int> p;
-	p = new int;
-	*p = 42;
+	std::shared_ptr<Foo_nonPOD> p;
+	p = std::make_shared<Foo_nonPOD>();
 }
