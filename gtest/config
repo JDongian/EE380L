@@ -1,0 +1,15 @@
+#!/bin/bash
+
+mkdir build
+cd build
+cmake ..
+make 
+
+cp libgtest.a ../lib/
+cd ../
+rm -r build
+cd lib
+
+mv gtest64.a gtest64_backup.a
+
+mv libgtest.a gtest64.a
