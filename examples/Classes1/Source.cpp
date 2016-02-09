@@ -30,11 +30,17 @@ class Base1 {
 public:
 	int x;
 	int y;
+	void doit(void) {
+		cout << "this points to " << this << " in Base1\n";
+	}
 };
 
 class Base2 {
 public:
 	int z;
+	void doit(void) {
+		cout << "this points to " << this << " in Base2\n";
+	}
 };
 
 class Derived : public Base1, public Base2 {
@@ -63,7 +69,17 @@ void inheritOffset(void) {
 	cout << endl;
 }
 
+void inheritMemberFunctions(void) {
+	Derived d;
+	cout << "d is address " << &d << endl;
+	d.Base1::doit();
+	d.Base2::doit();
+}
+
+
+
 int main(void) {
-	vectorInherit();
-	inheritOffset();
+	//vectorInherit();
+	//inheritOffset();
+	inheritMemberFunctions();
 }
