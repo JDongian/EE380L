@@ -1,0 +1,277 @@
+====== Summary ======
+make: *** [PHASE_AS1_3.tst] Error 1
+Aborted (core dumped)
+Segmentation fault (core dumped)
+Aborted (core dumped)
+Segmentation fault (core dumped)
+Aborted (core dumped)
+Aborted (core dumped)
+Aborted (core dumped)
+PHASE_A1_0.tst timed out.
+PHASE_A1_1.tst timed out.
+PHASE_A2_1.tst timed out.
+PHASE_A_3.tst timed out.
+PHASE_AS1_1.tst timed out.
+PHASE_AS1_2.tst timed out.
+PHASE_AS2_0.tst timed out.
+[       OK ] PhaseA.push_back (0 ms)
+[       OK ] PhaseA.bracket_operator (0 ms)
+[       OK ] PhaseA2.FooCtorDtor (0 ms)
+[       OK ] PhaseA.pop_back (0 ms)
+[       OK ] PhaseA.range_checks (0 ms)
+[  FAILED  ] PhaseASecret.<censored>
+[  FAILED  ] PhaseA1Secret.<censored>
+[       OK ] PhaseA2Secret.<censored>
+
+======= Dump========
+g++ Vector_PhaseA_secrettests.cpp Vector_PhaseA_unittests.cpp -DPHASE_AS_0 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++11 -fpermissive  -pthread -o PHASE_AS_0.tst
+g++ Vector_PhaseA_secrettests.cpp Vector_PhaseA_unittests.cpp -DPHASE_AS1_0 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++11 -fpermissive  -pthread -o PHASE_AS1_0.tst
+g++ Vector_PhaseA_secrettests.cpp Vector_PhaseA_unittests.cpp -DPHASE_AS1_1 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++11 -fpermissive  -pthread -o PHASE_AS1_1.tst
+g++ Vector_PhaseA_secrettests.cpp Vector_PhaseA_unittests.cpp -DPHASE_AS1_2 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++11 -fpermissive  -pthread -o PHASE_AS1_2.tst
+g++ Vector_PhaseA_secrettests.cpp Vector_PhaseA_unittests.cpp -DPHASE_AS1_3 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++11 -fpermissive  -pthread -o PHASE_AS1_3.tst
+g++ Vector_PhaseA_secrettests.cpp Vector_PhaseA_unittests.cpp -DPHASE_AS2_0 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++11 -fpermissive  -pthread -o PHASE_AS2_0.tst
+In file included from Vector_PhaseA_secrettests.cpp:8:0:
+Vector.h: In instantiation of ‘const T& epl::vector<T>::operator[](uint64_t) const [with T = int; uint64_t = long unsigned int]’:
+Vector_PhaseA_secrettests.cpp:187:15:   required from here
+Vector.h:128:51: error: invalid cast of an rvalue expression of type ‘int*’ to type ‘const int&’
+                         return (const T&)&(data[k]);
+                                                   ^
+Makefile:27: recipe for target 'PHASE_AS1_3.tst' failed
+make: *** [PHASE_AS1_3.tst] Error 1
+g++ Vector_PhaseA_secrettests.cpp Vector_PhaseA_unittests.cpp -DPHASE_AS2_1 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++11 -fpermissive  -pthread -o PHASE_AS2_1.tst
+g++ Vector_PhaseA_secrettests.cpp Vector_PhaseA_unittests.cpp -DPHASE_A_0 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++11 -fpermissive  -pthread -o PHASE_A_0.tst
+g++ Vector_PhaseA_secrettests.cpp Vector_PhaseA_unittests.cpp -DPHASE_A_1 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++11 -fpermissive  -pthread -o PHASE_A_1.tst
+g++ Vector_PhaseA_secrettests.cpp Vector_PhaseA_unittests.cpp -DPHASE_A_2 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++11 -fpermissive  -pthread -o PHASE_A_2.tst
+g++ Vector_PhaseA_secrettests.cpp Vector_PhaseA_unittests.cpp -DPHASE_A_3 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++11 -fpermissive  -pthread -o PHASE_A_3.tst
+g++ Vector_PhaseA_secrettests.cpp Vector_PhaseA_unittests.cpp -DPHASE_A_4 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++11 -fpermissive  -pthread -o PHASE_A_4.tst
+g++ Vector_PhaseA_secrettests.cpp Vector_PhaseA_unittests.cpp -DPHASE_A1_0 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++11 -fpermissive  -pthread -o PHASE_A1_0.tst
+g++ Vector_PhaseA_secrettests.cpp Vector_PhaseA_unittests.cpp -DPHASE_A1_1 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++11 -fpermissive  -pthread -o PHASE_A1_1.tst
+g++ Vector_PhaseA_secrettests.cpp Vector_PhaseA_unittests.cpp -DPHASE_A2_0 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++11 -fpermissive  -pthread -o PHASE_A2_0.tst
+g++ Vector_PhaseA_secrettests.cpp Vector_PhaseA_unittests.cpp -DPHASE_A2_1 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++11 -fpermissive  -pthread -o PHASE_A2_1.tst
+
+Testing: PHASE_A_0.tst
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from PhaseA
+[ RUN      ] PhaseA.push_back
+[       OK ] PhaseA.push_back (0 ms)
+[----------] 1 test from PhaseA (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (1 ms total)
+[  PASSED  ] 1 test.
+
+Testing: PHASE_A1_0.tst
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from PhaseA1
+[ RUN      ] PhaseA1.PushBackFront
+Vector_PhaseA_unittests.cpp:114: Failure
+Value of: x.size()
+  Actual: 11
+Expected: (sizeof(ans)/sizeof(*ans))
+Which is: 21
+Vector_PhaseA_unittests.cpp:116: Failure
+Value of: x[i]
+  Actual: 42
+Expected: ans[i]
+Which is: 9
+Vector_PhaseA_unittests.cpp:116: Failure
+Value of: x[i]
+  Actual: 0
+Expected: ans[i]
+Which is: 8
+Vector_PhaseA_unittests.cpp:116: Failure
+Value of: x[i]
+  Actual: 1
+Expected: ans[i]
+Which is: 7
+Vector_PhaseA_unittests.cpp:116: Failure
+Value of: x[i]
+  Actual: 2
+Expected: ans[i]
+Which is: 6
+Vector_PhaseA_unittests.cpp:116: Failure
+Value of: x[i]
+  Actual: 3
+Expected: ans[i]
+Which is: 5
+Vector_PhaseA_unittests.cpp:116: Failure
+Value of: x[i]
+  Actual: 5
+Expected: ans[i]
+Which is: 3
+Vector_PhaseA_unittests.cpp:116: Failure
+Value of: x[i]
+  Actual: 6
+Expected: ans[i]
+Which is: 2
+Vector_PhaseA_unittests.cpp:116: Failure
+Value of: x[i]
+  Actual: 7
+Expected: ans[i]
+Which is: 1
+Vector_PhaseA_unittests.cpp:116: Failure
+Value of: x[i]
+  Actual: 8
+Expected: ans[i]
+Which is: 0
+Vector_PhaseA_unittests.cpp:116: Failure
+Value of: x[i]
+  Actual: 9
+Expected: ans[i]
+Which is: 42
+Aborted (core dumped)
+PHASE_A1_0.tst timed out.
+
+Testing: PHASE_A1_1.tst
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from PhaseA1
+[ RUN      ] PhaseA1.CopyConstruct
+Segmentation fault (core dumped)
+PHASE_A1_1.tst timed out.
+
+Testing: PHASE_A_1.tst
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from PhaseA
+[ RUN      ] PhaseA.bracket_operator
+[       OK ] PhaseA.bracket_operator (0 ms)
+[----------] 1 test from PhaseA (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (0 ms total)
+[  PASSED  ] 1 test.
+
+Testing: PHASE_A2_0.tst
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from PhaseA2
+[ RUN      ] PhaseA2.FooCtorDtor
+[       OK ] PhaseA2.FooCtorDtor (0 ms)
+[----------] 1 test from PhaseA2 (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (0 ms total)
+[  PASSED  ] 1 test.
+
+Testing: PHASE_A2_1.tst
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from PhaseA2
+[ RUN      ] PhaseA2.ReallocCopy
+Aborted (core dumped)
+PHASE_A2_1.tst timed out.
+
+Testing: PHASE_A_2.tst
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from PhaseA
+[ RUN      ] PhaseA.pop_back
+[       OK ] PhaseA.pop_back (0 ms)
+[----------] 1 test from PhaseA (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (0 ms total)
+[  PASSED  ] 1 test.
+
+Testing: PHASE_A_3.tst
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from PhaseA
+[ RUN      ] PhaseA.constructors
+Segmentation fault (core dumped)
+PHASE_A_3.tst timed out.
+
+Testing: PHASE_A_4.tst
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from PhaseA
+[ RUN      ] PhaseA.range_checks
+[       OK ] PhaseA.range_checks (0 ms)
+[----------] 1 test from PhaseA (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (0 ms total)
+[  PASSED  ] 1 test.
+
+Testing: PHASE_AS_0.tst
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from PhaseASecret.<censored>
+[ RUN      ] PhaseASecret.<censored>
+Vector_PhaseA_secrettests.cpp:72: Failure
+Expected: x.pop_back() throws an exception of type std::out_of_range.
+  Actual: it throws nothing.
+[  FAILED  ] PhaseASecret.<censored>
+[----------] 1 test from PhaseASecret.<censored>
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (0 ms total)
+[  PASSED  ] 0 tests.
+[  FAILED  ] 1 test, listed below:
+[  FAILED  ] PhaseASecret.<censored>
+
+ 1 FAILED TEST
+
+Testing: PHASE_AS1_0.tst
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from PhaseA1Secret.<censored>
+[ RUN      ] PhaseA1Secret.<censored>
+unknown file: Failure
+C++ exception with description "subscript out of range" thrown in the test body.
+[  FAILED  ] PhaseA1Secret.<censored>
+[----------] 1 test from PhaseA1Secret.<censored>
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (1 ms total)
+[  PASSED  ] 0 tests.
+[  FAILED  ] 1 test, listed below:
+[  FAILED  ] PhaseA1Secret.<censored>
+
+ 1 FAILED TEST
+
+Testing: PHASE_AS1_1.tst
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from PhaseA1Secret.<censored>
+[ RUN      ] PhaseA1Secret.<censored>
+Vector_PhaseA_secrettests.cpp:151: Failure
+Value of: status
+  Actual: 4-byte object <01-00 00-00>
+Expected: std::future_status::ready
+Which is: 4-byte object <00-00 00-00>
+Vector_PhaseA_secrettests.cpp:156: Failure
+Expected: (1.9) < (float(bigPush_cnt) / float(smallPush_cnt)), actual: 1.9 vs -nan
+Aborted (core dumped)
+PHASE_AS1_1.tst timed out.
+
+Testing: PHASE_AS1_2.tst
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from PhaseA1Secret.<censored>
+[ RUN      ] PhaseA1Secret.<censored>
+Aborted (core dumped)
+PHASE_AS1_2.tst timed out.
+
+Testing: PHASE_AS2_0.tst
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from PhaseA2Secret.<censored>
+[ RUN      ] PhaseA2Secret.<censored>
+Aborted (core dumped)
+PHASE_AS2_0.tst timed out.
+
+Testing: PHASE_AS2_1.tst
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from PhaseA2Secret.<censored>
+[ RUN      ] PhaseA2Secret.<censored>
+[       OK ] PhaseA2Secret.<censored>
+[----------] 1 test from PhaseA2Secret.<censored>
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (0 ms total)
+[  PASSED  ] 1 test.
