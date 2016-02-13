@@ -64,7 +64,7 @@ namespace epl{
                     auto new_head_length = 1 + capacity;
                     auto new_capacity = 3 + capacity * 3; // make sure this is needed
 
-                    auto new_data = (T*) operator new (sizeof(T) * capacity);
+                    auto new_data = (T*) operator new (sizeof(T) * new_capacity);
                     // what is the right way to do this?
                     for (auto i = 0; i < length; ++i) {
                         new (new_data + new_head_length + i) T(std::move(fetch(i)));
