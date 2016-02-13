@@ -29,7 +29,7 @@ namespace epl{
                 }
     
                 void destroy(void) {
-                    delete[] data;
+                    delete data; // needs to manually run the descructor
                 }
 
                 // deep cope
@@ -62,15 +62,16 @@ namespace epl{
                 // this resizing scheme isn't memory-efficient with unbalanced inserts
                 void resize(void) {
                     auto new_head_length = 1 + capacity;
-                    auto new_capacity = 3 + capacity * 3; // make sure this is needed
+                    auto new_capacity = 3 + capacity * 3;
 
                     auto new_data = (T*) operator new (sizeof(T) * new_capacity);
                     // what is the right way to do this?
-                    for (auto i = 0; i < length; ++i) {
-                        new (new_data + new_head_length + i) T(std::move(fetch(i)));
+                    for (uint64_t i = 0; i < length; ++i) {
+                        new (new_data + new_head_length + i) T(fetch(i));
+                        data[head_length + i].~T();
                     }
-
-                    operator delete (data);
+                    
+                    delete (data);
 
                     head_length = new_head_length;
                     capacity = new_capacity;
