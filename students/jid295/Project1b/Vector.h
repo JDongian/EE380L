@@ -16,7 +16,7 @@ namespace epl{
                 uint64_t length;
                 uint64_t capacity;
                 uint64_t head_length;
-                T* data;
+                T* data = nullptr;
 
                 static constexpr uint64_t default_capacity = 8;
 
