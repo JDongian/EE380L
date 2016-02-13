@@ -61,17 +61,20 @@ namespace epl{
                 
                 // this resizing scheme isn't memory-efficient with unbalanced inserts
                 void resize(void) {
-                    T* old = data;
-                    head_length = 1 + capacity;
-                    capacity = 3 + capacity * 3; // make sure this is needed
+                    auto new_head_length = 1 + capacity;
+                    auto new_capacity = 3 + capacity * 3; // make sure this is needed
 
-                    data = (T*) operator new (sizeof(T) * capacity);
+                    auto new_data = (T*) operator new (sizeof(T) * capacity);
                     // what is the right way to do this?
                     for (auto i = 0; i < length; ++i) {
-                        new (data + head_length + i) T(fetch(i));
+                        new (new_data + new_head_length + i) T(std::move(fetch(i)));
                     }
 
-                    operator delete (old);
+                    operator delete (data);
+
+                    head_length = new_head_length;
+                    capacity = new_capacity;
+                    data = new_data;
                 }
 
             public:
