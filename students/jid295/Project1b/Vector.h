@@ -68,7 +68,7 @@ namespace epl{
                     data = (T*) operator new (sizeof(T) * capacity);
                     // what is the right way to do this?
                     for (auto i = 0; i < length; ++i) {
-                        new (data + head_length + i) T(std::move(fetch(i)));
+                        new (data + head_length + i) T(fetch(i));
                     }
 
                     operator delete (old);
