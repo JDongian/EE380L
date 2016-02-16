@@ -52,8 +52,7 @@ void shapefun(Shape s) {
 	s.draw();
 }
 
-int main(void) {
-//	an_asside_rvalue_refs();
+void shapes(void) {
 
 	Shape s;
 	Circle c;
@@ -66,5 +65,49 @@ int main(void) {
 	shapefun(s);
 	shapefun(c);
 	shapefun(r);
+}
+
+class Base {
+public:
+	int x;
+	//virtual 
+		void doit(void) { cout << "Base\n"; }
+
+	//virtual 
+		void doit2(void) { cout << "Base doit2\n"; }
+
+	virtual 
+		~Base(void) {}
+};
+
+class Base2 {
+public:
+	int y;
+	virtual void doit(void) { cout << "Base2\n"; }
+};
+
+class Derived : public Base, Base2 {
+public:
+	virtual void fun(void) { cout << "Derived\n"; }
+};
+
+
+void whatAmI(Base* obj) {
+	cout << "my type is : " << typeid(*obj).name() << endl;
+}
+
+int main(void) {
+	cout << "Base is " << sizeof(Base) << " bytes\n";
+
+	Base b;
+	b.doit();
+
+	Derived d;
+	Base& b1 = d;
+	Base& b2 = d;
+	b1.doit();
+	b2.doit();
+
+	whatAmI(&d);
 }
 
