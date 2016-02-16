@@ -1,6 +1,8 @@
 #include <iostream>
 #include <stdint.h>
 #include <typeinfo>
+#include <memory>
+#include <string>
 
 using std::cout;
 using std::endl;
@@ -76,8 +78,6 @@ public:
 	//virtual 
 		void doit2(void) { cout << "Base doit2\n"; }
 
-	virtual 
-		~Base(void) {}
 };
 
 class Base2 {
@@ -96,7 +96,7 @@ void whatAmI(Base* obj) {
 	cout << "my type is : " << typeid(*obj).name() << endl;
 }
 
-int main(void) {
+void vfts_construction(void) {
 	cout << "Base is " << sizeof(Base) << " bytes\n";
 
 	Base b;
@@ -109,5 +109,37 @@ int main(void) {
 	b2.doit();
 
 	whatAmI(&d);
+}
+
+class VisibleString {
+public:
+	VisibleString(void) {
+		cout << "string being made (default)\n";
+	}
+	
+	VisibleString(const char*) {
+		cout << "string being made (promotion from char*)\n";
+	}
+
+	~VisibleString(void) {
+		cout << "string being destroyed\n";
+	}
+};
+
+class Empty {
+public:
+	virtual void doit(void) { cout << "empty class\n"; }
+};
+
+class Simple : public Empty {
+public:
+//	std::string data;
+	VisibleString data;
+	Simple(void) : data{ "hello world\n" } {}
+};
+
+int main(void) {
+	Empty* ptr = new Simple{};
+	delete ptr;
 }
 
