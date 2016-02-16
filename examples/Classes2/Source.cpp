@@ -139,7 +139,6 @@ public:
 };
 
 int main(void) {
-	Empty* ptr = new Simple{};
-	delete ptr;
+    std::shared_ptr<Empty> ptr{ new Simple{}};
 }
 
