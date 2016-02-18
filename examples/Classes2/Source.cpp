@@ -72,11 +72,9 @@ void shapes(void) {
 class Base {
 public:
 	int x;
-	//virtual 
+	virtual 
 		void doit(void) { cout << "Base\n"; }
 
-	//virtual 
-		void doit2(void) { cout << "Base doit2\n"; }
 
 };
 
@@ -86,8 +84,9 @@ public:
 	virtual void doit(void) { cout << "Base2\n"; }
 };
 
-class Derived : public Base, Base2 {
+class Derived : public Base, public Base2 {
 public:
+	virtual void doit(void) { cout << "whoa?\n";  }
 	virtual void fun(void) { cout << "Derived\n"; }
 };
 
@@ -96,7 +95,9 @@ void whatAmI(Base* obj) {
 	cout << "my type is : " << typeid(*obj).name() << endl;
 }
 
-void vfts_construction(void) {
+
+
+int main(void) {
 	cout << "Base is " << sizeof(Base) << " bytes\n";
 
 	Base b;
@@ -104,13 +105,20 @@ void vfts_construction(void) {
 
 	Derived d;
 	Base& b1 = d;
-	Base& b2 = d;
+	Base2& b2 = d;
 	b1.doit();
 	b2.doit();
 
 	whatAmI(&d);
+
+	Base& bobj = d;
+	Derived& dobj = static_cast<Derived&>(bobj);
+//	Derived& dobj2 = dynamic_cast<Derived&>(bobj);
+
 }
 
+
+#ifdef notdef 
 class VisibleString {
 public:
 	VisibleString(void) {
@@ -142,3 +150,4 @@ int main(void) {
     std::shared_ptr<Empty> ptr{ new Simple{}};
 }
 
+#endif 
