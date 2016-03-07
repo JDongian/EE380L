@@ -4,7 +4,7 @@
 #include "Window.h"
 #include "tokens.h"
 #include "ObjInfo.h"
-#include "QuadTree.h" 
+#include "QuadTree.h"
 #include "Params.h"
 #include "LifeForm.h"
 #include "Event.h"
@@ -71,9 +71,10 @@ void LifeForm::reproduce(SmartPointer<LifeForm> child) {
 
     reproduce_time = Event::now();
 
-    child->is_alive = true;
+    child->is_alive = true; // critical line
     new Event(age_frequency, [=](void) { child->age(); });
 
+    // Set energy levels, with die() calls as needed.
     double new_energy = (energy/2) * (1.0 - reproduce_cost);
     lose_energy(energy - new_energy);
     child->energy = new_energy;
@@ -98,10 +99,10 @@ void LifeForm::place_child(Point& center, SmartPointer<LifeForm> child) {
 
     if (!child->is_alive) { return; }
 
-    auto margin = encounter_distance + 1;
+    auto margin = encounter_distance + 1; // arbitrary large value
     int counter = 0;
     do {
-        // sector-uniform, but not area-uniform
+        // sector-uniform, but not area-uniform probability
         double radius = drand48() * (reproduce_dist - encounter_distance)
             + encounter_distance
             + Point::tolerance;
@@ -127,7 +128,7 @@ void LifeForm::place_child(Point& center, SmartPointer<LifeForm> child) {
     //          << std::endl;
 
     child->start_point = child->pos;
-    // equavalent to border_cross()
+    // Equavalent to border_cross(), but for readability we do this:
     space.insert(child, child->pos, [=](void) { child->region_resize(); });
     child->check_encounter();
 }
@@ -188,9 +189,9 @@ void LifeForm::update_position(void) {
     SimTime delta_time = Event::now() - update_time;
 
     if (delta_time >= min_delta_time) {
-        Point delta_position (cos(course), sin(course));
+        Point delta_position(cos(course), sin(course));
         delta_position *= speed * delta_time;
-        Point new_position (pos + delta_position);
+        Point new_position(pos + delta_position);
 
         //std::cout << "old position: " << pos
         //          //<< ", position change: " << delta_position
