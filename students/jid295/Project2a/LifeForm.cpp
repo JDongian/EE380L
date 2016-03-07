@@ -70,7 +70,7 @@ void LifeForm::age(void) {
     if (!is_alive) { return; }
 
     SmartPointer<LifeForm> self{ this };
-    age_event = new Event(age_frequency, [self](void) { self->age(); });
+    age_event = new Event(age_frequency, [=](void) { self->age(); });
 
     lose_energy(age_penalty);
 }
@@ -156,6 +156,18 @@ void LifeForm::set_speed(double new_speed) {
     compute_next_move();
 }
 
+/* When calculating the time until the next border crossing event (something
+ * you need to do from inside set_course, set_speed, region_resize and
+ * border_cross), fudge. Specifically add Point::tolerance time units to the
+ * time. That way, when the time is up, the LifeForm will not only have
+ * reached the edge of the boundary, but it is certain to have crossed the
+ * edge. If you make the mistake of scheduling the event for when the object
+ * is exactly on the edge, you will run the risk of the object not actually
+ * leaving its region. Due to floating-point roundoff errors, the object could
+ * be 10e-15 space units from the edge (or so). Effectively, your program
+ * could go into an infinite loop, as the object keeps getting closer and
+ * closer to the edge without ever really crossing it.
+ */
 void LifeForm::compute_next_move(void) {
     if (!is_alive) { return; }
 
@@ -166,33 +178,155 @@ void LifeForm::compute_next_move(void) {
     if (speed == 0) {
         border_cross_event = nullptr;
     } else {
-       double distance = space.distance_to_edge(pos, course);
-       double eta = distance / speed + Point::tolerance;
+       auto distance = space.distance_to_edge(pos, course);
+       auto eta = distance / speed + Point::tolerance;
        SmartPointer<LifeForm> self{ this };
 
        border_cross_event = new Event(eta,
-               [self](void) { self->border_cross(); });
+               [=](void) { self->border_cross(); });
     }
 }
 
+/* Collisions occur only between two LifeForms. When a LifeForm moves to a new
+ * region, it collides with the closest LifeForm that is within 1.0 space
+ * units. The test program will not check for collisions between three or more
+ * LifeForms. However, your simulator must not crash when this happens.
+ */
 void LifeForm::check_encounter(void) {
     if (!is_alive) { return; }
 
-    SmartPointer<LifeForm> closest = space.closest(pos);
+    auto closest = space.closest(pos);
     closest->update_position();
-    if (closest->is_alive) {
-        double distance = pos.distance(closest->pos);
-        if (distance < encounter_distance) {
-            resolve_encounter(closest);
+    auto distance = pos.distance(closest->pos);
+
+    if (distance < encounter_distance) {
+        resolve_encounter(closest);
+    }
+}
+
+/* When a collision occurs, simulator must invoke the encounter method on each
+ * of the colliding life forms. The encounter method is pure virtual
+ * (abstract) and must be implemented by every derived LifeForm class
+ * (Craig, Algae). Be careful, the derived LifeForm can do arbitrarily
+ * sophisticated things inside its encounter method. That includes calling
+ * perceive, or set_course, or even reproduce. The encounter method returns
+ * either EAT or IGNORE . Since there are two LifeForms colliding, there are
+ * four cases; IGNORE/IGNORE, EAT/IGNORE, IGNORE/EAT and EAT/EAT. Provided at
+ * least one LifeForm attempts to eat, you should generate a random number and
+ * compare the result to eat_success_chance(eater->energy, eatee->energy).
+ */
+void LifeForm::resolve_encounter(SmartPointer<LifeForm> that) {
+    if (!is_alive) { return; }
+    if (!that->is_alive) { return; }
+
+    lose_energy(encounter_penalty);
+    that->lose_energy(encounter_penalty);
+
+    if (is_alive && that->is_alive) {
+        SmartPointer<LifeForm> self{ this };
+        auto send_action = encounter(info_about_them(that));
+        auto recv_action = that->encounter(that->info_about_them(self));
+        bool try_send_eat = send_action == LIFEFORM_EAT &&
+                            drand48() < eat_success_chance(energy, that->energy);
+        bool try_recv_eat = recv_action == LIFEFORM_EAT &&
+                            drand48() < eat_success_chance(that->energy, energy);
+    
+        if (try_send_eat && !try_recv_eat) {
+            eat(that);
+        } else if (!try_send_eat && try_recv_eat) {
+            that->eat(self);
+        } else if (try_send_eat && try_recv_eat) {
+            // TODO: swap this out for https://piazza.com/class/ik5telvhcgio3?cid=63
+            switch (encounter_strategy) {
+                case EVEN_MONEY:
+                    if (mrand48() < 0) {
+                        eat(that);
+                    } else {
+                        that->eat(self);
+                    }
+                    break;
+                case BIG_GUY_WINS:
+                    if (energy > that->energy) {
+                        eat(that);
+                    } else {
+                        that->eat(self);
+                    }
+                    break;
+                case UNDERDOG_IS_HERE:
+                    if (energy < that->energy) {
+                        eat(that);
+                    } else {
+                        that->eat(self);
+                    }
+                    break;
+                case FASTER_GUY_WINS:
+                    if (speed > that->speed) {
+                        eat(that);
+                    } else {
+                        that->eat(self);
+                    }
+                    break;
+                case SLOWER_GUY_WINS:
+                    if (speed < that->speed) {
+                        eat(that);
+                    } else {
+                        that->eat(self);
+                    }
+                    break;
+                default:
+                    assert(0); // Unknown encounter strategy
+            }
         }
     }
 }
 
-void LifeForm::resolve_encounter(SmartPointer<LifeForm>other) {
-    if (!is_alive) { return; }
-    if (!other->is_alive) { return; }
+/* Objects eat each other according to their desire (indicated by the return
+ * value of encounter) and their eat_success_chance (defined in Params.h). If
+ * object A wants to eat object B, then the simulator should generate a random
+ * number and compare it to the eat_success_chance(A, B). If the random number
+ * is less than the eat success chance, then A gets to eat B.
+ *
+ * Watch out, B could also be trying to eat A at the same time. Your simulator
+ * must allow stationary (or slow) objects to eat other objects (and
+ * vice-versa). Your simulator must not allow two objects to both succefully
+ * eat eath other. Params.h includes a variable called encounter_strategy
+ * which explains how to break the tie. To make the implementations uniform,
+ * we have set the tie-breaking rule so that the faster object gets to eat the
+ * slower object in the tie-break situlation. Note: there's a tie only if both
+ * A and B generate random numbers (they must each generate their own number)
+ * that are less than their eat_success_chances. In this case only do you use
+ * encounter_strategy to break the tie.
+ *
+ * Once you've figured out who got to eat whom, you have to award the victor
+ * the spoils. The rules for this are for the eater to gain the energy of the
+ * eatee, but with two caveats.
+ *
+ * 1. The energy is awarded to the eatee after exactly digestion_time time
+ *    units have passed (create an event).
+ * 2. The energy awarded is reduced by the eat_efficiency multiplier.
+ *
+ * Since eat_efficiency is less than 1, it is usually not a good idea to eat
+ * your own young.
+ */
+void LifeForm::eat(SmartPointer<LifeForm> target) {
+    //std::cout << "EATING: "
+    //          << species_name()
+    //          << " is eating "
+    //          << target->species_name()
+    //          << " in "
+    //          << digestion_time
+    //          << " frames."
+    //          << std::endl;
 
-    // TODO: implement
+    SmartPointer<LifeForm> self{ this };
+    auto gain = eat_efficiency * target->energy;
+    target->die_and_clean();
+
+    lose_energy(eat_cost_function(0, 0));
+
+    if (is_alive) {
+        new Event(digestion_time, [=](void) { self->gain_energy(gain); });
+    }
 }
 
 void LifeForm::energy_check() {
@@ -203,12 +337,33 @@ void LifeForm::energy_check() {
 
 void LifeForm::lose_energy(double loss) {
     assert(loss >= 0);
+
+    if (!is_alive) { return; }
+
+    //if (loss != 0) {
+    //std::cout << "ENERGY: -"
+    //          << loss
+    //          << " ("
+    //          << species_name()
+    //          << ")"
+    //          << std::endl;}
+ 
     energy -= loss;
     energy_check();
 }
 
 void LifeForm::gain_energy(double gain) {
     assert(gain >= 0);
+
+    if (!is_alive) { return; }
+
+    //std::cout << "ENERGY: +"
+    //          << gain
+    //          << " ("
+    //          << species_name()
+    //          << ")"
+    //          << std::endl;
+ 
     energy += gain;
 }
 
@@ -219,5 +374,6 @@ void LifeForm::die_and_clean() {
     if (age_event) {
         age_event->cancel();
     }
+
     die();
 }
