@@ -113,6 +113,7 @@ private:
 
       // pointer to the event for the next encounter with a boundary
       Event* border_cross_event;
+      Event* age_event = nullptr;
       // the event handler function for the border cross event
       void border_cross(void);
       // the callback function for region resizes (invoked by the quadtree)
@@ -141,6 +142,7 @@ private:
       void lose_energy(double);
       const Point& position() const { return pos; }
 
+      void die_and_clean(void);
       void energy_check(void);
 protected:
       double health(void) const {

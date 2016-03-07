@@ -203,7 +203,7 @@ void LifeForm::redisplay_all(void) {
 
             /* uncomment the next line to get accurate graphics at the expense
                  of slowing down the simulator */
-                       k->update_position();
+            k->update_position();
         }
     }
     win.flush();

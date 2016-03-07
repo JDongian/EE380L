@@ -60,7 +60,7 @@ $(PROGRAM): $(OBJS)
 	$(LD) $(LDFLAGS) -o $@ $(OBJS) $(LIBS)
 
 test: $(PROGRAM)
-	./$(PROGRAM)
+	reset; ./$(PROGRAM)
 
 clean:
 	-rm -f $(OBJS) $(PROGRAM) .*.d
