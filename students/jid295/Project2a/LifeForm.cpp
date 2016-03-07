@@ -15,7 +15,7 @@ using namespace std;
 
 template <typename T>
 T bound(T& x, const T& min, const T& max) {
-    assert(min < max);
+    assert (min < max);
     if (x > max) { x = max; }
     if (x < min) { x = min; }
     return x;
@@ -33,7 +33,103 @@ ObjInfo LifeForm::info_about_them(SmartPointer<LifeForm> neighbor) {
     return info;
 }
 
-void LifeForm::reproduce(SmartPointer<LifeForm> l) {
+/* When a LifeForm reproduces (see above), the energy from the parent LifeForm
+ * is divided in half. This amount of energy is given to both the parent and
+ * the child. Then, the fractional reproduce_cost is subtracted from both the
+ * parent and the child. For example, a LifeForm with 100 energy that
+ * reproduces will produce a child that has 50 * (1.0 - reproduce_cost)
+ * energy. The parent will have the same energy as the child.
+ *
+ * As a special rule, do not allow an object to reproduce faster than
+ * min_reproduce_time. This rule is included to prevent the ugly strategy of
+ * LifeForms reproducing themselves to death to avoid being eaten (inside
+ * encounter call reproduce 1000 times). If a LifeForm tries to call reproduce
+ * twice within min_reproduce_time time units, the child should be deleted and
+ * no energy penalty should be applied to the parent.
+ *
+ * When a LifeForm reproduces, the child must be placed no further than
+ * reproduce_dist units away. 
+ */
+void LifeForm::reproduce(SmartPointer<LifeForm> child) {
+    update_position();
+
+    if (!is_alive) {
+        child->die();
+        return;
+    }
+
+    if (Event::now() - reproduce_time <= min_reproduce_time) {
+        child->die(); // TODO: is this the right way to "delete" a child?
+        return;
+    }
+
+    //std::cout << "REPRODUCE: "
+    //          << species_name()
+    //          << " (" << child->species_name() << ") about"
+    //          << position()
+    //          << std::endl;
+
+    reproduce_time = Event::now();
+
+    child->is_alive = true;
+    new Event(age_frequency, [=](void) { child->age(); });
+
+    double new_energy = (energy/2) * (1.0 - reproduce_cost);
+    lose_energy(energy - new_energy);
+    child->energy = new_energy;
+    child->energy_check();
+
+    place_child(pos, child);
+}
+
+/* The solution attempts to find a "safe" position about 5 times. After that,
+ * whatever random position was last chosen is used. If that position is
+ * unsafe, the solution immediately resolves the encounter with the closest
+ * object (assuming that more than one object is within encounter_distance of
+ * the child). Under no circumstances should the child encounter the parent.
+ *
+ * When to resolve the encounter is part of the design work that you should
+ * do. both solutions (resolving the encounter immediately --- invoked as a
+ * subroutine of the reproduce function, and resolving the encounter as a
+ * future event (not too far in the future, of course)), can be made to work.
+ */
+void LifeForm::place_child(Point& center, SmartPointer<LifeForm> child) {
+    assert (reproduce_dist > encounter_distance);
+
+    if (!child->is_alive) { return; }
+
+    auto margin = encounter_distance + 1;
+    int counter = 0;
+    do {
+        // sector-uniform, but not area-uniform
+        double radius = drand48() * (reproduce_dist - encounter_distance)
+            + encounter_distance
+            + Point::tolerance;
+        double angle = drand48() * 2 * M_PI;
+        double x = center.xpos + cos(angle) * radius;
+        bound(x, Point::tolerance, grid_max - Point::tolerance);
+        double y = center.ypos + sin(angle) * radius;
+        bound(y, Point::tolerance, grid_max - Point::tolerance);
+
+        child->pos = Point{ x, y };
+
+        auto nearest = space.closest(child->pos);
+        if (nearest) {
+            margin = child->position().distance(nearest->position());
+        }
+    // Don't stop on an occupied position.
+    } while ((counter++ < 5 && margin <= encounter_distance) ||
+             space.is_occupied(child->pos));
+
+    //std::cout << "\tPLACED: "
+    //          << child->species_name() << " at "
+    //          << child->position()
+    //          << std::endl;
+
+    child->start_point = child->pos;
+    // equavalent to border_cross()
+    space.insert(child, child->pos, [=](void) { child->region_resize(); });
+    child->check_encounter();
 }
 
 /* Percieve has three params in Params.h that must be used. max_perceive_range
@@ -118,8 +214,8 @@ void LifeForm::update_position(void) {
  */
 void LifeForm::border_cross(void) {
     update_position();
-    check_encounter(); // order probably doesn't matter here TODO: confirm
     compute_next_move();
+    check_encounter();
 }
 
 /* This function will be a callback from the QuadTree. When another object is
@@ -196,10 +292,11 @@ void LifeForm::check_encounter(void) {
     if (!is_alive) { return; }
 
     auto closest = space.closest(pos);
+    assert(closest); // TODO: check this edge case?
     closest->update_position();
     auto distance = pos.distance(closest->pos);
 
-    if (distance < encounter_distance) {
+    if (distance <= encounter_distance) {
         resolve_encounter(closest);
     }
 }
@@ -221,6 +318,8 @@ void LifeForm::resolve_encounter(SmartPointer<LifeForm> that) {
 
     lose_energy(encounter_penalty);
     that->lose_energy(encounter_penalty);
+
+    // TODO: see if encounter must be called if only one is alive.
 
     if (is_alive && that->is_alive) {
         SmartPointer<LifeForm> self{ this };
@@ -274,7 +373,7 @@ void LifeForm::resolve_encounter(SmartPointer<LifeForm> that) {
                     }
                     break;
                 default:
-                    assert(0); // Unknown encounter strategy
+                    assert (0); // Unknown encounter strategy
             }
         }
     }
@@ -322,7 +421,7 @@ void LifeForm::eat(SmartPointer<LifeForm> target) {
     auto gain = eat_efficiency * target->energy;
     target->die_and_clean();
 
-    lose_energy(eat_cost_function(0, 0));
+    lose_energy(eat_cost_function(energy, target->energy));
 
     if (is_alive) {
         new Event(digestion_time, [=](void) { self->gain_energy(gain); });
@@ -336,7 +435,7 @@ void LifeForm::energy_check() {
 }
 
 void LifeForm::lose_energy(double loss) {
-    assert(loss >= 0);
+    assert (loss >= 0);
 
     if (!is_alive) { return; }
 
@@ -353,7 +452,7 @@ void LifeForm::lose_energy(double loss) {
 }
 
 void LifeForm::gain_energy(double gain) {
-    assert(gain >= 0);
+    assert (gain >= 0);
 
     if (!is_alive) { return; }
 

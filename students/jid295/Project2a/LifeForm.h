@@ -142,6 +142,7 @@ private:
       void lose_energy(double);
       const Point& position() const { return pos; }
 
+      void place_child(Point& center, SmartPointer<LifeForm> child);
       void die_and_clean(void);
       void energy_check(void);
 protected:

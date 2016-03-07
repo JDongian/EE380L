@@ -240,11 +240,10 @@ void LifeForm::redisplay_all(void) {
 
     if ((termination_strategy == RUN_TILL_HALF_EXTINCT && count <= max_species / 2)
         || (termination_strategy == RUN_TILL_ONE_SPECIES_LEFT && count <= 2)
+        || (termination_strategy == RUN_TILL_EVENTS_EXHAUSTED && Event::num_events() == 1)
         || Event::now() > MAX_SIMULATION_TIME) {
         // abort the simulation
         cout << "\t!!Simulation Complete at time " << Event::now() << " !!\n";
-        //cout << "hit CTRL-C to stop\n";  // uncomment if you want to see the
-        //sleep(1000);                     // final state of the graphics display
         exit(0);
     }
 #endif /* SPECIES_SUMMARY */
