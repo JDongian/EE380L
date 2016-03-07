@@ -128,13 +128,11 @@ double Point::bearing(const Point& p) const
 
 /* NOTE: this ifdef is correct only for g++.
    This is an implementation-dependent hack */
-#ifdef _IOSTREAM_H
 inline 
-ostream& operator<<(ostream& ost, const Point& p)
+std::ostream& operator<<(std::ostream& ost, const Point& p)
 {
   ost << "(" << p.xpos << "," << p.ypos << ")";
   return ost;
 }
-#endif /* _IOSTREAM_H */
 
 #endif /* !(_Point_h) */

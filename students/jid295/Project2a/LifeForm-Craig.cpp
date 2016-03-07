@@ -203,7 +203,7 @@ void LifeForm::redisplay_all(void) {
 
             /* uncomment the next line to get accurate graphics at the expense
                  of slowing down the simulator */
-                 //      k->update_position();
+                       k->update_position();
         }
     }
     win.flush();
@@ -281,22 +281,16 @@ void Algae::create_spontaneously(void)
 
 void LifeForm::die(void)
 {
+    /* It is possible to call die twice in some very peculiar circumstances.
+     * You have two objects that are bumping into each other without ever
+     * eating one another. Eventually, they run low on energy. They encounter
+     * each other, and both are weak enough to die object 1 calls obj1->die();
+     * Object 1 is removed from the tree. region_resize is called for object
+     * 2. region_resize calls update position, which kills object 2 ('cause
+     * it's too weak) space.remove(obj1) returns resolve_encounter calls
+     * obj2->die();
+     */
     if (!is_alive) return;        // already called.
-                  // it is possible to call die twice in some
-                  // very peculiar circumstances.
-                  // you have two objects that are bumping
-                  // into each other without ever eating
-                  // one another.
-                  // Eventually, they run low on energy.
-                  // they encounter each other, and both
-                  // are weak enough to die
-                  // object 1 calls obj1->die();
-                  // object 1 is removed from the tree.
-                  // region resize is called for object 2
-                  // region resize calls update position,
-                  // which kills object 2 ('cause it's too weak)
-                  // space.remove(obj1) returns
-                  // resolve_encounter calls obj2->die();
     space.remove(pos);
     is_alive = false;
 }

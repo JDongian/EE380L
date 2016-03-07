@@ -95,57 +95,53 @@ private:
        */
       static LFCreatorTable& istream_creators(void);
 
-
+      static Canvas win;
       static int scale_x(double); // scale_x and scale_y are used to position the pixel
       static int scale_y(double); // in the window when drawing a LifeForm
+
       void print_position(void) const; // print and print_position are provided for debugging purposes
       void print(void) const;
-
+      Point start_point;	    // start_point is sometimes used by the test program(s)
+				// you can (and should) ignore it
       double energy;
       bool is_alive;
-
-      Event* border_cross_event;    // pointer to the event for the next encounter with a boundary
-      void border_cross(void);		// the event handler function for the border cross event
-
-      void region_resize(void);		// the callback function for region resizes (invoked by the quadtree)
-
-      Point pos;
-      double update_time;           // the time when update_position was 
-                                //   last called
+      double update_time;           // the time when update_position was last called
       double reproduce_time;        // the time when reproduce was last called
+      Point pos;
       double course;
       double speed;
 
-      Point start_point;			// start_point is sometimes used by the test program(s)
-								// you can (and should) ignore it
-
+      // pointer to the event for the next encounter with a boundary
+      Event* border_cross_event;
+      // the event handler function for the border cross event
+      void border_cross(void);
+      // the callback function for region resizes (invoked by the quadtree)
+      void region_resize(void);	
 
       void resolve_encounter(SmartPointer<LifeForm>);
       void eat(SmartPointer<LifeForm>);
-      void age(void);               // subtract age_penalty from energy
-      void gain_energy(double);
+      void age(void);
       void update_position(void);   // calculate the current position for
 				    // an object.  If less than Time::tolerance
                                 // time units have passed since the last
                                 // call to update_position, then do nothing
                                 // (we can't have moved very far so there's
                                 // no point in updating our position)
-
       void check_encounter(void);   // check to see if there's another object
 				    // within encounter_distance.  If there's
                                 // an object nearby, invoke resove_encounter
                                 // on ourself with the closest object
-  
-      void die(void);          // kill the current life form
-
+      void die(void);
 
       void compute_next_move(void); // a simple function that creates the next border_cross_event
 
       ObjInfo info_about_them(SmartPointer<LifeForm>);
 
+      void gain_energy(double);
+      void lose_energy(double);
       const Point& position() const { return pos; }
 
-      static Canvas win;
+      void energy_check(void);
 protected:
       double health(void) const {
     	  if (!is_alive) { return 0.0; }
