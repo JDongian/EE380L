@@ -292,5 +292,10 @@ void LifeForm::die(void)
     if (!is_alive) return;        // already called.
     space.remove(pos);
     is_alive = false;
+
+    /* DEBUG */
+    //std::cout << "DIE: "
+    //          << species_name()
+    //          << std::endl;
 }
 

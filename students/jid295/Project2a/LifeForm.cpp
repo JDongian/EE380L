@@ -61,13 +61,6 @@ void LifeForm::reproduce(SmartPointer<LifeForm> child) {
         return;
     }
 
-    /* DEBUG */
-    //std::cout << "REPRODUCE: "
-    //          << species_name()
-    //          << " (" << child->species_name() << ") about"
-    //          << position()
-    //          << std::endl;
-
     reproduce_time = Event::now();
 
     child->is_alive = true; // critical line
@@ -80,6 +73,13 @@ void LifeForm::reproduce(SmartPointer<LifeForm> child) {
     child->energy_check();
 
     place_child(pos, child);
+
+    /* DEBUG */
+    //std::cout << "REPRODUCE: "
+    //          << species_name()
+    //          << "->" << child->species_name() << " at"
+    //          << child->pos
+    //          << std::endl;
 }
 
 /* The solution attempts to find a "safe" position about 5 times. After that,
@@ -130,9 +130,12 @@ void LifeForm::place_child(Point& center, SmartPointer<LifeForm> child) {
     //          << std::endl;
 
     child->start_point = child->pos;
-    // Equavalent to border_cross(), but for readability we do this:
+    // Tricky section -- depending on how lifeforms are implemented, this may
+    // run into issues. This should be safe for most lifeforms. Check events
+    // created and canceled inside encounter() for race condition details.
     space.insert(child, child->pos, [=](void) { child->region_resize(); });
-    child->check_encounter();
+    new Event(min_delta_time * 2, [=](void) { child->check_encounter(); });
+    //child->check_encounter();
 }
 
 /* Percieve has three params in Params.h that must be used. max_perceive_range
@@ -334,6 +337,8 @@ void LifeForm::resolve_encounter(SmartPointer<LifeForm> that) {
     //          << species_name()
     //          << " vs "
     //          << that->species_name()
+    //          << " at "
+    //          << pos
     //          << std::endl;
 
     if (is_alive && that->is_alive) {
@@ -352,43 +357,43 @@ void LifeForm::resolve_encounter(SmartPointer<LifeForm> that) {
         } else if (try_send_eat && try_recv_eat) {
             // TODO: swap this out for https://piazza.com/class/ik5telvhcgio3?cid=63
             switch (encounter_strategy) {
-                case EVEN_MONEY:
-                    if (mrand48() < 0) {
-                        eat(that);
-                    } else {
-                        that->eat(self);
-                    }
-                    break;
-                case BIG_GUY_WINS:
-                    if (energy > that->energy) {
-                        eat(that);
-                    } else {
-                        that->eat(self);
-                    }
-                    break;
-                case UNDERDOG_IS_HERE:
-                    if (energy < that->energy) {
-                        eat(that);
-                    } else {
-                        that->eat(self);
-                    }
-                    break;
-                case FASTER_GUY_WINS:
-                    if (speed > that->speed) {
-                        eat(that);
-                    } else {
-                        that->eat(self);
-                    }
-                    break;
-                case SLOWER_GUY_WINS:
-                    if (speed < that->speed) {
-                        eat(that);
-                    } else {
-                        that->eat(self);
-                    }
-                    break;
-                default:
-                    assert (0); // Unknown encounter strategy
+            case EVEN_MONEY:
+                if (mrand48() < 0) {
+                    eat(that);
+                } else {
+                    that->eat(self);
+                }
+                break;
+            case BIG_GUY_WINS:
+                if (energy > that->energy) {
+                    eat(that);
+                } else {
+                    that->eat(self);
+                }
+                break;
+            case UNDERDOG_IS_HERE:
+                if (energy < that->energy) {
+                    eat(that);
+                } else {
+                    that->eat(self);
+                }
+                break;
+            case FASTER_GUY_WINS:
+                if (speed > that->speed) {
+                    eat(that);
+                } else {
+                    that->eat(self);
+                }
+                break;
+            case SLOWER_GUY_WINS:
+                if (speed < that->speed) {
+                    eat(that);
+                } else {
+                    that->eat(self);
+                }
+                break;
+            default:
+                assert (0); // Unknown encounter strategy
             }
         }
     }
@@ -455,13 +460,13 @@ void LifeForm::lose_energy(double loss) {
     if (!is_alive) { return; }
 
     /* DEBUG */
-    //if (loss != 0) {
+    //if (loss > 2 && loss != 10) {
     //std::cout << "ENERGY: -"
     //          << loss
     //          << " ("
     //          << species_name()
     //          << "), current="
-    //          << energy
+    //          << energy - loss
     //          << std::endl;}
  
     energy -= loss;
@@ -479,7 +484,7 @@ void LifeForm::gain_energy(double gain) {
     //          << " ("
     //          << species_name()
     //          << "), current="
-    //          << energy
+    //          << energy + gain
     //          << std::endl;
  
     energy += gain;
