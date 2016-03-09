@@ -52,17 +52,16 @@ ObjInfo LifeForm::info_about_them(SmartPointer<LifeForm> neighbor) {
  */
 void LifeForm::reproduce(SmartPointer<LifeForm> child) {
     update_position();
-
     if (!is_alive) {
         child->die();
         return;
     }
-
     if (Event::now() - reproduce_time <= min_reproduce_time) {
-        child->die(); // TODO: is this the right way to "delete" a child?
+        child->die();
         return;
     }
 
+    /* DEBUG */
     //std::cout << "REPRODUCE: "
     //          << species_name()
     //          << " (" << child->species_name() << ") about"
@@ -103,7 +102,9 @@ void LifeForm::place_child(Point& center, SmartPointer<LifeForm> child) {
     int counter = 0;
     do {
         // sector-uniform, but not area-uniform probability
-        double radius = drand48() * (reproduce_dist - encounter_distance)
+        double radius = drand48() * (reproduce_dist
+                - encounter_distance
+                - 2 * Point::tolerance)
             + encounter_distance
             + Point::tolerance;
         double angle = drand48() * 2 * M_PI;
@@ -122,6 +123,7 @@ void LifeForm::place_child(Point& center, SmartPointer<LifeForm> child) {
     } while ((counter++ < 5 && margin <= encounter_distance) ||
              space.is_occupied(child->pos));
 
+    /* DEBUG */
     //std::cout << "\tPLACED: "
     //          << child->species_name() << " at "
     //          << child->position()
@@ -142,12 +144,18 @@ void LifeForm::place_child(Point& center, SmartPointer<LifeForm> child) {
  * is a function of the radius.
  */
 ObjList LifeForm::perceive(double radius) {
+    update_position();
+    if (!is_alive) { return ObjList{}; }
+
     ObjList area_info{};
 
     bound(radius, min_perceive_range, max_perceive_range);
 
     for(auto&& lifeform: space.nearby(pos, radius)) {
-        area_info.push_back(info_about_them(lifeform)); // TODO: understand memory
+        if (lifeform->is_alive) {
+            // TODO: understand memory
+            area_info.push_back(info_about_them(lifeform));
+        }
     }
 
     lose_energy(perceive_cost(radius));
@@ -193,6 +201,7 @@ void LifeForm::update_position(void) {
         delta_position *= speed * delta_time;
         Point new_position(pos + delta_position);
 
+        /* DEBUG */
         //std::cout << "old position: " << pos
         //          //<< ", position change: " << delta_position
         //          << "\t new position: " << new_position
@@ -320,7 +329,12 @@ void LifeForm::resolve_encounter(SmartPointer<LifeForm> that) {
     lose_energy(encounter_penalty);
     that->lose_energy(encounter_penalty);
 
-    // TODO: see if encounter must be called if only one is alive.
+    /* DEBUG */
+    //std::cout << "COLLISION: "
+    //          << species_name()
+    //          << " vs "
+    //          << that->species_name()
+    //          << std::endl;
 
     if (is_alive && that->is_alive) {
         SmartPointer<LifeForm> self{ this };
@@ -440,12 +454,14 @@ void LifeForm::lose_energy(double loss) {
 
     if (!is_alive) { return; }
 
+    /* DEBUG */
     //if (loss != 0) {
     //std::cout << "ENERGY: -"
     //          << loss
     //          << " ("
     //          << species_name()
-    //          << ")"
+    //          << "), current="
+    //          << energy
     //          << std::endl;}
  
     energy -= loss;
@@ -457,11 +473,13 @@ void LifeForm::gain_energy(double gain) {
 
     if (!is_alive) { return; }
 
+    /* DEBUG */
     //std::cout << "ENERGY: +"
     //          << gain
     //          << " ("
     //          << species_name()
-    //          << ")"
+    //          << "), current="
+    //          << energy
     //          << std::endl;
  
     energy += gain;

@@ -117,7 +117,7 @@ private:
       // the event handler function for the border cross event
       void border_cross(void);
       // the callback function for region resizes (invoked by the quadtree)
-      void region_resize(void);	
+      void region_resize(void);
 
       void resolve_encounter(SmartPointer<LifeForm>);
       void eat(SmartPointer<LifeForm>);
@@ -154,6 +154,7 @@ protected:
       void set_speed(double);
       double get_course(void) const { return course; }
       double get_speed(void) const { return speed; }
+      //double get_energy(void) const { return energy; }
       void reproduce(SmartPointer<LifeForm>);
       ObjList perceive(double);
 
