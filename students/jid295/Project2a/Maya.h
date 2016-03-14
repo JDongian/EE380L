@@ -6,6 +6,8 @@
 #include "Init.h"
 #include "Angle.hpp"
 #include "Vector.hpp"
+#include "Exploration.hpp"
+#include "SerialUtils.hpp"
 
 class Maya : public LifeForm {
     private:
@@ -19,9 +21,17 @@ class Maya : public LifeForm {
         const double SPEED_RESTING = 1;
         const double RADIUS_DEFAULT = 100;
 
-        long id;
+        long id = lrand48();
         double speed;
         Angle direction;
+        Vector relative_position;
+
+        //int times_reproduced = 0; TODO: for sex
+
+        SimTime last_update;
+        void update_position(void);
+
+        Exploration exploration;
 
         bool locked_on;
 
@@ -29,22 +39,20 @@ class Maya : public LifeForm {
         void hunt(double radius);
         Vector potential_fields(ObjList area_info);
 
-        // update personal data
-        void update_position(void);
-        void age(void);
-
         ObjList sense(double radius);
         bool is_family(std::string name);
         std::string serialize(void) const;
+        void deserialize(std::string serial,
+                double& id, Vector& rel_pos, Exploration& exp) const;
 
         void set_direction(const Angle& course);
-        void turn(const Angle& delta);
+        void avert_edge(void);
         void recurring(double timeout,
                 const std::function <void (void)>& callback);
         void recurring(const std::function <double (void)>& timeout,
                 const std::function <void (void)>& callback);
         // Nyquist sampling?
-        double update_interval = 0.5;
+        const double UPDATE_INTERVAL = 0.5;
     protected:
         static void initialize(void);
         void spawn(void);
@@ -59,5 +67,4 @@ class Maya : public LifeForm {
         virtual Action encounter(const ObjInfo&);
         friend class Initializer<Maya>;
 };
-
 #endif /* !(_Maya_h) */

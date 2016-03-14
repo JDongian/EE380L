@@ -50,6 +50,8 @@ Color Maya::my_color(void) const {
 }
 
 String Maya::player_name(void) const {
+    /* DEBUG */
+    //return "Maya+" + serialize();
     return "jid295'";
 }
 
@@ -60,36 +62,25 @@ String Maya::species_name(void) const {
 void Maya::startup(void) {
     SmartPointer<Maya> self = SmartPointer<Maya>(this);
 
-    id = lrand48();
-    
-    // TODO: parameterize
     set_speed(SPEED_RESTING);
-    set_direction(Angle(0, Angle::DEGREE));
+    set_direction(Angle(drand48() * 360, Angle::DEGREE)); // TODO: random good?
 
     locked_on = false;
 
-    // // Not sure why we need to wait twice, but okay.
-    // new Event(update_interval, [=](void) {
-    //     recurring(update_interval, [=](void) { self->update_position(); });
-    // });
+    last_update = Event::now();
+    recurring(UPDATE_INTERVAL, [=](void) { self->update_position(); });
 
-    // TODO: parameterize
-    double STAGE_MARGIN = grid_max / 8 / 1.414;
-    //auto turn_timeout = [=](void) { return STAGE_MARGIN / get_speed(); };
-    auto turn_timeout = [=](void) { return STAGE_MARGIN * 2 / 1.414 / get_speed(); };
-    recurring(turn_timeout,
-    [=](void) {
-        if (!locked_on) {
-            self->turn(Angle(90, Angle::DEGREE));
-        }
-    });
-
-    // TODO: parameterize
-    recurring(5, [=](void) {
+    // PARAM
+    recurring(min_reproduce_time/2, [=](void) {
         // TODO: parameterize
         if (health() >= 3.0) {
             spawn();
         }
+    });
+
+    // PARAM
+    recurring(grid_max / 16 / max_speed, [=](void) {
+        avert_edge();
     });
 
     hunt_event = new Event(0, [=](void) { self->hunt(RADIUS_DEFAULT); });
@@ -115,8 +106,14 @@ void Maya::recurring(double timeout,
 void Maya::recurring(const std::function <double (void)>& timeout,
         const std::function <void (void)>& callback) {
     SmartPointer<Maya> self = SmartPointer<Maya>(this);
+    
+    /* DEBUG */
+    //std::cout << "HEALTH: " << health() << std::endl;
 
-    new Event(timeout(), [=](void) {
+    double bound_timeout = timeout();
+    bound(bound_timeout, 0.0, 500.0); // in case of infinite timeouts
+
+    new Event(bound_timeout, [=](void) {
         // Helps keep event queue clean
         if (health() == 0.0) { return; } 
         callback();
@@ -124,7 +121,12 @@ void Maya::recurring(const std::function <double (void)>& timeout,
     });
 }
 
+void Maya::avert_edge() {
+}
+
 void Maya::set_direction(const Angle& course) {
+    update_position();
+
     direction = course;
     set_course(course.rad());
 
@@ -135,19 +137,47 @@ void Maya::set_direction(const Angle& course) {
     //          << std::endl;
 }
 
-void Maya::turn(const Angle& delta) {
-    set_direction(direction + delta);
-}
-
 void Maya::update_position(void) {
-    if (health() == 0.0) { return; }
-    SmartPointer<Maya> self = SmartPointer<Maya>(this);
+    double time_delta = Event::now() - last_update;
+    relative_position += Vector(direction, time_delta * get_speed());
+    exploration.update_explored(relative_position);
+    last_update = Event::now();
+
+    /* DEBUG */
+    //std::cout << "relative position: " << relative_position
+    //          << ", exploration: " << exploration
+    //          << std::endl;
 }
 
 ObjList Maya::sense(double radius) {
     SmartPointer<Maya> self = SmartPointer<Maya>(this);
 
-    return perceive(radius);
+    auto area_info = perceive(radius);
+    for (auto info: area_info) {
+        Vector delta(Angle(info.bearing, Angle::RADIAN), info.distance);
+        if (is_family(info.species)) {
+            double id;
+            Vector rel_pos;
+            Exploration exp;
+            deserialize(info.species, id, rel_pos, exp);
+
+            Vector delta_start(relative_position + delta + rel_pos * -1);
+            
+            exploration.expand(delta_start, exp);
+
+            /* DEBUG */
+            //std::cout << "SHARE: " << id
+            //          << " from " << delta_start
+            //          << " (e_dx="
+            //          << exploration.get_x_max() - exploration.get_x_min()
+            //          << ",e_dy="
+            //          << exploration.get_y_max() - exploration.get_y_min()
+            //          << ")" << std::endl;
+        } else {
+            exploration.update_explored(relative_position + delta);
+        }
+    }
+    return area_info;
 }
 
 Action Maya::encounter(const ObjInfo& target) {
@@ -185,10 +215,17 @@ void Maya::hunt(double radius) {
 
     ObjList area_info = sense(radius);
 
+    /* DEBUG */
+    //std::cout << "LifeForms in radius " << radius
+    //          << ": " << area_info.size() << std::endl;
+
     if (area_info.size() == 0) {
         locked_on = false;
-
-        // TODO: improve this (maybe go to the center)
+        
+        Vector decision = potential_fields(area_info);
+        if (decision.get_magnitude() != 0) {
+            set_direction(decision.get_angle());
+        }
         set_speed(SPEED_RESTING);
 
         // TODO: parameterize
@@ -226,21 +263,15 @@ void Maya::hunt(double radius) {
             set_direction(new_course);
             set_speed(new_speed);
 
-            /* DEBUG */
-            //std::cout << "DECISION VECTOR: " << decision
-            //          << ", target_speed=" << new_speed
-            //          << std::endl;
-
             // TODO: figure out radius for potential fields
             radius *= .5;
         } else { std::cout << "MATH ERROR"; }
     }
     
-    set_speed(10);
-
     bound(radius, min_perceive_range, max_perceive_range);
     timeout = radius / 3 / get_speed();
-    bound(timeout, 1.0, 30.0);
+    // PARAM
+    bound(timeout, 0.5, grid_max / 8 / get_speed());
 
     hunt_event = new Event(timeout, [=](void) {
         self->hunt(radius);
@@ -288,7 +319,7 @@ Vector gen_family_force(ObjInfo family) {
 
     double score_distance = pow(family.distance, -2);
 
-    Vector result (Angle(family.bearing + M_PI + 0.1, Angle::RADIAN),
+    Vector result (Angle(family.bearing + M_PI, Angle::RADIAN),
             score_distance);
     result *= A; 
 
@@ -329,6 +360,34 @@ Vector gen_algae_force(ObjInfo algae) {
     return result;
 }
 
+Vector gen_edge_force(Vector pos) {
+    const double A = 200;
+    double score_distance;
+    Vector result;
+    // for a small bit of efficiency;
+    double margin = grid_max / 12;
+    // PARAM
+    if (pos.get_x() < margin) {
+        score_distance = A * pow(pos.get_x(), -2);
+        result += Vector(Angle(0, Angle::DEGREE), score_distance);
+    } else if (grid_max - pos.get_x() < margin) {
+        score_distance = A * pow(grid_max - pos.get_x(), -2);
+        result += Vector(Angle(180, Angle::DEGREE), score_distance);
+    }
+    if (pos.get_y() < margin) {
+        score_distance = A * pow(pos.get_y(), -2);
+        result += Vector(Angle(90, Angle::DEGREE), score_distance);
+    } else if (grid_max - pos.get_y() < margin) {
+        score_distance = A * pow(grid_max - pos.get_y(), -2);
+        result += Vector(Angle(270, Angle::DEGREE), score_distance);
+    }
+
+    /* DEBUG */
+    //std::cout << "EDGE VECTOR: " << result << std::endl;
+
+    return result;
+}
+
 Vector Maya::potential_fields(ObjList area_info) {
     Vector result{};
 
@@ -345,6 +404,14 @@ Vector Maya::potential_fields(ObjList area_info) {
             break;
         }
     }
+    Vector position = exploration.normalized_position(relative_position);
+    result += gen_edge_force(position);
+
+    /* DEBUG */
+    //std::cout << "DECISION VECTOR: " << result
+    //          << ", EST. POSITION: " << position
+    //          << std::endl;
+
     return result;
 }
 
@@ -362,6 +429,7 @@ void Maya::spawn(void) {
     // TODO: sex
     SmartPointer<Maya> child = new Maya;
     reproduce(child);
+    // times_reproduced++;
 }
 
 bool Maya::is_family(String name) {
@@ -380,9 +448,20 @@ bool Maya::is_family(String name) {
 // TODO: make this faster with std::to_string
 String Maya::serialize() const {
     std::stringstream sstm;
-    sstm << id << ","
-         << speed << ","
-         << direction.deg();
+    sstm << id << ";"
+         << relative_position << ";"
+         << exploration << ";"
+         << direction;
 
     return sstm.str();
+}
+
+void Maya::deserialize(String serial,
+        double& id, Vector& rel_pos, Exploration& exp) const {
+    auto parts = split(serial, ':');
+    auto values = split(parts[1], ';');
+
+    id = stoi(values[0]);
+    rel_pos = Vector(values[1]);
+    exp = Exploration(values[2]);
 }

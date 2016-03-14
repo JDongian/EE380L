@@ -204,11 +204,20 @@ void LifeForm::update_position(void) {
         delta_position *= speed * delta_time;
         Point new_position(pos + delta_position);
 
+        Point delta_point(new_position.xpos - start_point.xpos,
+                new_position.ypos - start_point.ypos);
+
         /* DEBUG */
         //std::cout << "old position: " << pos
-        //          //<< ", position change: " << delta_position
+        //          << ", position change: " << delta_position
         //          << "\t new position: " << new_position
         //          << std::endl;
+        
+        /* DEBUG */
+        //if (delta_point != Point(0, 0)) {
+        //std::cout << "start position: " << start_point
+        //          << "\tposition change: " << delta_point
+        //          << std::endl; }
 
         update_time = Event::now();
         if (space.is_out_of_bounds(new_position)) {
