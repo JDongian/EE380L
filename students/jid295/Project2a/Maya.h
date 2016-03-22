@@ -22,25 +22,31 @@ class Maya : public LifeForm {
         const double SPEED_RESTING = 1;
         const double RADIUS_DEFAULT = 100;
         // PARAM
-        const double MARGIN_WIDTH = grid_max / 16; // TODO: bound, by max_speed * 1 ?
+        const double MARGIN_WIDTH = grid_max / 12; // TODO: bound, by max_speed * 1 ?
+        
+        // Nyquist sampling?
+        const double UPDATE_INTERVAL = 0.5;
+        
+        const double RESET_INTERVAL = 250;
  
         long id = lrand48();
         double speed;
         Angle direction;
         Vector relative_position;
 
+        bool locked_on;
+
+        Exploration exploration;
+
         //int times_reproduced = 0; TODO: for sex
 
         SimTime last_update;
         void update_position(void);
+        void reset_position();
 
         void set_mspeed(const double& speed);
         void set_direction(const Angle& course);
         void turn(const Angle& delta);
-
-        Exploration exploration;
-
-        bool locked_on;
 
         Event* action_event;
         void action(double radius);
@@ -57,8 +63,6 @@ class Maya : public LifeForm {
                 const std::function <void (void)>& callback);
         void recurring(const std::function <double (void)>& timeout,
                 const std::function <void (void)>& callback);
-        // Nyquist sampling?
-        const double UPDATE_INTERVAL = 0.5;
     protected:
         static void initialize(void);
         void spawn(void);

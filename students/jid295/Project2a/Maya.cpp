@@ -75,7 +75,7 @@ void Maya::startup(void) {
 
     const double A = 1.4;
     // PARAM
-    auto turn_timeout = [=](void) { return grid_max / A; };
+    auto turn_timeout = [=](void) { return grid_max / A / get_speed(); };
     recurring(turn_timeout, [=](void) {
         if (!locked_on) {
             self->turn(Angle(90, Angle::DEGREE));
@@ -85,11 +85,24 @@ void Maya::startup(void) {
         }
     });
 
+    // GLOBAL
+    auto reset_timeout = [=](void) {
+        return RESET_INTERVAL - fmod(Event::now(), 100);
+    };
+    recurring(reset_timeout, [=](void) {
+        if (fmod(Event::now(), RESET_INTERVAL ) < 1) {
+            reset_position();
+
+            /* DEBUG */
+            //std::cout << "RESET" << std::endl;
+        }
+    });
+
 
     // PARAM
     recurring(min_reproduce_time / 2, [=](void) {
         // TODO: parameterize
-        if (health() >= 3.0) {
+        if (health() >= 2.0) {
             spawn();
         }
     });
@@ -100,6 +113,11 @@ void Maya::startup(void) {
     //std::cout << "STARTUP: "
     //          << species_name()
     //          << std::endl;
+}
+
+void Maya::reset_position() {
+    relative_position = Vector();
+    exploration.reset();
 }
 
 void Maya::recurring(double timeout,
@@ -189,10 +207,10 @@ void Maya::update_position(void) {
     exploration.update_explored(relative_position);
     last_update = Event::now();
 
-    /* DEBUG */
-    std::cout << "POSITION UPDATE: (" << relative_position
-              << ")\t\tEXPLORATION: " << exploration
-              << std::endl;
+    /* DEBUG POSITION */
+    //std::cout << "POSITION UPDATE: (" << relative_position
+    //          << ")\t\tEXPLORATION: " << exploration
+    //          << std::endl;
 }
 
 ObjList Maya::sense(double radius) {
