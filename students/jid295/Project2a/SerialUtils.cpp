@@ -1,5 +1,4 @@
-#ifndef _SerialUtils_h
-#define _SerialUtils_h 1
+#include "SerialUtils.h"
 
 std::vector<std::string> split(const std::string &text, char sep) {
     std::vector<std::string> tokens;
@@ -11,5 +10,3 @@ std::vector<std::string> split(const std::string &text, char sep) {
     tokens.push_back(text.substr(start));
     return tokens;
 }
-
-#endif /* _SerialUtils_h */

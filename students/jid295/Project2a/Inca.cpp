@@ -4,7 +4,7 @@
 #include <string>
 #include <sstream>
 
-#include "Maya.h"
+#include "Inca.h"
 #include "Event.h"
 #include "ObjInfo.h"
 #include "Params.h"
@@ -27,40 +27,40 @@ T bound(T& x, const T& min, const T& max) {
 }
 
 /* boilerplate */
-Initializer<Maya> __Maya_initializer;
+Initializer<Inca> __Inca_initializer;
 
-void Maya::initialize(void) {
-    LifeForm::add_creator(Maya::create, "Maya");
+void Inca::initialize(void) {
+    LifeForm::add_creator(Inca::create, "Inca");
 }
 
-SmartPointer<LifeForm> Maya::create(void) {
-    return new Maya;
+SmartPointer<LifeForm> Inca::create(void) {
+    return new Inca;
 }
 
-Maya::Maya() {
-    SmartPointer<Maya> self = SmartPointer<Maya>(this);
+Inca::Inca() {
+    SmartPointer<Inca> self = SmartPointer<Inca>(this);
     new Event(0, [=](void) { self->startup(); });
 }
 
-Maya::~Maya() {}
+Inca::~Inca() {}
 /* end of boilerplate */
 
-Color Maya::my_color(void) const {
-    return BLUE;
+Color Inca::my_color(void) const {
+    return CYAN;
 }
 
-String Maya::player_name(void) const {
+String Inca::player_name(void) const {
     /* DEBUG */
-    //return "Maya+" + serialize();
-    return "jid295*";
+    //return "Inca+" + serialize();
+    return "jid295**";
 }
 
-String Maya::species_name(void) const {
-    return "Maya:" + serialize();
+String Inca::species_name(void) const {
+    return "Inca:" + serialize();
 }
 
-void Maya::startup(void) {
-    SmartPointer<Maya> self = SmartPointer<Maya>(this);
+void Inca::startup(void) {
+    SmartPointer<Inca> self = SmartPointer<Inca>(this);
 
     set_mspeed(SPEED_RESTING);
     set_direction(Angle(drand48() * 360, Angle::DEGREE));
@@ -115,14 +115,14 @@ void Maya::startup(void) {
     //          << std::endl;
 }
 
-void Maya::reset_position() {
+void Inca::reset_position() {
     relative_position = Vector();
     exploration.reset();
 }
 
-void Maya::recurring(double timeout,
+void Inca::recurring(double timeout,
         const std::function <void (void)>& callback) {
-    SmartPointer<Maya> self = SmartPointer<Maya>(this);
+    SmartPointer<Inca> self = SmartPointer<Inca>(this);
 
     new Event(timeout, [=](void) {
         // Helps keep event queue clean
@@ -132,9 +132,9 @@ void Maya::recurring(double timeout,
     });
 }
 
-void Maya::recurring(const std::function <double (void)>& timeout,
+void Inca::recurring(const std::function <double (void)>& timeout,
         const std::function <void (void)>& callback) {
-    SmartPointer<Maya> self = SmartPointer<Maya>(this);
+    SmartPointer<Inca> self = SmartPointer<Inca>(this);
     
     /* DEBUG */
     //std::cout << "HEALTH: " << health() << std::endl;
@@ -150,8 +150,8 @@ void Maya::recurring(const std::function <double (void)>& timeout,
     });
 }
 
-void Maya::avert_edge() {
-    SmartPointer<Maya> self = SmartPointer<Maya>(this);
+void Inca::avert_edge() {
+    SmartPointer<Inca> self = SmartPointer<Inca>(this);
 
     Vector position = exploration.normalized_position(relative_position);
     // PARAM
@@ -174,7 +174,7 @@ void Maya::avert_edge() {
     }
 }
 
-void Maya::set_direction(const Angle& course) {
+void Inca::set_direction(const Angle& course) {
     update_position();
     direction = course;
     set_course(course.rad());
@@ -186,12 +186,12 @@ void Maya::set_direction(const Angle& course) {
     //          << std::endl;
 }
 
-void Maya::turn(const Angle& delta) {
+void Inca::turn(const Angle& delta) {
         set_direction(direction + delta);
 }
 
-void Maya::set_mspeed(const double& speed) {
-    SmartPointer<Maya> self = SmartPointer<Maya>(this);
+void Inca::set_mspeed(const double& speed) {
+    SmartPointer<Inca> self = SmartPointer<Inca>(this);
     new Event(0, [=](void) { self->update_position(); });
 
     update_position();
@@ -201,7 +201,7 @@ void Maya::set_mspeed(const double& speed) {
     //exploration.reduce(0, 0.999);
 }
 
-void Maya::update_position(void) {
+void Inca::update_position(void) {
     double time_delta = Event::now() - last_update;
     relative_position += Vector(direction, time_delta * get_speed());
     exploration.update_explored(relative_position);
@@ -213,8 +213,8 @@ void Maya::update_position(void) {
     //          << std::endl;
 }
 
-ObjList Maya::sense(double radius) {
-    SmartPointer<Maya> self = SmartPointer<Maya>(this);
+ObjList Inca::sense(double radius) {
+    SmartPointer<Inca> self = SmartPointer<Inca>(this);
 
     auto area_info = perceive(radius);
     for (auto info: area_info) {
@@ -246,8 +246,8 @@ ObjList Maya::sense(double radius) {
     return area_info;
 }
 
-Action Maya::encounter(const ObjInfo& target) {
-    SmartPointer<Maya> self = SmartPointer<Maya>(this);
+Action Inca::encounter(const ObjInfo& target) {
+    SmartPointer<Inca> self = SmartPointer<Inca>(this);
 
     locked_on = false;
 
@@ -273,9 +273,9 @@ Action Maya::encounter(const ObjInfo& target) {
     }
 }
 
-void Maya::action(double radius) {
+void Inca::action(double radius) {
     if (health() == 0.0) { return; }
-    SmartPointer<Maya> self = SmartPointer<Maya>(this);
+    SmartPointer<Inca> self = SmartPointer<Inca>(this);
 
     double timeout;
     double new_speed;
@@ -334,7 +334,7 @@ void Maya::action(double radius) {
     //          << ": " << area_info.size() << std::endl;
 }
 
-double Maya::score_enemy_health(double enemy_health, double my_health) {
+double Inca::score_enemy_health(double enemy_health, double my_health) {
     // TODO: GA
     double A, B, C;
     double D; // might be unsigned
@@ -353,7 +353,7 @@ double Maya::score_enemy_health(double enemy_health, double my_health) {
     return energy_difference / divisor;
 }
 
-double Maya::score_algae_health(double health) {
+double Inca::score_algae_health(double health) {
     // TODO: GA
     double A, B, C;
     A = 1; B = 200; C = 2;
@@ -369,7 +369,7 @@ double Maya::score_algae_health(double health) {
     return real_energy / divisor;
 }
 
-Vector Maya::gen_family_force(ObjInfo family) {
+Vector Inca::gen_family_force(ObjInfo family) {
     double A;
     A = 7;
 
@@ -385,7 +385,7 @@ Vector Maya::gen_family_force(ObjInfo family) {
     return result;
 }
 
-Vector Maya::gen_enemy_force(ObjInfo enemy, double my_health) {
+Vector Inca::gen_enemy_force(ObjInfo enemy, double my_health) {
     double A;
     A = 15;
 
@@ -403,7 +403,7 @@ Vector Maya::gen_enemy_force(ObjInfo enemy, double my_health) {
 }
 
 // Parameter control, no scale factor.
-Vector Maya::gen_algae_force(ObjInfo algae) { 
+Vector Inca::gen_algae_force(ObjInfo algae) { 
     const double A = 10;
     double score_hp = score_algae_health(algae.health);
     double score_distance = pow(algae.distance, -2);
@@ -418,7 +418,7 @@ Vector Maya::gen_algae_force(ObjInfo algae) {
     return result;
 }
 
-Vector Maya::gen_edge_force(Vector norm_pos, double margin_width) {
+Vector Inca::gen_edge_force(Vector norm_pos, double margin_width) {
     const double A = 8;
     const double B = 1.1;
     double score_distance;
@@ -449,7 +449,7 @@ Vector Maya::gen_edge_force(Vector norm_pos, double margin_width) {
     return result;
 }
 
-Vector Maya::potential_fields(ObjList area_info) {
+Vector Inca::potential_fields(ObjList area_info) {
     Vector result{};
 
     for (auto info: area_info) {
@@ -476,7 +476,7 @@ Vector Maya::potential_fields(ObjList area_info) {
     return result;
 }
 
-Maya::Phylum Maya::get_phylum(String name) {
+Inca::Phylum Inca::get_phylum(String name) {
     if (is_family(name)) {
         return FAMILY;
     } else if (name == "Algae") {
@@ -486,15 +486,15 @@ Maya::Phylum Maya::get_phylum(String name) {
     }
 }
 
-void Maya::spawn(void) {
+void Inca::spawn(void) {
     // TODO: sex
-    SmartPointer<Maya> child = new Maya;
+    SmartPointer<Inca> child = new Inca;
     reproduce(child);
     // times_reproduced++;
 }
 
-bool Maya::is_family(String name) {
-    String base = "Maya";
+bool Inca::is_family(String name) {
+    String base = "Inca";
     bool result = name.compare(0, base.length(), base) == 0;
 
     /* DEBUG */
@@ -507,20 +507,20 @@ bool Maya::is_family(String name) {
 }
 
 // TODO: make this faster with std::to_string
-String Maya::serialize() const {
+String Inca::serialize() const {
     std::stringstream sstm;
     sstm << id << ";"
          << relative_position << ";"
          << exploration << ";"
-         << direction;
+         << get_course() << ";"
+         << get_speed();
 
     return sstm.str();
 }
 
-void Maya::deserialize(String serial,
+void Inca::deserialize(String serial,
         double& id, Vector& rel_pos, Exploration& exp) const {
-    auto parts = split(serial, ':');
-    auto values = split(parts[1], ';');
+    auto values = split(split(serial, ':')[1], ';');
 
     id = stoi(values[0]);
     rel_pos = Vector(values[1]);

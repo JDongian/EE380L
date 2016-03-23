@@ -223,6 +223,11 @@ void LifeForm::update_position(void) {
         if (space.is_out_of_bounds(new_position)) {
             die_and_clean();
         } else {
+            if (space.is_occupied(new_position)){ // TODO
+                return;
+                //die_and_clean();
+                //return;
+            }
             space.update_position(pos, new_position);
             pos = new_position;
 
