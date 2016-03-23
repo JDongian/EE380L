@@ -19,7 +19,7 @@ class Maya : public LifeForm {
         Phylum get_phylum(std::string name);
 
         // TODO: parameterize
-        const double SPEED_RESTING = 1;
+        const double SPEED_RESTING = 5;
         const double RADIUS_DEFAULT = 100;
         // PARAM
         const double MARGIN_WIDTH = grid_max / 12; // TODO: bound, by max_speed * 1 ?
