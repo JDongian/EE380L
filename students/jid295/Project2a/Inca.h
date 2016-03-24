@@ -35,11 +35,15 @@ class Inca : public LifeForm {
         // Nyquist sampling?
         const double UPDATE_INTERVAL = 0.5;
         
+<<<<<<< d9b76bf64d7e779250ac7519f70fe776fc129fe3
 <<<<<<< 4dd9765623497f7d4cec016733afdc5ceb68593f
         const double RESET_INTERVAL = 200;
 =======
         const double RESET_INTERVAL = 100;
 >>>>>>> add genes to inca
+=======
+        //const double RESET_INTERVAL = 300;
+>>>>>>> there is a bug
  
         long id = lrand48();
         double speed;

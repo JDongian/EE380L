@@ -18,9 +18,18 @@ class Gene {
         double RADIUS_DEFAULT;
         double MARGIN_WIDTH;
 
+        //std::function <const double& (const double&)>& ACTIVITY = [=](const double& speed) ->
+        //    const double& {
+        //        return grid_max / 8 / speed;
+        //    };
+
         // Good initial values
         Gene() {
+<<<<<<< d9b76bf64d7e779250ac7519f70fe776fc129fe3
             SPEED_RESTING = 7;
+=======
+            SPEED_RESTING = 9;
+>>>>>>> there is a bug
             RADIUS_DEFAULT = 100;
             MARGIN_WIDTH = grid_max / 16;
         }
