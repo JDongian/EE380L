@@ -1,5 +1,5 @@
-#if !(_Maya_h)
-#define _Maya_h 1
+#if !(_Inca_h)
+#define _Inca_h 1
 
 #include <memory>
 #include "LifeForm.h"
@@ -9,7 +9,9 @@
 #include "Exploration.hpp"
 #include "SerialUtils.h"
 
-class Maya : public LifeForm {
+extern std::vector<std::string> split(const std::string &text, char sep);
+
+class Inca : public LifeForm {
     private:
         enum Phylum {
             FAMILY = 1,
@@ -75,13 +77,13 @@ class Maya : public LifeForm {
         void spawn(void);
         void startup(void);
     public:
-        Maya(void);
-        ~Maya(void);
+        Inca(void);
+        ~Inca(void);
         Color my_color(void) const;
         static SmartPointer<LifeForm> create(void);
         virtual std::string species_name(void) const;
         virtual std::string player_name(void) const;
         virtual Action encounter(const ObjInfo&);
-        friend class Initializer<Maya>;
+        friend class Initializer<Inca>;
 };
-#endif /* !(_Maya_h) */
+#endif /* !(_Inca_h) */

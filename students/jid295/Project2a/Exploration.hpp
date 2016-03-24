@@ -2,7 +2,7 @@
 #define _Exploration_h 1
 
 #include <cmath>
-#include "SerialUtils.hpp"
+#include "SerialUtils.h"
 
 #ifndef M_PI
 #	define M_PI ((double) 3.1415926535897932)

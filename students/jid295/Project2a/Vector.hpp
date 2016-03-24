@@ -6,7 +6,7 @@
 #include <limits>
 #include <ostream>
 #include "Angle.hpp"
-#include "SerialUtils.hpp"
+#include "SerialUtils.h"
 
 #ifndef M_PI
 #	define M_PI ((double) 3.1415926535897932)
