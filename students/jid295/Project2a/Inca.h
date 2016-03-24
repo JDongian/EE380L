@@ -35,6 +35,7 @@ class Inca : public LifeForm {
         // Nyquist sampling?
         const double UPDATE_INTERVAL = 0.5;
         
+<<<<<<< b435078dbce8092ca0f8bf81a6c399c497781e50
 <<<<<<< d9b76bf64d7e779250ac7519f70fe776fc129fe3
 <<<<<<< 4dd9765623497f7d4cec016733afdc5ceb68593f
         const double RESET_INTERVAL = 200;
@@ -44,6 +45,9 @@ class Inca : public LifeForm {
 =======
         //const double RESET_INTERVAL = 300;
 >>>>>>> there is a bug
+=======
+        const double RESET_INTERVAL = 500;
+>>>>>>> fix most issues with exploration (it works now)
  
         long id = lrand48();
         double speed;

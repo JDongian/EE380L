@@ -25,6 +25,11 @@ T bound(T& x, const T& min, const T& max) {
     return x;
 }
 
+void pause(void) {
+    std::cout << "press Enter to continue...\n";
+    system("read");
+}
+
 Initializer<Inca> __Inca_initializer;
 
 void Inca::initialize(void) {
@@ -66,8 +71,14 @@ String Inca::species_name(void) const {
 void Inca::startup(void) {
     SmartPointer<Inca> self = SmartPointer<Inca>(this);
 
+<<<<<<< b435078dbce8092ca0f8bf81a6c399c497781e50
     set_mspeed(gene.SPEED_RESTING);
     set_direction(Angle(drand48() * 360, Angle::DEGREE));
+=======
+    set_mspeed(gene->SPEED_RESTING);
+    //set_direction(Angle(drand48() * 360, Angle::DEGREE));
+    set_direction(Angle(0, Angle::DEGREE));
+>>>>>>> fix most issues with exploration (it works now)
 
     locked_on = false;
 
@@ -80,18 +91,20 @@ void Inca::startup(void) {
     const double A = 1.4;
     // PARAM
     auto turn_timeout = [=](void) { return grid_max / A / get_speed(); };
-    recurring(turn_timeout, [=](void) {
-        if (!locked_on) {
-            self->turn(Angle(150, Angle::DEGREE));
+    if (gene->TURN_ENABLED) {
+        recurring(turn_timeout, [=](void) {
+            if (!locked_on) {
+                self->turn(Angle(120, Angle::DEGREE));
 
-            action_event->cancel();
-            action_event = new Event(0, [=](void) { self->action(0); });
-        }
-    });
+                action_event->cancel();
+                action_event = new Event(0, [=](void) { self->action(0); });
+            }
+        });
+    }
 
     // GLOBAL
     //auto reset_timeout = [=](void) {
-    //    return RESET_INTERVAL - fmod(Event::now(), 100);
+    //    return RESET_INTERVAL - fmod(Event::now(), RESET_INTERVAL);
     //};
     //recurring(reset_timeout, [=](void) {
     //    if (fmod(Event::now(), RESET_INTERVAL ) < 1) {
@@ -121,8 +134,10 @@ void Inca::reset_position() {
     exploration.reset();
 
     /* DEBUG */
-    std::cout << "RESET" << std::endl;
-    system("read");
+    std::cout << "RESET: " << exploration << "(w="
+              << exploration.get_width() << ", h="
+              << exploration.get_height() << ")" << std::endl;
+    //pause();
 }
 
 void Inca::recurring(double timeout,
@@ -194,8 +209,7 @@ void Inca::set_mspeed(const double& speed) {
     new Event(0, [=](void) { self->update_position(); });
 
     update_position();
-    //set_speed(speed);
-    set_speed(1);
+    set_speed(speed);
 
     // PARAM
     //exploration.reduce(0, 0.999);
@@ -230,6 +244,7 @@ ObjList Inca::sense(double radius) {
 
             Vector delta_start(relative_position + delta + rel_pos * -1);
 
+<<<<<<< b435078dbce8092ca0f8bf81a6c399c497781e50
             exploration.expand(delta_start, exp);
 <<<<<<< d9b76bf64d7e779250ac7519f70fe776fc129fe3
             //exploration.expand(delta_start, exp, grid_max + MARGIN_WIDTH * 2);
@@ -250,6 +265,34 @@ ObjList Inca::sense(double radius) {
             //          << exploration.get_y_max() - exploration.get_y_min()
             //          << ")" << std::endl;
         } else {
+=======
+            if (exp.get_width() < grid_max &&
+                exp.get_height() < grid_max) {
+                exploration.expand(delta_start, exp);
+
+                /* DEBUG */
+                //std::cout << "SHARE: " << id
+                //          << " from (" << delta.get_x() + get_POSITION().xpos << ", "
+                //          << delta.get_y() + get_POSITION().ypos << ")"
+                //          << " (e_dx="
+                //          << exploration.get_x_max() - exploration.get_x_min()
+                //          << ",e_dy="
+                //          << exploration.get_y_max() - exploration.get_y_min()
+                //          << ") to me "
+                //          << get_POSITION()
+                //          << std::endl;
+
+                if (exploration.get_width() > grid_max + gene->MARGIN_WIDTH ||
+                    exploration.get_height() > grid_max + gene->MARGIN_WIDTH) {
+                    std::cout << grid_max << std::endl;
+                    std::cout << exploration << std::endl;
+                    std::cout << exploration.get_width() << std::endl;
+                    std::cout << exploration.get_height() << std::endl;
+                    reset_position();
+                }
+            }
+       } else {
+>>>>>>> fix most issues with exploration (it works now)
             exploration.update_explored(relative_position + delta);
             // TODO: add algae + margin vector
         }
@@ -435,11 +478,15 @@ Vector Inca::gen_algae_force(ObjInfo algae) {
 }
 
 Vector Inca::gen_edge_force(Vector norm_pos, double margin_width) {
+<<<<<<< b435078dbce8092ca0f8bf81a6c399c497781e50
 <<<<<<< d9b76bf64d7e779250ac7519f70fe776fc129fe3
     const double A = 8;
     const double B = 1.1;
 =======
     const double A = 222222;
+=======
+    const double A = 22;
+>>>>>>> fix most issues with exploration (it works now)
     const double B = 1.4;
 >>>>>>> there is a bug
     double score_distance;
@@ -492,10 +539,13 @@ Vector Inca::potential_fields(ObjList area_info) {
     result += gen_edge_force(position, MARGIN_WIDTH);
 =======
     result += gen_edge_force(position, gene->MARGIN_WIDTH);
+<<<<<<< b435078dbce8092ca0f8bf81a6c399c497781e50
     if (gen_edge_force(position, gene->MARGIN_WIDTH).get_magnitude() != 0) {
         result = gen_edge_force(position, gene->MARGIN_WIDTH);
     }
 >>>>>>> there is a bug
+=======
+>>>>>>> fix most issues with exploration (it works now)
 
     /* DEBUG */
     //std::cout << "DECISION VECTOR: " << result
@@ -534,11 +584,28 @@ bool Inca::is_family(const ObjInfo& info) {
         Parameters params;
 
         // Validate valid string
+<<<<<<< b435078dbce8092ca0f8bf81a6c399c497781e50
         result = deserialize(info.species, id, rel_pos, exp, course, speed, params);
+=======
+        if (deserialize(info.species, id, rel_pos, exp, course, speed, genes)) {
+            result = true;
+        } else {
+            result = false;
+            std::cout << "WARNING: bad string format \""
+                      << info.species << "\""
+                      << std::endl;
+            pause();
+        }
+>>>>>>> fix most issues with exploration (it works now)
         
         // Validate non-copied string
-        if (abs(course - info.their_course) > min_delta_time
-                || abs(speed - info.their_speed) > min_delta_time) {
+        if (abs(course - info.their_course) > 0.01
+                || abs(speed - info.their_speed) > 0.01) {
+            std::cout << "WARNING: spoofing attempt ("
+                      << course << ", " << info.their_course << "); ("
+                      << speed << ", " << info.their_speed << ")"
+                      << std::endl;
+            pause();
             result = false;
         }
     }
@@ -580,13 +647,19 @@ bool Inca::deserialize(String serial,
         id = stoi(values[0]);
         rel_pos = Vector(values[1]);
         exp = Exploration(values[2]);
+<<<<<<< b435078dbce8092ca0f8bf81a6c399c497781e50
         course = stoi(values[3]);
         speed = stoi(values[4]);
         params = Parameters(values[5]);
+=======
+        course = stod(values[3]);
+        speed = stod(values[4]);
+        g = Gene(values[5]);
+>>>>>>> fix most issues with exploration (it works now)
 
         return true;
     } catch (std::invalid_argument& error) {
-        system("read");
+        pause();
         return false;
     }
 }

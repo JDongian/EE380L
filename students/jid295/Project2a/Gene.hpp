@@ -17,6 +17,7 @@ class Gene {
         double SPEED_RESTING;
         double RADIUS_DEFAULT;
         double MARGIN_WIDTH;
+        double TURN_ENABLED;
 
         //std::function <const double& (const double&)>& ACTIVITY = [=](const double& speed) ->
         //    const double& {
@@ -31,7 +32,9 @@ class Gene {
             SPEED_RESTING = 9;
 >>>>>>> there is a bug
             RADIUS_DEFAULT = 100;
-            MARGIN_WIDTH = grid_max / 16;
+            MARGIN_WIDTH = grid_max / 15;
+
+            TURN_ENABLED = false;
         }
         // asexual randomization
         Gene(const Gene& gene) {
