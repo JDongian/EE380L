@@ -63,7 +63,7 @@ void Maya::startup(void) {
     SmartPointer<Maya> self = SmartPointer<Maya>(this);
 
     set_mspeed(SPEED_RESTING);
-    set_direction(Angle(drand48() * 360, Angle::DEGREE)); // TODO: random good?
+    set_direction(Angle(drand48() * 360, Angle::DEGREE));
 
     locked_on = false;
 
@@ -101,8 +101,8 @@ void Maya::startup(void) {
 
     // PARAM
     recurring(min_reproduce_time / 2, [=](void) {
-        // TODO: parameterize
-        if (health() >= 2.0) {
+        // TODO: parameterize with surroundings
+        if (health() >= 3.0) {
             spawn();
         }
     });
@@ -371,7 +371,7 @@ double score_algae_health(double health) {
 
 Vector gen_family_force(ObjInfo family) {
     double A;
-    A = 10;
+    A = 7;
 
     double score_distance = pow(family.distance, -2);
 
@@ -387,7 +387,7 @@ Vector gen_family_force(ObjInfo family) {
 
 Vector gen_enemy_force(ObjInfo enemy, double my_health) {
     double A;
-    A = 13;
+    A = 15;
 
     double score_hp = score_enemy_health(enemy.health, my_health);
     double score_distance = pow(enemy.distance, -2);
@@ -404,11 +404,13 @@ Vector gen_enemy_force(ObjInfo enemy, double my_health) {
 
 // Parameter control, no scale factor.
 Vector gen_algae_force(ObjInfo algae) { 
+    const double A = 10;
     double score_hp = score_algae_health(algae.health);
     double score_distance = pow(algae.distance, -2);
 
     Vector result (Angle(algae.bearing, Angle::RADIAN),
             score_hp * score_distance);
+    result *= A;
 
     /* DEBUG */
     //std::cout << "ALGAE VECTOR: " << result << std::endl;
@@ -417,27 +419,29 @@ Vector gen_algae_force(ObjInfo algae) {
 }
 
 Vector gen_edge_force(Vector norm_pos, double margin_width) {
-    const double A = 30;
-    const double B = 1.5;
+    const double A = 8;
+    const double B = 1.1;
     double score_distance;
     Vector result;
     // TODO: parameterize
     double margin = B * margin_width;
     // PARAM
     if (norm_pos.get_x() < margin) {
-        score_distance = A * pow(norm_pos.get_x(), -2);
+        score_distance = pow(norm_pos.get_x(), -2);
         result += Vector(Angle(0, Angle::DEGREE), score_distance);
     } else if (grid_max - norm_pos.get_x() < margin) {
-        score_distance = A * pow(grid_max - norm_pos.get_x(), -2);
+        score_distance = pow(grid_max - norm_pos.get_x(), -2);
         result += Vector(Angle(180, Angle::DEGREE), score_distance);
     }
     if (norm_pos.get_y() < margin) {
-        score_distance = A * pow(norm_pos.get_y(), -2);
+        score_distance = pow(norm_pos.get_y(), -2);
         result += Vector(Angle(90, Angle::DEGREE), score_distance);
     } else if (grid_max - norm_pos.get_y() < margin) {
-        score_distance = A * pow(grid_max - norm_pos.get_y(), -2);
+        score_distance = pow(grid_max - norm_pos.get_y(), -2);
         result += Vector(Angle(270, Angle::DEGREE), score_distance);
     }
+
+    result *= A;
 
     /* DEBUG */
     //std::cout << "EDGE VECTOR: " << result << std::endl;
