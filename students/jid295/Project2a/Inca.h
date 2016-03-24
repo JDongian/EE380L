@@ -7,6 +7,7 @@
 #include "Angle.hpp"
 #include "Vector.hpp"
 #include "Exploration.hpp"
+#include "Parameters.hpp"
 #include "SerialUtils.h"
 
 extern std::vector<std::string> split(const std::string &text, char sep);
@@ -18,18 +19,18 @@ class Inca : public LifeForm {
             ENEMY = 2,
             ALGAE = 3
         };
-        Phylum get_phylum(std::string name);
+        Phylum get_phylum(const ObjInfo& info);
 
         // TODO: parameterize
-        const double SPEED_RESTING = 5;
+        const double SPEED_RESTING = 2;
         const double RADIUS_DEFAULT = 100;
         // PARAM
-        const double MARGIN_WIDTH = grid_max / 12; // TODO: bound, by max_speed * 1 ?
+        const double MARGIN_WIDTH = grid_max / 16; // TODO: bound, by max_speed * 1 ?
         
         // Nyquist sampling?
         const double UPDATE_INTERVAL = 0.5;
         
-        const double RESET_INTERVAL = 250;
+        const double RESET_INTERVAL = 200;
  
         long id = lrand48();
         double speed;
@@ -55,10 +56,15 @@ class Inca : public LifeForm {
         Vector potential_fields(ObjList area_info);
 
         ObjList sense(double radius);
-        bool is_family(std::string name);
+        bool is_family(const ObjInfo& info);
         std::string serialize(void) const;
-        void deserialize(std::string serial,
-                double& id, Vector& rel_pos, Exploration& exp) const;
+        bool deserialize(std::string serial,
+                double& id,
+                Vector& rel_pos,
+                Exploration& exp,
+                double& course,
+                double& speed,
+                Parameters& params) const;
 
         void avert_edge(void);
         void recurring(double timeout,

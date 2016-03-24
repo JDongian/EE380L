@@ -166,11 +166,11 @@ void Maya::avert_edge() {
         action_event = new Event(0.1, [=](void) { self->action(0); });
 
         /* DEBUG */
-        std::cout << "EDGE AVERT, "
-                  << position
-                  << ", "
-                  << exploration
-                  << std::endl;
+        //std::cout << "EDGE AVERT, "
+        //          << position
+        //          << ", "
+        //          << exploration
+        //          << std::endl;
     }
 }
 

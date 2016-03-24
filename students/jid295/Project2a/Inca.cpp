@@ -166,11 +166,11 @@ void Inca::avert_edge() {
         action_event = new Event(0.1, [=](void) { self->action(0); });
 
         /* DEBUG */
-        std::cout << "EDGE AVERT, "
-                  << position
-                  << ", "
-                  << exploration
-                  << std::endl;
+        //std::cout << "EDGE AVERT, "
+        //          << position
+        //          << ", "
+        //          << exploration
+        //          << std::endl;
     }
 }
 
@@ -219,11 +219,14 @@ ObjList Inca::sense(double radius) {
     auto area_info = perceive(radius);
     for (auto info: area_info) {
         Vector delta(Angle(info.bearing, Angle::RADIAN), info.distance);
-        if (is_family(info.species)) {
+        if (is_family(info)) {
             double id;
             Vector rel_pos;
             Exploration exp;
-            deserialize(info.species, id, rel_pos, exp);
+            double course;
+            double speed;
+            Parameters params;
+            deserialize(info.species, id, rel_pos, exp, course, speed, params);
 
             Vector delta_start(relative_position + delta + rel_pos * -1);
 
@@ -241,6 +244,7 @@ ObjList Inca::sense(double radius) {
             //          << ")" << std::endl;
         } else {
             exploration.update_explored(relative_position + delta);
+            // TODO: add algae + margin vector
         }
     }
     return area_info;
@@ -251,7 +255,7 @@ Action Inca::encounter(const ObjInfo& target) {
 
     locked_on = false;
 
-    if (is_family(target.species)) {
+    if (is_family(target)) {
         set_direction(Angle(target.bearing + M_PI / 2, Angle::RADIAN));
         set_mspeed(SPEED_RESTING);
 
@@ -453,7 +457,7 @@ Vector Inca::potential_fields(ObjList area_info) {
     Vector result{};
 
     for (auto info: area_info) {
-        switch (get_phylum(info.species)) {
+        switch (get_phylum(info)) {
         case FAMILY:
             result += gen_family_force(info);
             break;
@@ -476,10 +480,10 @@ Vector Inca::potential_fields(ObjList area_info) {
     return result;
 }
 
-Inca::Phylum Inca::get_phylum(String name) {
-    if (is_family(name)) {
+Inca::Phylum Inca::get_phylum(const ObjInfo& info) {
+    if (is_family(info)) {
         return FAMILY;
-    } else if (name == "Algae") {
+    } else if (info.species == "Algae") {
         return ALGAE;
     } else {
         return ENEMY;
@@ -493,9 +497,27 @@ void Inca::spawn(void) {
     // times_reproduced++;
 }
 
-bool Inca::is_family(String name) {
+bool Inca::is_family(const ObjInfo& info) {
     String base = "Inca";
-    bool result = name.compare(0, base.length(), base) == 0;
+    bool result = false;
+
+    if (info.species.compare(0, base.length(), base) == 0) {
+        double id;
+        Vector rel_pos;
+        Exploration exp;
+        double course;
+        double speed;
+        Parameters params;
+
+        // Validate valid string
+        result = deserialize(info.species, id, rel_pos, exp, course, speed, params);
+        
+        // Validate non-copied string
+        if (abs(course - info.their_course) > min_delta_time
+                || abs(speed - info.their_speed) > min_delta_time) {
+            result = false;
+        }
+    }
 
     /* DEBUG */
     //std::cout << "NAMECHECK: '"
@@ -513,16 +535,29 @@ String Inca::serialize() const {
          << relative_position << ";"
          << exploration << ";"
          << get_course() << ";"
-         << get_speed();
-
+         << get_speed() << ";"
+         << Parameters(SPEED_RESTING, RADIUS_DEFAULT, MARGIN_WIDTH);
     return sstm.str();
 }
 
-void Inca::deserialize(String serial,
-        double& id, Vector& rel_pos, Exploration& exp) const {
-    auto values = split(split(serial, ':')[1], ';');
+bool Inca::deserialize(String serial,
+        double& id, Vector& rel_pos,
+        Exploration& exp,
+        double& course,
+        double& speed,
+        Parameters& params) const {
+    try {
+        auto values = split(split(serial, ':')[1], ';');
 
-    id = stoi(values[0]);
-    rel_pos = Vector(values[1]);
-    exp = Exploration(values[2]);
+        id = stoi(values[0]);
+        rel_pos = Vector(values[1]);
+        exp = Exploration(values[2]);
+        course = stoi(values[3]);
+        speed = stoi(values[4]);
+        params = Parameters(values[5]);
+
+        return true;
+    } catch (std::invalid_argument& error) {
+        return false;
+    }
 }
