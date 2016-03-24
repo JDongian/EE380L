@@ -1,0 +1,60 @@
+====== Summary ======
+Test1: move distance 100 along x axis PASSED for 5 points
+Test1: move distance 100 along y axis PASSED for 5 points
+Test2: move to 100,100  PASSED for 10 points
+Test2: collision between Test1 and Test2 objects PASSED for 5 points
+Test3: collisions occurred reasonably often PASSED for 5 points
+Test3: reversals occurred sufficiently often PASSED for 5 points
+Test4a: basic perceive PASSED for 5 points
+Test4b: perceive - update position FAILED for -5 points
+Test5a: reproduce energy calculations PASSED for 10 points
+Test5a: no immediate reproduce allowed PASSED for 5 points
+Test5c: reproduce distance PASSED for 5 points
+Test6: aging PASSED for 10 points
+
+Individual Tests - Score: 70 out of 75.
+Total Score: 70 out of 75.
+
+========== Dump ==========
+/bin/sh -ec 'g++ --std=c++11 -I../../../examples/fltk -MM  -DDEBUG=0 -DNO_WINDOW=0 -DSPECIES_SUMMARY=0 -DALGAE_SPORES=0 -DRANDOM=0 -DSLOWDOWN=0 -DUSE_GC=0 -DRUN_TESTS=1 -DTEST_SIMULATION=0 Window.cpp > .Window.d'
+/bin/sh -ec 'g++ --std=c++11 -I../../../examples/fltk -MM  -DDEBUG=0 -DNO_WINDOW=0 -DSPECIES_SUMMARY=0 -DALGAE_SPORES=0 -DRANDOM=0 -DSLOWDOWN=0 -DUSE_GC=0 -DRUN_TESTS=1 -DTEST_SIMULATION=0 Test.cpp > .Test.d'
+/bin/sh -ec 'g++ --std=c++11 -I../../../examples/fltk -MM  -DDEBUG=0 -DNO_WINDOW=0 -DSPECIES_SUMMARY=0 -DALGAE_SPORES=0 -DRANDOM=0 -DSLOWDOWN=0 -DUSE_GC=0 -DRUN_TESTS=1 -DTEST_SIMULATION=0 Praveen.cpp > .Praveen.d'
+/bin/sh -ec 'g++ --std=c++11 -I../../../examples/fltk -MM  -DDEBUG=0 -DNO_WINDOW=0 -DSPECIES_SUMMARY=0 -DALGAE_SPORES=0 -DRANDOM=0 -DSLOWDOWN=0 -DUSE_GC=0 -DRUN_TESTS=1 -DTEST_SIMULATION=0 Params.cpp > .Params.d'
+/bin/sh -ec 'g++ --std=c++11 -I../../../examples/fltk -MM  -DDEBUG=0 -DNO_WINDOW=0 -DSPECIES_SUMMARY=0 -DALGAE_SPORES=0 -DRANDOM=0 -DSLOWDOWN=0 -DUSE_GC=0 -DRUN_TESTS=1 -DTEST_SIMULATION=0 LifeForm-Craig.cpp > .LifeForm-Craig.d'
+/bin/sh -ec 'g++ --std=c++11 -I../../../examples/fltk -MM  -DDEBUG=0 -DNO_WINDOW=0 -DSPECIES_SUMMARY=0 -DALGAE_SPORES=0 -DRANDOM=0 -DSLOWDOWN=0 -DUSE_GC=0 -DRUN_TESTS=1 -DTEST_SIMULATION=0 LifeForm.cpp > .LifeForm.d'
+/bin/sh -ec 'g++ --std=c++11 -I../../../examples/fltk -MM  -DDEBUG=0 -DNO_WINDOW=0 -DSPECIES_SUMMARY=0 -DALGAE_SPORES=0 -DRANDOM=0 -DSLOWDOWN=0 -DUSE_GC=0 -DRUN_TESTS=1 -DTEST_SIMULATION=0 Event.cpp > .Event.d'
+/bin/sh -ec 'g++ --std=c++11 -I../../../examples/fltk -MM  -DDEBUG=0 -DNO_WINDOW=0 -DSPECIES_SUMMARY=0 -DALGAE_SPORES=0 -DRANDOM=0 -DSLOWDOWN=0 -DUSE_GC=0 -DRUN_TESTS=1 -DTEST_SIMULATION=0 Craig.cpp > .Craig.d'
+/bin/sh -ec 'g++ --std=c++11 -I../../../examples/fltk -MM  -DDEBUG=0 -DNO_WINDOW=0 -DSPECIES_SUMMARY=0 -DALGAE_SPORES=0 -DRANDOM=0 -DSLOWDOWN=0 -DUSE_GC=0 -DRUN_TESTS=1 -DTEST_SIMULATION=0 animals.cpp > .animals.d'
+/bin/sh -ec 'g++ --std=c++11 -I../../../examples/fltk -MM  -DDEBUG=0 -DNO_WINDOW=0 -DSPECIES_SUMMARY=0 -DALGAE_SPORES=0 -DRANDOM=0 -DSLOWDOWN=0 -DUSE_GC=0 -DRUN_TESTS=1 -DTEST_SIMULATION=0 Algae.cpp > .Algae.d'
+g++ --std=c++11 -I../../../examples/fltk   -Wall   -g  -DDEBUG=0 -DNO_WINDOW=0 -DSPECIES_SUMMARY=0 -DALGAE_SPORES=0 -DRANDOM=0 -DSLOWDOWN=0 -DUSE_GC=0 -DRUN_TESTS=1 -DTEST_SIMULATION=0  -c -o Algae.o Algae.cpp
+g++ --std=c++11 -I../../../examples/fltk   -Wall   -g  -DDEBUG=0 -DNO_WINDOW=0 -DSPECIES_SUMMARY=0 -DALGAE_SPORES=0 -DRANDOM=0 -DSLOWDOWN=0 -DUSE_GC=0 -DRUN_TESTS=1 -DTEST_SIMULATION=0  -c -o animals.o animals.cpp
+g++ --std=c++11 -I../../../examples/fltk   -Wall   -g  -DDEBUG=0 -DNO_WINDOW=0 -DSPECIES_SUMMARY=0 -DALGAE_SPORES=0 -DRANDOM=0 -DSLOWDOWN=0 -DUSE_GC=0 -DRUN_TESTS=1 -DTEST_SIMULATION=0  -c -o Craig.o Craig.cpp
+g++ --std=c++11 -I../../../examples/fltk   -Wall   -g  -DDEBUG=0 -DNO_WINDOW=0 -DSPECIES_SUMMARY=0 -DALGAE_SPORES=0 -DRANDOM=0 -DSLOWDOWN=0 -DUSE_GC=0 -DRUN_TESTS=1 -DTEST_SIMULATION=0  -c -o Event.o Event.cpp
+g++ --std=c++11 -I../../../examples/fltk   -Wall   -g  -DDEBUG=0 -DNO_WINDOW=0 -DSPECIES_SUMMARY=0 -DALGAE_SPORES=0 -DRANDOM=0 -DSLOWDOWN=0 -DUSE_GC=0 -DRUN_TESTS=1 -DTEST_SIMULATION=0  -c -o LifeForm.o LifeForm.cpp
+g++ --std=c++11 -I../../../examples/fltk   -Wall   -g  -DDEBUG=0 -DNO_WINDOW=0 -DSPECIES_SUMMARY=0 -DALGAE_SPORES=0 -DRANDOM=0 -DSLOWDOWN=0 -DUSE_GC=0 -DRUN_TESTS=1 -DTEST_SIMULATION=0  -c -o LifeForm-Craig.o LifeForm-Craig.cpp
+g++ --std=c++11 -I../../../examples/fltk   -Wall   -g  -DDEBUG=0 -DNO_WINDOW=0 -DSPECIES_SUMMARY=0 -DALGAE_SPORES=0 -DRANDOM=0 -DSLOWDOWN=0 -DUSE_GC=0 -DRUN_TESTS=1 -DTEST_SIMULATION=0  -c -o Params.o Params.cpp
+g++ --std=c++11 -I../../../examples/fltk   -Wall   -g  -DDEBUG=0 -DNO_WINDOW=0 -DSPECIES_SUMMARY=0 -DALGAE_SPORES=0 -DRANDOM=0 -DSLOWDOWN=0 -DUSE_GC=0 -DRUN_TESTS=1 -DTEST_SIMULATION=0  -c -o Praveen.o Praveen.cpp
+g++ --std=c++11 -I../../../examples/fltk   -Wall   -g  -DDEBUG=0 -DNO_WINDOW=0 -DSPECIES_SUMMARY=0 -DALGAE_SPORES=0 -DRANDOM=0 -DSLOWDOWN=0 -DUSE_GC=0 -DRUN_TESTS=1 -DTEST_SIMULATION=0  -c -o Test.o Test.cpp
+g++ --std=c++11 -I../../../examples/fltk   -Wall   -g  -DDEBUG=0 -DNO_WINDOW=0 -DSPECIES_SUMMARY=0 -DALGAE_SPORES=0 -DRANDOM=0 -DSLOWDOWN=0 -DUSE_GC=0 -DRUN_TESTS=1 -DTEST_SIMULATION=0  -c -o Window.o Window.cpp
+g++ --std=c++11 -I../../../examples/fltk  -g  -o lifeformTests Algae.o animals.o Craig.o Event.o LifeForm.o LifeForm-Craig.o Params.o Praveen.o Test.o Window.o  ../../../examples/fltk/lib/fltk64.a  -lX11 -lm -ldl -lpthread
+/bin/sh -ec 'g++ --std=c++11 -I../../examples/fltk -MM  -DDEBUG=0 -DNO_WINDOW=0 -DSPECIES_SUMMARY=1 -DALGAE_SPORES=1 -DRANDOM=0 -DSLOWDOWN=0 -DUSE_GC=0 -DTEST_SIMULATION=1 -DRUN_TESTS=0 Window.cpp > .Window.d'
+/bin/sh -ec 'g++ --std=c++11 -I../../examples/fltk -MM  -DDEBUG=0 -DNO_WINDOW=0 -DSPECIES_SUMMARY=1 -DALGAE_SPORES=1 -DRANDOM=0 -DSLOWDOWN=0 -DUSE_GC=0 -DTEST_SIMULATION=1 -DRUN_TESTS=0 Test.cpp > .Test.d'
+/bin/sh -ec 'g++ --std=c++11 -I../../examples/fltk -MM  -DDEBUG=0 -DNO_WINDOW=0 -DSPECIES_SUMMARY=1 -DALGAE_SPORES=1 -DRANDOM=0 -DSLOWDOWN=0 -DUSE_GC=0 -DTEST_SIMULATION=1 -DRUN_TESTS=0 Praveen.cpp > .Praveen.d'
+/bin/sh -ec 'g++ --std=c++11 -I../../examples/fltk -MM  -DDEBUG=0 -DNO_WINDOW=0 -DSPECIES_SUMMARY=1 -DALGAE_SPORES=1 -DRANDOM=0 -DSLOWDOWN=0 -DUSE_GC=0 -DTEST_SIMULATION=1 -DRUN_TESTS=0 Params.cpp > .Params.d'
+/bin/sh -ec 'g++ --std=c++11 -I../../examples/fltk -MM  -DDEBUG=0 -DNO_WINDOW=0 -DSPECIES_SUMMARY=1 -DALGAE_SPORES=1 -DRANDOM=0 -DSLOWDOWN=0 -DUSE_GC=0 -DTEST_SIMULATION=1 -DRUN_TESTS=0 LifeForm-Craig.cpp > .LifeForm-Craig.d'
+/bin/sh -ec 'g++ --std=c++11 -I../../examples/fltk -MM  -DDEBUG=0 -DNO_WINDOW=0 -DSPECIES_SUMMARY=1 -DALGAE_SPORES=1 -DRANDOM=0 -DSLOWDOWN=0 -DUSE_GC=0 -DTEST_SIMULATION=1 -DRUN_TESTS=0 LifeForm.cpp > .LifeForm.d'
+/bin/sh -ec 'g++ --std=c++11 -I../../examples/fltk -MM  -DDEBUG=0 -DNO_WINDOW=0 -DSPECIES_SUMMARY=1 -DALGAE_SPORES=1 -DRANDOM=0 -DSLOWDOWN=0 -DUSE_GC=0 -DTEST_SIMULATION=1 -DRUN_TESTS=0 Event.cpp > .Event.d'
+/bin/sh -ec 'g++ --std=c++11 -I../../examples/fltk -MM  -DDEBUG=0 -DNO_WINDOW=0 -DSPECIES_SUMMARY=1 -DALGAE_SPORES=1 -DRANDOM=0 -DSLOWDOWN=0 -DUSE_GC=0 -DTEST_SIMULATION=1 -DRUN_TESTS=0 Craig.cpp > .Craig.d'
+/bin/sh -ec 'g++ --std=c++11 -I../../examples/fltk -MM  -DDEBUG=0 -DNO_WINDOW=0 -DSPECIES_SUMMARY=1 -DALGAE_SPORES=1 -DRANDOM=0 -DSLOWDOWN=0 -DUSE_GC=0 -DTEST_SIMULATION=1 -DRUN_TESTS=0 animals.cpp > .animals.d'
+/bin/sh -ec 'g++ --std=c++11 -I../../examples/fltk -MM  -DDEBUG=0 -DNO_WINDOW=0 -DSPECIES_SUMMARY=1 -DALGAE_SPORES=1 -DRANDOM=0 -DSLOWDOWN=0 -DUSE_GC=0 -DTEST_SIMULATION=1 -DRUN_TESTS=0 Algae.cpp > .Algae.d'
+g++ --std=c++11 -I../../examples/fltk   -Wall   -g  -DDEBUG=0 -DNO_WINDOW=0 -DSPECIES_SUMMARY=1 -DALGAE_SPORES=1 -DRANDOM=0 -DSLOWDOWN=0 -DUSE_GC=0 -DTEST_SIMULATION=1 -DRUN_TESTS=0  -c -o Algae.o Algae.cpp
+g++ --std=c++11 -I../../examples/fltk   -Wall   -g  -DDEBUG=0 -DNO_WINDOW=0 -DSPECIES_SUMMARY=1 -DALGAE_SPORES=1 -DRANDOM=0 -DSLOWDOWN=0 -DUSE_GC=0 -DTEST_SIMULATION=1 -DRUN_TESTS=0  -c -o animals.o animals.cpp
+g++ --std=c++11 -I../../examples/fltk   -Wall   -g  -DDEBUG=0 -DNO_WINDOW=0 -DSPECIES_SUMMARY=1 -DALGAE_SPORES=1 -DRANDOM=0 -DSLOWDOWN=0 -DUSE_GC=0 -DTEST_SIMULATION=1 -DRUN_TESTS=0  -c -o Craig.o Craig.cpp
+g++ --std=c++11 -I../../examples/fltk   -Wall   -g  -DDEBUG=0 -DNO_WINDOW=0 -DSPECIES_SUMMARY=1 -DALGAE_SPORES=1 -DRANDOM=0 -DSLOWDOWN=0 -DUSE_GC=0 -DTEST_SIMULATION=1 -DRUN_TESTS=0  -c -o Event.o Event.cpp
+g++ --std=c++11 -I../../examples/fltk   -Wall   -g  -DDEBUG=0 -DNO_WINDOW=0 -DSPECIES_SUMMARY=1 -DALGAE_SPORES=1 -DRANDOM=0 -DSLOWDOWN=0 -DUSE_GC=0 -DTEST_SIMULATION=1 -DRUN_TESTS=0  -c -o LifeForm.o LifeForm.cpp
+g++ --std=c++11 -I../../examples/fltk   -Wall   -g  -DDEBUG=0 -DNO_WINDOW=0 -DSPECIES_SUMMARY=1 -DALGAE_SPORES=1 -DRANDOM=0 -DSLOWDOWN=0 -DUSE_GC=0 -DTEST_SIMULATION=1 -DRUN_TESTS=0  -c -o LifeForm-Craig.o LifeForm-Craig.cpp
+g++ --std=c++11 -I../../examples/fltk   -Wall   -g  -DDEBUG=0 -DNO_WINDOW=0 -DSPECIES_SUMMARY=1 -DALGAE_SPORES=1 -DRANDOM=0 -DSLOWDOWN=0 -DUSE_GC=0 -DTEST_SIMULATION=1 -DRUN_TESTS=0  -c -o Params.o Params.cpp
+g++ --std=c++11 -I../../examples/fltk   -Wall   -g  -DDEBUG=0 -DNO_WINDOW=0 -DSPECIES_SUMMARY=1 -DALGAE_SPORES=1 -DRANDOM=0 -DSLOWDOWN=0 -DUSE_GC=0 -DTEST_SIMULATION=1 -DRUN_TESTS=0  -c -o Praveen.o Praveen.cpp
+g++ --std=c++11 -I../../examples/fltk   -Wall   -g  -DDEBUG=0 -DNO_WINDOW=0 -DSPECIES_SUMMARY=1 -DALGAE_SPORES=1 -DRANDOM=0 -DSLOWDOWN=0 -DUSE_GC=0 -DTEST_SIMULATION=1 -DRUN_TESTS=0  -c -o Test.o Test.cpp
+g++ --std=c++11 -I../../examples/fltk   -Wall   -g  -DDEBUG=0 -DNO_WINDOW=0 -DSPECIES_SUMMARY=1 -DALGAE_SPORES=1 -DRANDOM=0 -DSLOWDOWN=0 -DUSE_GC=0 -DTEST_SIMULATION=1 -DRUN_TESTS=0  -c -o Window.o Window.cpp
+g++ --std=c++11 -I../../examples/fltk  -g  -o simulation Algae.o animals.o Craig.o Event.o LifeForm.o LifeForm-Craig.o Params.o Praveen.o Test.o Window.o  ../../examples/fltk/lib/fltk64.a  -lX11 -lm -ldl -lpthread
