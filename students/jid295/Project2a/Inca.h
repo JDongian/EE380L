@@ -8,6 +8,7 @@
 #include "Vector.hpp"
 #include "Exploration.hpp"
 #include "SerialUtils.h"
+#include "Gene.hpp"
 
 extern std::vector<std::string> split(const std::string &text, char sep);
 
@@ -20,16 +21,12 @@ class Inca : public LifeForm {
         };
         Phylum get_phylum(std::string name);
 
-        // TODO: parameterize
-        const double SPEED_RESTING = 5;
-        const double RADIUS_DEFAULT = 100;
-        // PARAM
-        const double MARGIN_WIDTH = grid_max / 12; // TODO: bound, by max_speed * 1 ?
+        Gene gene;
         
         // Nyquist sampling?
         const double UPDATE_INTERVAL = 0.5;
         
-        const double RESET_INTERVAL = 250;
+        const double RESET_INTERVAL = 100;
  
         long id = lrand48();
         double speed;
