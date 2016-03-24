@@ -9,6 +9,7 @@
 #include "Exploration.hpp"
 #include "Parameters.hpp"
 #include "SerialUtils.h"
+#include "Gene.hpp"
 
 extern std::vector<std::string> split(const std::string &text, char sep);
 
@@ -21,16 +22,24 @@ class Inca : public LifeForm {
         };
         Phylum get_phylum(const ObjInfo& info);
 
+<<<<<<< 4dd9765623497f7d4cec016733afdc5ceb68593f
         // TODO: parameterize
         const double SPEED_RESTING = 2;
         const double RADIUS_DEFAULT = 100;
         // PARAM
         const double MARGIN_WIDTH = grid_max / 16; // TODO: bound, by max_speed * 1 ?
+=======
+        Gene gene;
+>>>>>>> add genes to inca
         
         // Nyquist sampling?
         const double UPDATE_INTERVAL = 0.5;
         
+<<<<<<< 4dd9765623497f7d4cec016733afdc5ceb68593f
         const double RESET_INTERVAL = 200;
+=======
+        const double RESET_INTERVAL = 100;
+>>>>>>> add genes to inca
  
         long id = lrand48();
         double speed;

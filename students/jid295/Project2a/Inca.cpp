@@ -10,7 +10,6 @@
 #include "Params.h"
 #include "Random.h"
 #include "Window.h"
-#include "base64.h"
 
 #ifdef _MSC_VER
 using namespace epl;
@@ -26,7 +25,6 @@ T bound(T& x, const T& min, const T& max) {
     return x;
 }
 
-/* boilerplate */
 Initializer<Inca> __Inca_initializer;
 
 void Inca::initialize(void) {
@@ -39,11 +37,17 @@ SmartPointer<LifeForm> Inca::create(void) {
 
 Inca::Inca() {
     SmartPointer<Inca> self = SmartPointer<Inca>(this);
+    gene = new Gene;
+    new Event(0, [=](void) { self->startup(); });
+}
+
+Inca::Inca(Gene birth_gene) {
+    SmartPointer<Inca> self = SmartPointer<Inca>(this);
+    gene = birth_gene;
     new Event(0, [=](void) { self->startup(); });
 }
 
 Inca::~Inca() {}
-/* end of boilerplate */
 
 Color Inca::my_color(void) const {
     return CYAN;
@@ -62,7 +66,7 @@ String Inca::species_name(void) const {
 void Inca::startup(void) {
     SmartPointer<Inca> self = SmartPointer<Inca>(this);
 
-    set_mspeed(SPEED_RESTING);
+    set_mspeed(gene.SPEED_RESTING);
     set_direction(Angle(drand48() * 360, Angle::DEGREE));
 
     locked_on = false;
@@ -107,7 +111,7 @@ void Inca::startup(void) {
         }
     });
 
-    action_event = new Event(0, [=](void) { self->action(RADIUS_DEFAULT); });
+    action_event = new Event(0, [=](void) { self->action(gene.RADIUS_DEFAULT); });
 
     /* DEBUG */
     //std::cout << "STARTUP: "
@@ -257,7 +261,7 @@ Action Inca::encounter(const ObjInfo& target) {
 
     if (is_family(target)) {
         set_direction(Angle(target.bearing + M_PI / 2, Angle::RADIAN));
-        set_mspeed(SPEED_RESTING);
+        set_mspeed(gene.SPEED_RESTING);
 
         /* DEBUG */
         //std::cout << "FAMILY ENCOUNTER: "
@@ -271,7 +275,7 @@ Action Inca::encounter(const ObjInfo& target) {
         return LIFEFORM_IGNORE;
     } else {
         action_event->cancel();
-        action_event = new Event(0.1, [=](void) { self->action(RADIUS_DEFAULT); });
+        action_event = new Event(0.1, [=](void) { self->action(gene.RADIUS_DEFAULT); });
 
         return LIFEFORM_EAT;
     }
@@ -289,7 +293,7 @@ void Inca::action(double radius) {
     if (area_info.size() == 0) {
         locked_on = false;
         
-        new_speed = SPEED_RESTING;
+        new_speed = gene.SPEED_RESTING;
 
         // TODO: parameterize
         radius = encounter_distance + radius * 2;
@@ -317,7 +321,7 @@ void Inca::action(double radius) {
         radius *= .5;
     }
 
-    bound(new_speed, SPEED_RESTING, max_speed);
+    bound(new_speed, gene.SPEED_RESTING, max_speed);
     set_mspeed(new_speed);
     if (decision.get_magnitude() != 0) {
         set_direction(decision.get_angle());
@@ -491,8 +495,7 @@ Inca::Phylum Inca::get_phylum(const ObjInfo& info) {
 }
 
 void Inca::spawn(void) {
-    // TODO: sex
-    SmartPointer<Inca> child = new Inca;
+    SmartPointer<Inca> child = new Inca(new Gene(gene));
     reproduce(child);
     // times_reproduced++;
 }
