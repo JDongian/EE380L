@@ -37,17 +37,19 @@ SmartPointer<LifeForm> Inca::create(void) {
 
 Inca::Inca() {
     SmartPointer<Inca> self = SmartPointer<Inca>(this);
-    gene = new Gene;
+    gene = new Gene();
     new Event(0, [=](void) { self->startup(); });
 }
 
-Inca::Inca(Gene birth_gene) {
+Inca::Inca(Gene* birth_gene) {
     SmartPointer<Inca> self = SmartPointer<Inca>(this);
     gene = birth_gene;
     new Event(0, [=](void) { self->startup(); });
 }
 
-Inca::~Inca() {}
+Inca::~Inca() {
+    delete gene;
+}
 
 Color Inca::my_color(void) const {
     return CYAN;
@@ -66,7 +68,7 @@ String Inca::species_name(void) const {
 void Inca::startup(void) {
     SmartPointer<Inca> self = SmartPointer<Inca>(this);
 
-    set_mspeed(gene.SPEED_RESTING);
+    set_mspeed(gene->SPEED_RESTING);
     set_direction(Angle(drand48() * 360, Angle::DEGREE));
 
     locked_on = false;
@@ -111,7 +113,7 @@ void Inca::startup(void) {
         }
     });
 
-    action_event = new Event(0, [=](void) { self->action(gene.RADIUS_DEFAULT); });
+    action_event = new Event(0, [=](void) { self->action(gene->RADIUS_DEFAULT); });
 
     /* DEBUG */
     //std::cout << "STARTUP: "
@@ -164,17 +166,17 @@ void Inca::avert_edge() {
     double y = position.get_y();
 
     // PARAM
-    if (grid_max / 2 - abs(x) < MARGIN_WIDTH
-     || grid_max / 2 - abs(y) < MARGIN_WIDTH) {
+    if (grid_max / 2 - abs(x) < gene->MARGIN_WIDTH
+     || grid_max / 2 - abs(y) < gene->MARGIN_WIDTH) {
         action_event->cancel();
         action_event = new Event(0.1, [=](void) { self->action(0); });
 
         /* DEBUG */
-        std::cout << "EDGE AVERT, "
-                  << position
-                  << ", "
-                  << exploration
-                  << std::endl;
+        //std::cout << "EDGE AVERT, "
+        //          << position
+        //          << ", "
+        //          << exploration
+        //          << std::endl;
     }
 }
 
@@ -223,17 +225,20 @@ ObjList Inca::sense(double radius) {
     auto area_info = perceive(radius);
     for (auto info: area_info) {
         Vector delta(Angle(info.bearing, Angle::RADIAN), info.distance);
-        if (is_family(info.species)) {
+        if (is_family(info)) {
             double id;
             Vector rel_pos;
             Exploration exp;
-            deserialize(info.species, id, rel_pos, exp);
+            double course;
+            double speed;
+            Gene genes;
+            deserialize(info.species, id, rel_pos, exp, course, speed, genes);
 
             Vector delta_start(relative_position + delta + rel_pos * -1);
 
             // PARAM
             exploration.expand(delta_start, exp);
-            //exploration.expand(delta_start, exp, grid_max + MARGIN_WIDTH * 2);
+            //exploration.expand(delta_start, exp, grid_max + gene->MARGIN_WIDTH * 2);
 
             /* DEBUG */
             //std::cout << "SHARE: " << id
@@ -245,6 +250,7 @@ ObjList Inca::sense(double radius) {
             //          << ")" << std::endl;
         } else {
             exploration.update_explored(relative_position + delta);
+            // TODO: add algae + margin vector
         }
     }
     return area_info;
@@ -255,9 +261,9 @@ Action Inca::encounter(const ObjInfo& target) {
 
     locked_on = false;
 
-    if (is_family(target.species)) {
+    if (is_family(target)) {
         set_direction(Angle(target.bearing + M_PI / 2, Angle::RADIAN));
-        set_mspeed(gene.SPEED_RESTING);
+        set_mspeed(gene->SPEED_RESTING);
 
         /* DEBUG */
         //std::cout << "FAMILY ENCOUNTER: "
@@ -271,7 +277,7 @@ Action Inca::encounter(const ObjInfo& target) {
         return LIFEFORM_IGNORE;
     } else {
         action_event->cancel();
-        action_event = new Event(0.1, [=](void) { self->action(gene.RADIUS_DEFAULT); });
+        action_event = new Event(0.1, [=](void) { self->action(gene->RADIUS_DEFAULT); });
 
         return LIFEFORM_EAT;
     }
@@ -289,7 +295,7 @@ void Inca::action(double radius) {
     if (area_info.size() == 0) {
         locked_on = false;
         
-        new_speed = gene.SPEED_RESTING;
+        new_speed = gene->SPEED_RESTING;
 
         // TODO: parameterize
         radius = encounter_distance + radius * 2;
@@ -317,7 +323,7 @@ void Inca::action(double radius) {
         radius *= .5;
     }
 
-    bound(new_speed, gene.SPEED_RESTING, max_speed);
+    bound(new_speed, gene->SPEED_RESTING, max_speed);
     set_mspeed(new_speed);
     if (decision.get_magnitude() != 0) {
         set_direction(decision.get_angle());
@@ -423,12 +429,13 @@ Vector Inca::gen_algae_force(ObjInfo algae) {
 }
 
 Vector Inca::gen_edge_force(Vector norm_pos, double margin_width) {
-    const double A = 8;
+    const double A = 12;
     const double B = 1.1;
     double score_distance;
     Vector result;
     // TODO: parameterize
     double margin = B * margin_width;
+
     // PARAM
     if (norm_pos.get_x() < margin) {
         score_distance = pow(norm_pos.get_x(), -2);
@@ -457,7 +464,7 @@ Vector Inca::potential_fields(ObjList area_info) {
     Vector result{};
 
     for (auto info: area_info) {
-        switch (get_phylum(info.species)) {
+        switch (get_phylum(info)) {
         case FAMILY:
             result += gen_family_force(info);
             break;
@@ -470,7 +477,7 @@ Vector Inca::potential_fields(ObjList area_info) {
         }
     }
     Vector position = exploration.normalized_position(relative_position);
-    result += gen_edge_force(position, MARGIN_WIDTH);
+    result += gen_edge_force(position, gene->MARGIN_WIDTH);
 
     /* DEBUG */
     //std::cout << "DECISION VECTOR: " << result
@@ -480,10 +487,10 @@ Vector Inca::potential_fields(ObjList area_info) {
     return result;
 }
 
-Inca::Phylum Inca::get_phylum(String name) {
-    if (is_family(name)) {
+Inca::Phylum Inca::get_phylum(const ObjInfo& info) {
+    if (is_family(info)) {
         return FAMILY;
-    } else if (name == "Algae") {
+    } else if (info.species == "Algae") {
         return ALGAE;
     } else {
         return ENEMY;
@@ -491,20 +498,39 @@ Inca::Phylum Inca::get_phylum(String name) {
 }
 
 void Inca::spawn(void) {
-    SmartPointer<Inca> child = new Inca(new Gene(gene));
+    // TODO: rand
+    SmartPointer<Inca> child = new Inca(new Gene());
     reproduce(child);
     // times_reproduced++;
 }
 
-bool Inca::is_family(String name) {
+bool Inca::is_family(const ObjInfo& info) {
     String base = "Inca";
-    bool result = name.compare(0, base.length(), base) == 0;
+    bool result = false;
+
+    if (info.species.compare(0, base.length(), base) == 0) {
+        double id;
+        Vector rel_pos;
+        Exploration exp;
+        double course;
+        double speed;
+        Gene genes;
+
+        // Validate valid string
+        result = deserialize(info.species, id, rel_pos, exp, course, speed, genes);
+        
+        // Validate non-copied string
+        if (abs(course - info.their_course) > min_delta_time
+                || abs(speed - info.their_speed) > min_delta_time) {
+            result = false;
+        }
+    }
 
     /* DEBUG */
-    //std::cout << "NAMECHECK: '"
-    //          << name
-    //          << (result ? "' is family" : "' not family")
-    //          << std::endl;
+    std::cout << "NAMECHECK: '"
+              << info.species
+              << (result ? "' is family" : "' not family")
+              << std::endl;
 
     return result;
 }
@@ -516,16 +542,29 @@ String Inca::serialize() const {
          << relative_position << ";"
          << exploration << ";"
          << get_course() << ";"
-         << get_speed();
-
+         << get_speed() << ";"
+         << *gene;
     return sstm.str();
 }
 
-void Inca::deserialize(String serial,
-        double& id, Vector& rel_pos, Exploration& exp) const {
-    auto values = split(split(serial, ':')[1], ';');
+bool Inca::deserialize(String serial,
+        double& id, Vector& rel_pos,
+        Exploration& exp,
+        double& course,
+        double& speed,
+        Gene& g) const {
+    try {
+        auto values = split(split(serial, ':')[1], ';');
 
-    id = stoi(values[0]);
-    rel_pos = Vector(values[1]);
-    exp = Exploration(values[2]);
+        id = stoi(values[0]);
+        rel_pos = Vector(values[1]);
+        exp = Exploration(values[2]);
+        course = stoi(values[3]);
+        speed = stoi(values[4]);
+        g = Gene(values[5]);
+
+        return true;
+    } catch (std::invalid_argument& error) {
+        return false;
+    }
 }

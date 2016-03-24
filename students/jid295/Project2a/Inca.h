@@ -10,8 +10,6 @@
 #include "SerialUtils.h"
 #include "Gene.hpp"
 
-extern std::vector<std::string> split(const std::string &text, char sep);
-
 class Inca : public LifeForm {
     private:
         enum Phylum {
@@ -19,14 +17,14 @@ class Inca : public LifeForm {
             ENEMY = 2,
             ALGAE = 3
         };
-        Phylum get_phylum(std::string name);
+        Phylum get_phylum(const ObjInfo& info);
 
-        Gene gene;
+        Gene* gene;
         
         // Nyquist sampling?
         const double UPDATE_INTERVAL = 0.5;
         
-        const double RESET_INTERVAL = 100;
+        const double RESET_INTERVAL = 200;
  
         long id = lrand48();
         double speed;
@@ -52,10 +50,15 @@ class Inca : public LifeForm {
         Vector potential_fields(ObjList area_info);
 
         ObjList sense(double radius);
-        bool is_family(std::string name);
+        bool is_family(const ObjInfo& info);
         std::string serialize(void) const;
-        void deserialize(std::string serial,
-                double& id, Vector& rel_pos, Exploration& exp) const;
+        bool deserialize(std::string serial,
+                double& id,
+                Vector& rel_pos,
+                Exploration& exp,
+                double& course,
+                double& speed,
+                Gene& params) const;
 
         void avert_edge(void);
         void recurring(double timeout,
@@ -75,6 +78,7 @@ class Inca : public LifeForm {
         void startup(void);
     public:
         Inca(void);
+        Inca(Gene*);
         ~Inca(void);
         Color my_color(void) const;
         static SmartPointer<LifeForm> create(void);
