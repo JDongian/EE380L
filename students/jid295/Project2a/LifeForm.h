@@ -152,6 +152,7 @@ protected:
       }
       void set_course(double);
       void set_speed(double);
+      Point get_POSITION(void) const { return pos; }
       double get_course(void) const { return course; }
       double get_speed(void) const { return speed; }
       //double get_energy(void) const { return energy; }

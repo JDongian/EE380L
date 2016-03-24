@@ -73,12 +73,17 @@ public:
         y_min *= b;
         y_max *= b;
     }
-
-    void reset() {
+    void reset_x() {
         x_min = 0;
         x_max = 0;
+    }
+    void reset_y() {
         y_min = 0;
         y_max = 0;
+    }
+    void reset() {
+        reset_x();
+        reset_y();
     }
 
     Vector normalized_position(const Vector& rel_pos) {

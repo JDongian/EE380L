@@ -24,7 +24,7 @@ class Inca : public LifeForm {
         // Nyquist sampling?
         const double UPDATE_INTERVAL = 0.5;
         
-        //const double RESET_INTERVAL = 300;
+        const double RESET_INTERVAL = 500;
  
         long id = lrand48();
         double speed;
