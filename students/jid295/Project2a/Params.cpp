@@ -52,6 +52,8 @@ const double encounter_penalty = 5.0;
 /* the cost to move is non-linear */
 double movement_cost(double speed, double time)
 {
+    //
+    return 0;
   return 0.01 * pow(speed, 1.5) * time;
 }
 
@@ -104,6 +106,8 @@ const double encounter_distance = 1.0;
  */
 
 double perceive_cost(double radius) {
+    //
+    return 0;
   return radius / 20.0;
 }
   
@@ -121,9 +125,9 @@ const double max_speed = 10.0;
 const double max_perceive_range = 100.0;
 const double min_perceive_range = 2.0;
 
-const int grid_max = 800;
-const int win_x_size = 800;
-const int win_y_size = 800;
+const int grid_max = 500;
+const int win_x_size = 500;
+const int win_y_size = 500;
 
 const double min_delta_time = 1.0e-6; // minimum time between scheduling an
                                 // event and when that event can occur

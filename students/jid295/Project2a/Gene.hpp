@@ -23,11 +23,16 @@ class Gene {
         double RADIUS_DEFAULT;
         double MARGIN_WIDTH;
 
+        //std::function <const double& (const double&)>& ACTIVITY = [=](const double& speed) ->
+        //    const double& {
+        //        return grid_max / 8 / speed;
+        //    };
+
         // Good initial values
         Gene() {
-            SPEED_RESTING = 0.1;
+            SPEED_RESTING = 9;
             RADIUS_DEFAULT = 100;
-            MARGIN_WIDTH = grid_max / 12;
+            MARGIN_WIDTH = grid_max / 16;
         }
         // asexual randomization
         //Gene(const Gene& gene) {

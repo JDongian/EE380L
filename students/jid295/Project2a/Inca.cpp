@@ -84,7 +84,7 @@ void Inca::startup(void) {
     auto turn_timeout = [=](void) { return grid_max / A / get_speed(); };
     recurring(turn_timeout, [=](void) {
         if (!locked_on) {
-            self->turn(Angle(90, Angle::DEGREE));
+            self->turn(Angle(150, Angle::DEGREE));
 
             action_event->cancel();
             action_event = new Event(0, [=](void) { self->action(0); });
@@ -92,17 +92,14 @@ void Inca::startup(void) {
     });
 
     // GLOBAL
-    auto reset_timeout = [=](void) {
-        return RESET_INTERVAL - fmod(Event::now(), 100);
-    };
-    recurring(reset_timeout, [=](void) {
-        if (fmod(Event::now(), RESET_INTERVAL ) < 1) {
-            reset_position();
-
-            /* DEBUG */
-            //std::cout << "RESET" << std::endl;
-        }
-    });
+    //auto reset_timeout = [=](void) {
+    //    return RESET_INTERVAL - fmod(Event::now(), 100);
+    //};
+    //recurring(reset_timeout, [=](void) {
+    //    if (fmod(Event::now(), RESET_INTERVAL ) < 1) {
+    //        reset_position();
+    //    }
+    //});
 
 
     // PARAM
@@ -124,6 +121,10 @@ void Inca::startup(void) {
 void Inca::reset_position() {
     relative_position = Vector();
     exploration.reset();
+
+    /* DEBUG */
+    std::cout << "RESET" << std::endl;
+    system("read");
 }
 
 void Inca::recurring(double timeout,
@@ -172,11 +173,11 @@ void Inca::avert_edge() {
         action_event = new Event(0.1, [=](void) { self->action(0); });
 
         /* DEBUG */
-        //std::cout << "EDGE AVERT, "
-        //          << position
-        //          << ", "
-        //          << exploration
-        //          << std::endl;
+        std::cout << "EDGE OVERSHOOT: "
+                  << position
+                  << ", "
+                  << exploration
+                  << std::endl;
     }
 }
 
@@ -184,16 +185,10 @@ void Inca::set_direction(const Angle& course) {
     update_position();
     direction = course;
     set_course(course.rad());
-
-    /* DEBUG */
-    //std::cout << "TURN: +"
-    //          << delta.deg()
-    //          << "deg"
-    //          << std::endl;
 }
 
 void Inca::turn(const Angle& delta) {
-        set_direction(direction + delta);
+    set_direction(direction + delta);
 }
 
 void Inca::set_mspeed(const double& speed) {
@@ -201,7 +196,8 @@ void Inca::set_mspeed(const double& speed) {
     new Event(0, [=](void) { self->update_position(); });
 
     update_position();
-    set_speed(speed);
+    //set_speed(speed);
+    set_speed(1);
 
     // PARAM
     //exploration.reduce(0, 0.999);
@@ -236,8 +232,11 @@ ObjList Inca::sense(double radius) {
 
             Vector delta_start(relative_position + delta + rel_pos * -1);
 
-            // PARAM
             exploration.expand(delta_start, exp);
+            if (exploration.get_width() > grid_max
+                    || exploration.get_height() > grid_max) {
+                reset_position();
+            }
             //exploration.expand(delta_start, exp, grid_max + gene->MARGIN_WIDTH * 2);
 
             /* DEBUG */
@@ -323,7 +322,7 @@ void Inca::action(double radius) {
         radius *= .5;
     }
 
-    bound(new_speed, gene->SPEED_RESTING, max_speed);
+    bound(new_speed, gene->SPEED_RESTING, max_speed + 1);
     set_mspeed(new_speed);
     if (decision.get_magnitude() != 0) {
         set_direction(decision.get_angle());
@@ -333,7 +332,8 @@ void Inca::action(double radius) {
     // TODO: parameterize
     timeout = radius / 3 / get_speed();
     // PARAM
-    bound(timeout, 0.5, grid_max / 8 / get_speed());
+    bound(timeout, 0.5, grid_max / 8 / new_speed);
+    bound(timeout, 0.5, 0.7);
 
     action_event = new Event(timeout, [=](void) {
         self->action(radius);
@@ -429,8 +429,8 @@ Vector Inca::gen_algae_force(ObjInfo algae) {
 }
 
 Vector Inca::gen_edge_force(Vector norm_pos, double margin_width) {
-    const double A = 12;
-    const double B = 1.1;
+    const double A = 222222;
+    const double B = 1.4;
     double score_distance;
     Vector result;
     // TODO: parameterize
@@ -455,7 +455,8 @@ Vector Inca::gen_edge_force(Vector norm_pos, double margin_width) {
     result *= A;
 
     /* DEBUG */
-    //std::cout << "EDGE VECTOR: " << result << std::endl;
+    if (result.get_magnitude() != 0) {
+        std::cout << "EDGE FORCE: " << result << std::endl; }
 
     return result;
 }
@@ -478,6 +479,9 @@ Vector Inca::potential_fields(ObjList area_info) {
     }
     Vector position = exploration.normalized_position(relative_position);
     result += gen_edge_force(position, gene->MARGIN_WIDTH);
+    if (gen_edge_force(position, gene->MARGIN_WIDTH).get_magnitude() != 0) {
+        result = gen_edge_force(position, gene->MARGIN_WIDTH);
+    }
 
     /* DEBUG */
     //std::cout << "DECISION VECTOR: " << result
@@ -527,10 +531,10 @@ bool Inca::is_family(const ObjInfo& info) {
     }
 
     /* DEBUG */
-    std::cout << "NAMECHECK: '"
-              << info.species
-              << (result ? "' is family" : "' not family")
-              << std::endl;
+    //std::cout << "NAMECHECK: '"
+    //          << info.species
+    //          << (result ? "' is family" : "' not family")
+    //          << std::endl;
 
     return result;
 }
@@ -565,6 +569,7 @@ bool Inca::deserialize(String serial,
 
         return true;
     } catch (std::invalid_argument& error) {
+        system("read");
         return false;
     }
 }

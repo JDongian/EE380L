@@ -104,6 +104,12 @@ public:
     double get_y_max(void) const {
         return y_max;
     }
+    double get_width(void) const {
+        return x_max - x_min;
+    }
+    double get_height(void) const {
+        return y_max - y_min;
+    }
 };
 
 inline std::ostream& operator<<(std::ostream& ost, const Exploration& e) {
