@@ -1,6 +1,33 @@
 #include <iostream>
 #include <cstdint>
 
+/*
+ * I need you to know iterator_traits and why it exists.
+ * NOTE that the standard iterator_traits includes several nested components
+ * (e.g., pointer_type, reference_type and a few others)
+ * I ONLY care about iterator_category and value_type
+ */
+template <typename Iterator>
+struct iterator_traits {
+	using iterator_category =
+		typename Iterator::iterator_category;
+	using value_type =
+		typename Iterator::value_type;
+};
+
+template <typename T>
+struct iterator_traits<T*> {
+	using iterator_category = std::random_access_iterator_tag;
+	using value_type = T;
+};
+
+template <>
+struct iterator_traits<int*> {
+	using iterator_category = std::random_access_iterator_tag;
+	using value_type = int;
+};
+
+
 /* 
  * The partition function is used by the quicksort algorithm 
  * the purpose of the function is to move larger values towards
@@ -24,8 +51,13 @@
  * is state-less, and the only real information in contained in the type Comp. However, it's 
  * possible that comp is an actual pointer to a function (yuck -- no inlining).
  */
+
+struct forward_iterator_tag {};
+struct bidrectional_iterator_tag : public forward_iterator_tag {};
+struct random_access_iterator_tag : public bidrectional_iterator_tag {};
+
 template <typename FI, typename Comp>
-FI partition(FI b, FI e, Comp comp) {
+FI partition(FI b, FI e, Comp comp, std::forward_iterator_tag _notused) {
 	/* this implementation assumes only forward iteration
 	 * to keep the implementation simple, I will use *b as the pivot value */
 
@@ -35,6 +67,7 @@ FI partition(FI b, FI e, Comp comp) {
 	  * thus, when next == e, we're done with partition */
 
 	if (b == e) { return b; } // probably invalid case, not sure the returned value is meaningful
+	cout << "forward\n";
 
 //	using I = std::remove_reference<FI>::type; // our iterator type
 	FI piv_pos{ b };
@@ -62,13 +95,54 @@ FI partition(FI b, FI e, Comp comp) {
 	return piv_pos;
 }
 
+template <typename BI, typename Comp>
+BI partition(BI begin, BI end, Comp comp, 
+std::random_access_iterator_tag _notused) {
+	/* invariant: [b, lo) are all strictly less than pivot
+	* [hi, e) are all not less than pivot
+	* *piv_pos is the pivot value (we put piv_pos at the end
+	* for convenience) */
+
+	if (begin == end) { return begin; } // ill defined
+	--end;
+	cout << "bidirectional\n";
+
+	/* I'm being lazy here, we'll use the last element as pivot value */
+	BI piv_pos{ end };
+	BI lo{ begin };
+	BI hi{ end };
+
+	using T = typename iterator_traits<BI>::value_type;
+	T piv = *piv_pos;
+
+	while (lo != hi) {
+		while (lo != hi && comp(*lo, *piv_pos)) {
+			++lo;
+		}
+		while (lo != hi && comp(*piv_pos, *hi)) {
+			--hi;
+		}
+		if (lo != hi) {
+			std::swap(*lo, *hi);
+		}
+	}
+
+	std::swap(*lo, *piv_pos);
+	return lo;
+}
+
 
 /* see comments for partition regarding the requiremetns for FI and Comp */
 template <typename FI, typename Comp>
 void quickSort(FI b, FI e, Comp comp) {
 	if (b == e) { return; } // empty container, already sorted
-	FI piv_pos = partition(b, e, comp);
+
+	typename iterator_traits<FI>::iterator_category tag_var{};
+	FI piv_pos = partition(b, e, comp, tag_var);
+
 	quickSort(b, piv_pos, comp);
 	++piv_pos;
 	quickSort(piv_pos, e, comp);
 }
+
+

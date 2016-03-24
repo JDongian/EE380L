@@ -32,8 +32,9 @@ void showSort(T& container) {
 
 	auto b = std::begin(container);
 	auto e = std::end(container);
+	using Elem = decltype(*b);
 
-	quickSort(b, e, less<int>{});
+	quickSort(b, e, less<Elem>{});
 
 	cout << "\t   after sorting: ";
 	pref = "";
@@ -61,8 +62,7 @@ int main(void) {
 	 * but the sorting functions don't know what type is stored in the container
 	 * I know, it seems silly that std::vector<int>::iterator doesn't give us 
 	 * enough info to realize that "int" is the type of data we're sorting, but we don't 
-	 * have that info... we need some tools -- Thursday's class 
+	 * have that info... we need some tools -- Thursday's class */
 	std::vector<std::string> words{ "cat", "dog", "bird", "mouse", "elephant" };
 	showSort(words);
-	*/
 }
