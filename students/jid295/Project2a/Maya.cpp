@@ -52,7 +52,7 @@ Color Maya::my_color(void) const {
 String Maya::player_name(void) const {
     /* DEBUG */
     //return "Maya+" + serialize();
-    return "jid295'";
+    return "jid295*";
 }
 
 String Maya::species_name(void) const {
@@ -62,28 +62,39 @@ String Maya::species_name(void) const {
 void Maya::startup(void) {
     SmartPointer<Maya> self = SmartPointer<Maya>(this);
 
-    set_speed(SPEED_RESTING);
+    set_mspeed(SPEED_RESTING);
     set_direction(Angle(drand48() * 360, Angle::DEGREE)); // TODO: random good?
 
     locked_on = false;
 
     last_update = Event::now();
-    recurring(UPDATE_INTERVAL, [=](void) { self->update_position(); });
+    recurring(UPDATE_INTERVAL, [=](void) {
+        self->update_position();
+        self->avert_edge();
+    });
+
+    const double A = 1.4;
+    // PARAM
+    auto turn_timeout = [=](void) { return grid_max / A; };
+    recurring(turn_timeout, [=](void) {
+        if (!locked_on) {
+            self->turn(Angle(90, Angle::DEGREE));
+
+            action_event->cancel();
+            action_event = new Event(0, [=](void) { self->action(0); });
+        }
+    });
+
 
     // PARAM
-    recurring(min_reproduce_time/2, [=](void) {
+    recurring(min_reproduce_time / 2, [=](void) {
         // TODO: parameterize
         if (health() >= 3.0) {
             spawn();
         }
     });
 
-    // PARAM
-    recurring(grid_max / 16 / max_speed, [=](void) {
-        avert_edge();
-    });
-
-    hunt_event = new Event(0, [=](void) { self->hunt(RADIUS_DEFAULT); });
+    action_event = new Event(0, [=](void) { self->action(RADIUS_DEFAULT); });
 
     /* DEBUG */
     //std::cout << "STARTUP: "
@@ -122,11 +133,31 @@ void Maya::recurring(const std::function <double (void)>& timeout,
 }
 
 void Maya::avert_edge() {
+    SmartPointer<Maya> self = SmartPointer<Maya>(this);
+
+    Vector position = exploration.normalized_position(relative_position);
+    // PARAM
+    position += Vector(grid_max / -2, grid_max / -2);
+    double x = position.get_x();
+    double y = position.get_y();
+
+    // PARAM
+    if (grid_max / 2 - abs(x) < MARGIN_WIDTH
+     || grid_max / 2 - abs(y) < MARGIN_WIDTH) {
+        action_event->cancel();
+        action_event = new Event(0.1, [=](void) { self->action(0); });
+
+        /* DEBUG */
+        std::cout << "EDGE AVERT, "
+                  << position
+                  << ", "
+                  << exploration
+                  << std::endl;
+    }
 }
 
 void Maya::set_direction(const Angle& course) {
     update_position();
-
     direction = course;
     set_course(course.rad());
 
@@ -137,6 +168,21 @@ void Maya::set_direction(const Angle& course) {
     //          << std::endl;
 }
 
+void Maya::turn(const Angle& delta) {
+        set_direction(direction + delta);
+}
+
+void Maya::set_mspeed(const double& speed) {
+    SmartPointer<Maya> self = SmartPointer<Maya>(this);
+    new Event(0, [=](void) { self->update_position(); });
+
+    update_position();
+    set_speed(speed);
+
+    // PARAM
+    //exploration.reduce(0, 0.999);
+}
+
 void Maya::update_position(void) {
     double time_delta = Event::now() - last_update;
     relative_position += Vector(direction, time_delta * get_speed());
@@ -144,9 +190,9 @@ void Maya::update_position(void) {
     last_update = Event::now();
 
     /* DEBUG */
-    //std::cout << "relative position: " << relative_position
-    //          << ", exploration: " << exploration
-    //          << std::endl;
+    std::cout << "POSITION UPDATE: (" << relative_position
+              << ")\t\tEXPLORATION: " << exploration
+              << std::endl;
 }
 
 ObjList Maya::sense(double radius) {
@@ -162,8 +208,10 @@ ObjList Maya::sense(double radius) {
             deserialize(info.species, id, rel_pos, exp);
 
             Vector delta_start(relative_position + delta + rel_pos * -1);
-            
+
+            // PARAM
             exploration.expand(delta_start, exp);
+            //exploration.expand(delta_start, exp, grid_max + MARGIN_WIDTH * 2);
 
             /* DEBUG */
             //std::cout << "SHARE: " << id
@@ -187,7 +235,7 @@ Action Maya::encounter(const ObjInfo& target) {
 
     if (is_family(target.species)) {
         set_direction(Angle(target.bearing + M_PI / 2, Angle::RADIAN));
-        set_speed(SPEED_RESTING);
+        set_mspeed(SPEED_RESTING);
 
         /* DEBUG */
         //std::cout << "FAMILY ENCOUNTER: "
@@ -200,82 +248,72 @@ Action Maya::encounter(const ObjInfo& target) {
 
         return LIFEFORM_IGNORE;
     } else {
-        hunt_event->cancel();
-        hunt_event = new Event(0.2, [=](void) { self->hunt(RADIUS_DEFAULT); });
+        action_event->cancel();
+        action_event = new Event(0.1, [=](void) { self->action(RADIUS_DEFAULT); });
 
         return LIFEFORM_EAT;
     }
 }
 
-void Maya::hunt(double radius) {
+void Maya::action(double radius) {
     if (health() == 0.0) { return; }
     SmartPointer<Maya> self = SmartPointer<Maya>(this);
-    // TODO: parameterize
+
     double timeout;
-
+    double new_speed;
     ObjList area_info = sense(radius);
-
-    /* DEBUG */
-    //std::cout << "LifeForms in radius " << radius
-    //          << ": " << area_info.size() << std::endl;
+    Vector decision = potential_fields(area_info);
 
     if (area_info.size() == 0) {
         locked_on = false;
         
-        Vector decision = potential_fields(area_info);
-        if (decision.get_magnitude() != 0) {
-            set_direction(decision.get_angle());
-        }
-        set_speed(SPEED_RESTING);
+        new_speed = SPEED_RESTING;
 
         // TODO: parameterize
-        radius += encounter_distance;
-        radius *= 2;
+        radius = encounter_distance + radius * 2;
     } else {
         locked_on = true;
 
-        ObjInfo best_target;
-        best_target.distance = HUGE;
+        //ObjInfo best_target;
+        //best_target.distance = HUGE;
 
-        for (auto target: area_info) {
-            if (best_target.distance > target.distance) {
-                best_target = target;
-            }
-        }
+        //for (auto target: area_info) {
+        //    if (best_target.distance > target.distance) {
+        //        best_target = target;
+        //    }
+        //}
 
-        double A;
-        A = 20;
+        double A, B;
+        A = 1; B = 20;
 
-        //double A;
-        //A = 4;
+        // TODO: figure out speed -- perhaps f(area_info.counts()) ?
+        // PARAM
+        new_speed = max_speed / (A + B * decision.get_magnitude());
 
-        Vector decision = potential_fields(area_info);
-        Angle new_course = decision.get_angle();
-    
-        if (decision.get_magnitude() > 0) {
-            // TODO: figure out speed
-            // PARAM
-            double new_speed = max_speed
-                / (1 + A * decision.get_magnitude());
-            //double new_speed = best_target.their_speed + A;
-            bound(new_speed, 2.0, 2.0 + best_target.distance);
 
-            set_direction(new_course);
-            set_speed(new_speed);
+        // TODO: figure out radius for potential fields
+        radius *= .5;
+    }
 
-            // TODO: figure out radius for potential fields
-            radius *= .5;
-        } else { std::cout << "MATH ERROR"; }
+    bound(new_speed, SPEED_RESTING, max_speed);
+    set_mspeed(new_speed);
+    if (decision.get_magnitude() != 0) {
+        set_direction(decision.get_angle());
     }
     
     bound(radius, min_perceive_range, max_perceive_range);
+    // TODO: parameterize
     timeout = radius / 3 / get_speed();
     // PARAM
     bound(timeout, 0.5, grid_max / 8 / get_speed());
 
-    hunt_event = new Event(timeout, [=](void) {
-        self->hunt(radius);
+    action_event = new Event(timeout, [=](void) {
+        self->action(radius);
     });
+
+    /* DEBUG */
+    //std::cout << "LifeForms in radius " << radius
+    //          << ": " << area_info.size() << std::endl;
 }
 
 double score_enemy_health(double enemy_health, double my_health) {
@@ -360,25 +398,26 @@ Vector gen_algae_force(ObjInfo algae) {
     return result;
 }
 
-Vector gen_edge_force(Vector pos) {
-    const double A = 200;
+Vector gen_edge_force(Vector norm_pos, double margin_width) {
+    const double A = 30;
+    const double B = 1.5;
     double score_distance;
     Vector result;
-    // for a small bit of efficiency;
-    double margin = grid_max / 12;
+    // TODO: parameterize
+    double margin = B * margin_width;
     // PARAM
-    if (pos.get_x() < margin) {
-        score_distance = A * pow(pos.get_x(), -2);
+    if (norm_pos.get_x() < margin) {
+        score_distance = A * pow(norm_pos.get_x(), -2);
         result += Vector(Angle(0, Angle::DEGREE), score_distance);
-    } else if (grid_max - pos.get_x() < margin) {
-        score_distance = A * pow(grid_max - pos.get_x(), -2);
+    } else if (grid_max - norm_pos.get_x() < margin) {
+        score_distance = A * pow(grid_max - norm_pos.get_x(), -2);
         result += Vector(Angle(180, Angle::DEGREE), score_distance);
     }
-    if (pos.get_y() < margin) {
-        score_distance = A * pow(pos.get_y(), -2);
+    if (norm_pos.get_y() < margin) {
+        score_distance = A * pow(norm_pos.get_y(), -2);
         result += Vector(Angle(90, Angle::DEGREE), score_distance);
-    } else if (grid_max - pos.get_y() < margin) {
-        score_distance = A * pow(grid_max - pos.get_y(), -2);
+    } else if (grid_max - norm_pos.get_y() < margin) {
+        score_distance = A * pow(grid_max - norm_pos.get_y(), -2);
         result += Vector(Angle(270, Angle::DEGREE), score_distance);
     }
 
@@ -405,7 +444,7 @@ Vector Maya::potential_fields(ObjList area_info) {
         }
     }
     Vector position = exploration.normalized_position(relative_position);
-    result += gen_edge_force(position);
+    result += gen_edge_force(position, MARGIN_WIDTH);
 
     /* DEBUG */
     //std::cout << "DECISION VECTOR: " << result
