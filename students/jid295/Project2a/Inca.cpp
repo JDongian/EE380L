@@ -42,17 +42,19 @@ SmartPointer<LifeForm> Inca::create(void) {
 
 Inca::Inca() {
     SmartPointer<Inca> self = SmartPointer<Inca>(this);
-    gene = new Gene;
+    gene = new Gene();
     new Event(0, [=](void) { self->startup(); });
 }
 
-Inca::Inca(Gene birth_gene) {
+Inca::Inca(Gene* birth_gene) {
     SmartPointer<Inca> self = SmartPointer<Inca>(this);
     gene = birth_gene;
     new Event(0, [=](void) { self->startup(); });
 }
 
-Inca::~Inca() {}
+Inca::~Inca() {
+    delete gene;
+}
 
 Color Inca::my_color(void) const {
     return CYAN;
@@ -71,14 +73,9 @@ String Inca::species_name(void) const {
 void Inca::startup(void) {
     SmartPointer<Inca> self = SmartPointer<Inca>(this);
 
-<<<<<<< b435078dbce8092ca0f8bf81a6c399c497781e50
-    set_mspeed(gene.SPEED_RESTING);
-    set_direction(Angle(drand48() * 360, Angle::DEGREE));
-=======
     set_mspeed(gene->SPEED_RESTING);
     //set_direction(Angle(drand48() * 360, Angle::DEGREE));
     set_direction(Angle(0, Angle::DEGREE));
->>>>>>> fix most issues with exploration (it works now)
 
     locked_on = false;
 
@@ -121,7 +118,7 @@ void Inca::startup(void) {
         }
     });
 
-    action_event = new Event(0, [=](void) { self->action(gene.RADIUS_DEFAULT); });
+    action_event = new Event(0, [=](void) { self->action(gene->RADIUS_DEFAULT); });
 
     /* DEBUG */
     //std::cout << "STARTUP: "
@@ -180,8 +177,8 @@ void Inca::avert_edge() {
     double y = position.get_y();
 
     // PARAM
-    if (grid_max / 2 - abs(x) < MARGIN_WIDTH
-     || grid_max / 2 - abs(y) < MARGIN_WIDTH) {
+    if (grid_max / 2 - abs(x) < gene->MARGIN_WIDTH
+     || grid_max / 2 - abs(y) < gene->MARGIN_WIDTH) {
         action_event->cancel();
         action_event = new Event(0.1, [=](void) { self->action(0); });
 
@@ -239,33 +236,11 @@ ObjList Inca::sense(double radius) {
             Exploration exp;
             double course;
             double speed;
-            Parameters params;
-            deserialize(info.species, id, rel_pos, exp, course, speed, params);
+            Gene genes;
+            deserialize(info.species, id, rel_pos, exp, course, speed, genes);
 
             Vector delta_start(relative_position + delta + rel_pos * -1);
 
-<<<<<<< b435078dbce8092ca0f8bf81a6c399c497781e50
-            exploration.expand(delta_start, exp);
-<<<<<<< d9b76bf64d7e779250ac7519f70fe776fc129fe3
-            //exploration.expand(delta_start, exp, grid_max + MARGIN_WIDTH * 2);
-=======
-            if (exploration.get_width() > grid_max
-                    || exploration.get_height() > grid_max) {
-                reset_position();
-            }
-            //exploration.expand(delta_start, exp, grid_max + gene->MARGIN_WIDTH * 2);
->>>>>>> there is a bug
-
-            /* DEBUG */
-            //std::cout << "SHARE: " << id
-            //          << " from " << delta_start
-            //          << " (e_dx="
-            //          << exploration.get_x_max() - exploration.get_x_min()
-            //          << ",e_dy="
-            //          << exploration.get_y_max() - exploration.get_y_min()
-            //          << ")" << std::endl;
-        } else {
-=======
             if (exp.get_width() < grid_max &&
                 exp.get_height() < grid_max) {
                 exploration.expand(delta_start, exp);
@@ -292,7 +267,6 @@ ObjList Inca::sense(double radius) {
                 }
             }
        } else {
->>>>>>> fix most issues with exploration (it works now)
             exploration.update_explored(relative_position + delta);
             // TODO: add algae + margin vector
         }
@@ -307,7 +281,7 @@ Action Inca::encounter(const ObjInfo& target) {
 
     if (is_family(target)) {
         set_direction(Angle(target.bearing + M_PI / 2, Angle::RADIAN));
-        set_mspeed(gene.SPEED_RESTING);
+        set_mspeed(gene->SPEED_RESTING);
 
         /* DEBUG */
         //std::cout << "FAMILY ENCOUNTER: "
@@ -321,7 +295,7 @@ Action Inca::encounter(const ObjInfo& target) {
         return LIFEFORM_IGNORE;
     } else {
         action_event->cancel();
-        action_event = new Event(0.1, [=](void) { self->action(gene.RADIUS_DEFAULT); });
+        action_event = new Event(0.1, [=](void) { self->action(gene->RADIUS_DEFAULT); });
 
         return LIFEFORM_EAT;
     }
@@ -339,7 +313,7 @@ void Inca::action(double radius) {
     if (area_info.size() == 0) {
         locked_on = false;
         
-        new_speed = gene.SPEED_RESTING;
+        new_speed = gene->SPEED_RESTING;
 
         // TODO: parameterize
         radius = encounter_distance + radius * 2;
@@ -367,11 +341,7 @@ void Inca::action(double radius) {
         radius *= .5;
     }
 
-<<<<<<< d9b76bf64d7e779250ac7519f70fe776fc129fe3
-    bound(new_speed, gene.SPEED_RESTING, max_speed);
-=======
     bound(new_speed, gene->SPEED_RESTING, max_speed + 1);
->>>>>>> there is a bug
     set_mspeed(new_speed);
     if (decision.get_magnitude() != 0) {
         set_direction(decision.get_angle());
@@ -478,21 +448,13 @@ Vector Inca::gen_algae_force(ObjInfo algae) {
 }
 
 Vector Inca::gen_edge_force(Vector norm_pos, double margin_width) {
-<<<<<<< b435078dbce8092ca0f8bf81a6c399c497781e50
-<<<<<<< d9b76bf64d7e779250ac7519f70fe776fc129fe3
-    const double A = 8;
-    const double B = 1.1;
-=======
-    const double A = 222222;
-=======
     const double A = 22;
->>>>>>> fix most issues with exploration (it works now)
     const double B = 1.4;
->>>>>>> there is a bug
     double score_distance;
     Vector result;
     // TODO: parameterize
     double margin = B * margin_width;
+
     // PARAM
     if (norm_pos.get_x() < margin) {
         score_distance = pow(norm_pos.get_x(), -2);
@@ -535,17 +497,7 @@ Vector Inca::potential_fields(ObjList area_info) {
         }
     }
     Vector position = exploration.normalized_position(relative_position);
-<<<<<<< d9b76bf64d7e779250ac7519f70fe776fc129fe3
-    result += gen_edge_force(position, MARGIN_WIDTH);
-=======
     result += gen_edge_force(position, gene->MARGIN_WIDTH);
-<<<<<<< b435078dbce8092ca0f8bf81a6c399c497781e50
-    if (gen_edge_force(position, gene->MARGIN_WIDTH).get_magnitude() != 0) {
-        result = gen_edge_force(position, gene->MARGIN_WIDTH);
-    }
->>>>>>> there is a bug
-=======
->>>>>>> fix most issues with exploration (it works now)
 
     /* DEBUG */
     //std::cout << "DECISION VECTOR: " << result
@@ -566,7 +518,8 @@ Inca::Phylum Inca::get_phylum(const ObjInfo& info) {
 }
 
 void Inca::spawn(void) {
-    SmartPointer<Inca> child = new Inca(new Gene(gene));
+    // TODO: rand
+    SmartPointer<Inca> child = new Inca(new Gene());
     reproduce(child);
     // times_reproduced++;
 }
@@ -581,12 +534,9 @@ bool Inca::is_family(const ObjInfo& info) {
         Exploration exp;
         double course;
         double speed;
-        Parameters params;
+        Gene genes;
 
         // Validate valid string
-<<<<<<< b435078dbce8092ca0f8bf81a6c399c497781e50
-        result = deserialize(info.species, id, rel_pos, exp, course, speed, params);
-=======
         if (deserialize(info.species, id, rel_pos, exp, course, speed, genes)) {
             result = true;
         } else {
@@ -596,7 +546,6 @@ bool Inca::is_family(const ObjInfo& info) {
                       << std::endl;
             pause();
         }
->>>>>>> fix most issues with exploration (it works now)
         
         // Validate non-copied string
         if (abs(course - info.their_course) > 0.01
@@ -612,11 +561,7 @@ bool Inca::is_family(const ObjInfo& info) {
 
     /* DEBUG */
     //std::cout << "NAMECHECK: '"
-<<<<<<< d9b76bf64d7e779250ac7519f70fe776fc129fe3
-    //          << name
-=======
     //          << info.species
->>>>>>> there is a bug
     //          << (result ? "' is family" : "' not family")
     //          << std::endl;
 
@@ -631,7 +576,7 @@ String Inca::serialize() const {
          << exploration << ";"
          << get_course() << ";"
          << get_speed() << ";"
-         << Parameters(SPEED_RESTING, RADIUS_DEFAULT, MARGIN_WIDTH);
+         << *gene;
     return sstm.str();
 }
 
@@ -640,22 +585,16 @@ bool Inca::deserialize(String serial,
         Exploration& exp,
         double& course,
         double& speed,
-        Parameters& params) const {
+        Gene& g) const {
     try {
         auto values = split(split(serial, ':')[1], ';');
 
         id = stoi(values[0]);
         rel_pos = Vector(values[1]);
         exp = Exploration(values[2]);
-<<<<<<< b435078dbce8092ca0f8bf81a6c399c497781e50
-        course = stoi(values[3]);
-        speed = stoi(values[4]);
-        params = Parameters(values[5]);
-=======
         course = stod(values[3]);
         speed = stod(values[4]);
         g = Gene(values[5]);
->>>>>>> fix most issues with exploration (it works now)
 
         return true;
     } catch (std::invalid_argument& error) {

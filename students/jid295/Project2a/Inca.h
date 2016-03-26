@@ -7,11 +7,8 @@
 #include "Angle.hpp"
 #include "Vector.hpp"
 #include "Exploration.hpp"
-#include "Parameters.hpp"
 #include "SerialUtils.h"
 #include "Gene.hpp"
-
-extern std::vector<std::string> split(const std::string &text, char sep);
 
 class Inca : public LifeForm {
     private:
@@ -22,32 +19,12 @@ class Inca : public LifeForm {
         };
         Phylum get_phylum(const ObjInfo& info);
 
-<<<<<<< 4dd9765623497f7d4cec016733afdc5ceb68593f
-        // TODO: parameterize
-        const double SPEED_RESTING = 2;
-        const double RADIUS_DEFAULT = 100;
-        // PARAM
-        const double MARGIN_WIDTH = grid_max / 16; // TODO: bound, by max_speed * 1 ?
-=======
-        Gene gene;
->>>>>>> add genes to inca
+        Gene* gene;
         
         // Nyquist sampling?
         const double UPDATE_INTERVAL = 0.5;
         
-<<<<<<< b435078dbce8092ca0f8bf81a6c399c497781e50
-<<<<<<< d9b76bf64d7e779250ac7519f70fe776fc129fe3
-<<<<<<< 4dd9765623497f7d4cec016733afdc5ceb68593f
-        const double RESET_INTERVAL = 200;
-=======
-        const double RESET_INTERVAL = 100;
->>>>>>> add genes to inca
-=======
-        //const double RESET_INTERVAL = 300;
->>>>>>> there is a bug
-=======
         const double RESET_INTERVAL = 500;
->>>>>>> fix most issues with exploration (it works now)
  
         long id = lrand48();
         double speed;
@@ -81,7 +58,7 @@ class Inca : public LifeForm {
                 Exploration& exp,
                 double& course,
                 double& speed,
-                Parameters& params) const;
+                Gene& params) const;
 
         void avert_edge(void);
         void recurring(double timeout,
@@ -101,6 +78,7 @@ class Inca : public LifeForm {
         void startup(void);
     public:
         Inca(void);
+        Inca(Gene*);
         ~Inca(void);
         Color my_color(void) const;
         static SmartPointer<LifeForm> create(void);
