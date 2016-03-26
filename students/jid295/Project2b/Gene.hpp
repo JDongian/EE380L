@@ -21,6 +21,10 @@ class Gene {
         double max_reproduce_threshold = 100.0;
         double min_min_activity = 0.7;
         double max_min_activity = grid_max / 4 / max_speed;
+        double min_rad_mult = 0.1;
+        double max_rad_mult = 100;
+        double min_rad_reduc = 0.1;
+        double max_rad_reduc = 1.5;
 
         double speed_resting;
         double radius_default;
@@ -31,6 +35,9 @@ class Gene {
         double f_family_a;
         double f_algae_a;
         double f_enemy_a;
+        double empty_mult;
+        double speed_mult;
+        double rad_reduc;
 
     public:
         double SPEED_RESTING;
@@ -42,6 +49,9 @@ class Gene {
         double FORCE_FAMILY_A;
         double FORCE_ALGAE_A;
         double FORCE_ENEMY_A;
+        double EMPTY_WORLD_RADIUS_MULTIPLIER;
+        double VECTOR_SPEED_MULTIPLIER;
+        double LOCK_ON_REDUCTION;
 
         //std::function <const bool&(const double&&)> DO_REPRODUCE;
         //= []() {
@@ -59,6 +69,9 @@ class Gene {
             f_family_a = 17 + uni_rand(0, 8);
             f_algae_a = 26 + uni_rand(0, 8);
             f_enemy_a = 24 + uni_rand(0, 8);
+            empty_mult = 2;
+            speed_mult = 2000;
+            rad_reduc = 0.5;
 
             bind();
         }
@@ -70,7 +83,10 @@ class Gene {
              double min_act,
              double f_f_a,
              double f_a_a,
-             double f_e_a) {
+             double f_e_a,
+             double e_m,
+             double s_m,
+             double r_r) {
             speed_resting = speed;
             radius_default = radius;
             margin_divisor = margin;
@@ -80,6 +96,9 @@ class Gene {
             f_family_a = f_f_a;
             f_algae_a = f_a_a;
             f_enemy_a = f_e_a;
+            empty_mult = e_m;
+            speed_mult = s_m;
+            rad_reduc = r_r;
 
             bind();
         }
@@ -92,7 +111,10 @@ class Gene {
                             other.min_activity,
                             other.f_family_a,
                             other.f_algae_a,
-                            other.f_enemy_a);
+                            other.f_enemy_a,
+                            other.empty_mult,
+                            other.speed_mult,
+                            other.rad_reduc);
              bind();
         }
         Gene(std::string serial) {
@@ -105,7 +127,10 @@ class Gene {
                             stod(results[5]),
                             stod(results[6]),
                             stod(results[7]),
-                            stod(results[8]));
+                            stod(results[8]),
+                            stod(results[9]),
+                            stod(results[10]),
+                            stod(results[11]));
         }
 
         Gene& operator=(Gene&& other) {
@@ -117,7 +142,10 @@ class Gene {
                             other.min_activity,
                             other.f_family_a,
                             other.f_algae_a,
-                            other.f_enemy_a);
+                            other.f_enemy_a,
+                            other.empty_mult,
+                            other.speed_mult,
+                            other.rad_reduc);
             return *this;
         }
 
@@ -130,7 +158,10 @@ class Gene {
                 << min_activity << ","
                 << f_family_a << ","
                 << f_algae_a << ","
-                << f_enemy_a;
+                << f_enemy_a << ","
+                << empty_mult << ","
+                << speed_mult << ","
+                << rad_reduc;
             return ost;
         }
 
@@ -156,6 +187,14 @@ class Gene {
             FORCE_FAMILY_A = f_family_a;
             FORCE_ALGAE_A = f_algae_a;
             FORCE_ENEMY_A = f_enemy_a;
+
+            EMPTY_WORLD_RADIUS_MULTIPLIER = empty_mult;
+            bound(EMPTY_WORLD_RADIUS_MULTIPLIER, min_rad_mult, max_rad_mult);
+
+            VECTOR_SPEED_MULTIPLIER = speed_mult;
+
+            LOCK_ON_REDUCTION = rad_reduc;
+            bound(LOCK_ON_REDUCTION, min_rad_reduc, max_rad_reduc);
         }
 
         // asexual randomization
@@ -169,6 +208,9 @@ class Gene {
             f_family_a += uni_rand(0, 2);
             f_algae_a += uni_rand(0, 4);
             f_enemy_a += uni_rand(0, 2);
+            empty_mult += uni_rand(0, 0.4);
+            speed_mult += uni_rand(0, 20);
+            rad_reduc += uni_rand(0, 0.1);
 
             bind();
         }
@@ -178,6 +220,7 @@ class Gene {
         }
 
         // TODO: gaussian
+        // TODO: simulated annealing (the cooldown part)
 };
 
 inline std::ostream& operator<<(std::ostream& ost, const Gene& g) {

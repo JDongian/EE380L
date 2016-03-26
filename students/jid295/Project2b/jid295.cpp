@@ -202,9 +202,6 @@ void jid295::set_mspeed(const double& speed) {
 
     update_position();
     set_speed(speed);
-
-    // PARAM
-    //exploration.reduce(0, 0.999);
 }
 
 void jid295::update_position(void) {
@@ -307,8 +304,7 @@ void jid295::action(double radius) {
         
         new_speed = gene->SPEED_RESTING;
 
-        // TODO: parameterize
-        radius = encounter_distance + radius * 2;
+        radius = encounter_distance + radius * gene->EMPTY_WORLD_RADIUS_MULTIPLIER;
     } else {
         locked_on = true;
 
@@ -321,18 +317,13 @@ void jid295::action(double radius) {
         //    }
         //}
 
-        double A, B, C;
-        A = 1; B = 20; C = 2000;
-
         // TODO: figure out speed -- perhaps f(area_info.counts()) ?
-        // PARAM
-        //new_speed = max_speed / (A + B * decision.get_magnitude());
-        new_speed = C * decision.get_magnitude();
+        new_speed = gene->VECTOR_SPEED_MULTIPLIER * decision.get_magnitude();
 
         //std::cout << decision.get_magnitude() << std::endl;
 
         // TODO: figure out radius for potential fields
-        radius *= .5;
+        radius *= gene->LOCK_ON_REDUCTION;
     }
 
     bound(new_speed, gene->SPEED_RESTING, max_speed + 0.1);
