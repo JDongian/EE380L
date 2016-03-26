@@ -34,8 +34,8 @@ class Gene {
 
         // Good initial values
         Gene() {
-            SPEED_RESTING = 9;
-            SPEED_RESTING += uni_rand(0, 6);
+            SPEED_RESTING = 2;
+            SPEED_RESTING += uni_rand(0, 7);
             RADIUS_DEFAULT = 100;
             RADIUS_DEFAULT += uni_rand(0, 20);
             margin_width = 14;
@@ -64,9 +64,12 @@ class Gene {
 
         void bind(void) {
             bound(SPEED_RESTING, min_speed, max_speed);
+
             bound(RADIUS_DEFAULT, min_perceive_range, max_perceive_range);
+
             MARGIN_WIDTH = grid_max / margin_width;
             bound(MARGIN_WIDTH, min_margin, max_margin);
+
             TURN_ENABLED = turn_enabled < 0.5;
         }
 

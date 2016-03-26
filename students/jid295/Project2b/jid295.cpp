@@ -62,7 +62,7 @@ Color jid295::my_color(void) const {
 
 String jid295::player_name(void) const {
     /* DEBUG */
-    //return "jid295+" + serialize();
+    return "jid295+" + serialize();
     return "jid295**";
 }
 
@@ -292,7 +292,7 @@ Action jid295::encounter(const ObjInfo& target) {
     } else {
         action_event->cancel();
         action_event = new Event(0.1, [=](void) { self->action(gene->RADIUS_DEFAULT); });
-
+    
         return LIFEFORM_EAT;
     }
 }
@@ -363,7 +363,7 @@ double jid295::score_enemy_health(double enemy_health, double my_health) {
     // TODO: GA
     double A, B, C;
     double D; // might be unsigned
-    A = 0.7; B = 180; C = 2; D = -0.3;
+    A = 0.7; B = 180; C = 2; D = -0.2;
 
     double enemy_energy = enemy_health * start_energy;
     double my_energy = my_health * start_energy;
