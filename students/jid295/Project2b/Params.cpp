@@ -143,6 +143,6 @@ const double min_delta_time = 1.0e-6; // minimum time between scheduling an
 const EncounterResolver encounter_strategy = BIG_GUY_WINS;
 
 const SimulationTerminationStrategy termination_strategy =  
-// RUN_TILL_ONE_SPECIES_LEFT;
+RUN_TILL_ONE_SPECIES_LEFT;
 // RUN_TILL_HALF_EXTINCT;
-RUN_TILL_EVENTS_EXHAUSTED;      // probably runs forever, Algae Spores
+//RUN_TILL_EVENTS_EXHAUSTED;      // probably runs forever, Algae Spores

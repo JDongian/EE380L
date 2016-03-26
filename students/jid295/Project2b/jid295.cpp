@@ -62,8 +62,8 @@ Color jid295::my_color(void) const {
 
 String jid295::player_name(void) const {
     /* DEBUG */
-    return "jid295+" + serialize();
-    return "jid295**";
+    //return "jid295+" + serialize();
+    return "jid295";
 }
 
 String jid295::species_name(void) const {
@@ -83,6 +83,10 @@ void jid295::startup(void) {
     recurring(UPDATE_INTERVAL, [=](void) {
         self->update_position();
         self->avert_edge();
+
+        if (health() > gene->REPRODUCE_THRESHOLD) {
+            spawn();
+        }
     });
 
     const double A = 1.4;
@@ -108,15 +112,6 @@ void jid295::startup(void) {
     //        reset_position();
     //    }
     //});
-
-
-    // PARAM
-    recurring(min_reproduce_time / 2, [=](void) {
-        // TODO: parameterize with surroundings
-        if (health() >= 3.0) {
-            spawn();
-        }
-    });
 
     action_event = new Event(0, [=](void) { self->action(gene->RADIUS_DEFAULT); });
 
@@ -183,11 +178,11 @@ void jid295::avert_edge() {
         action_event = new Event(0.1, [=](void) { self->action(0); });
 
         /* DEBUG */
-        std::cout << "EDGE OVERSHOOT: "
-                  << position
-                  << ", "
-                  << exploration
-                  << std::endl;
+        //std::cout << "EDGE OVERSHOOT: "
+        //          << position
+        //          << ", "
+        //          << exploration
+        //          << std::endl;
     }
 }
 
@@ -230,6 +225,7 @@ ObjList jid295::sense(double radius) {
     auto area_info = perceive(radius);
     for (auto info: area_info) {
         Vector delta(Angle(info.bearing, Angle::RADIAN), info.distance);
+        // TODO: stop deserializing twice here
         if (is_family(info)) {
             double id;
             Vector rel_pos;
@@ -339,6 +335,7 @@ void jid295::action(double radius) {
 
     bound(new_speed, gene->SPEED_RESTING, max_speed + 0.1);
     set_mspeed(new_speed);
+    // TODO: perhaps set speed according to opportunity cost of eating algae (- movement cost)
     if (decision.get_magnitude() != 0) {
         set_direction(decision.get_angle());
     }
@@ -514,12 +511,15 @@ jid295::Phylum jid295::get_phylum(const ObjInfo& info) {
 }
 
 void jid295::spawn(void) {
-    // TODO: rand
     Gene* child_gene = new Gene(*gene);
     child_gene->randomize();
+
     SmartPointer<jid295> child = new jid295(child_gene);
     reproduce(child);
     // times_reproduced++;
+    
+    /* DEBUG */
+    std::cout << "PARENT GENES: " << *gene << std::endl;
 }
 
 bool jid295::is_family(const ObjInfo& info) {
@@ -596,7 +596,7 @@ bool jid295::deserialize(String serial,
 
         return true;
     } catch (std::invalid_argument& error) {
-        pause();
+        std::cout << "WARNING: invalid serialization" << std::endl;
         return false;
     }
 }
