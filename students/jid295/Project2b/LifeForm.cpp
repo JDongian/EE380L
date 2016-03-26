@@ -206,14 +206,27 @@ void LifeForm::update_position(void) {
 
         /* DEBUG */
         //std::cout << "old position: " << pos
-        //          //<< ", position change: " << delta_position
+        //          << ", position change: " << delta_position
         //          << "\t new position: " << new_position
         //          << std::endl;
+
+        /* DEBUG */
+        //Point delta_point(new_position.xpos - start_point.xpos,
+        //        new_position.ypos - start_point.ypos);
+        //if (delta_point != Point(0, 0)) {
+        //std::cout << "position delta:  " << delta_point
+        //          << "\t\tstart position: " << start_point
+        //          << std::endl; }
 
         update_time = Event::now();
         if (space.is_out_of_bounds(new_position)) {
             die_and_clean();
         } else {
+            if (space.is_occupied(new_position)){ // TODO
+                return;
+                //die_and_clean();
+                //return;
+            }
             space.update_position(pos, new_position);
             pos = new_position;
 
