@@ -4,7 +4,7 @@
 #include <string>
 #include <sstream>
 
-#include "Inca.h"
+#include "jid295.h"
 #include "Event.h"
 #include "ObjInfo.h"
 #include "Params.h"
@@ -30,48 +30,48 @@ void pause(void) {
     system("read");
 }
 
-Initializer<Inca> __Inca_initializer;
+Initializer<jid295> __jid295_initializer;
 
-void Inca::initialize(void) {
-    LifeForm::add_creator(Inca::create, "Inca");
+void jid295::initialize(void) {
+    LifeForm::add_creator(jid295::create, "jid295");
 }
 
-SmartPointer<LifeForm> Inca::create(void) {
-    return new Inca;
+SmartPointer<LifeForm> jid295::create(void) {
+    return new jid295;
 }
 
-Inca::Inca() {
-    SmartPointer<Inca> self = SmartPointer<Inca>(this);
+jid295::jid295() {
+    SmartPointer<jid295> self = SmartPointer<jid295>(this);
     gene = new Gene();
     new Event(0, [=](void) { self->startup(); });
 }
 
-Inca::Inca(Gene* birth_gene) {
-    SmartPointer<Inca> self = SmartPointer<Inca>(this);
+jid295::jid295(Gene* birth_gene) {
+    SmartPointer<jid295> self = SmartPointer<jid295>(this);
     gene = birth_gene;
     new Event(0, [=](void) { self->startup(); });
 }
 
-Inca::~Inca() {
+jid295::~jid295() {
     delete gene;
 }
 
-Color Inca::my_color(void) const {
+Color jid295::my_color(void) const {
     return CYAN;
 }
 
-String Inca::player_name(void) const {
+String jid295::player_name(void) const {
     /* DEBUG */
-    //return "Inca+" + serialize();
+    //return "jid295+" + serialize();
     return "jid295**";
 }
 
-String Inca::species_name(void) const {
-    return "Inca:" + serialize();
+String jid295::species_name(void) const {
+    return "jid295:" + serialize();
 }
 
-void Inca::startup(void) {
-    SmartPointer<Inca> self = SmartPointer<Inca>(this);
+void jid295::startup(void) {
+    SmartPointer<jid295> self = SmartPointer<jid295>(this);
 
     set_mspeed(gene->SPEED_RESTING);
     //set_direction(Angle(drand48() * 360, Angle::DEGREE));
@@ -126,7 +126,7 @@ void Inca::startup(void) {
     //          << std::endl;
 }
 
-void Inca::reset_position() {
+void jid295::reset_position() {
     relative_position = Vector();
     exploration.reset();
 
@@ -137,9 +137,9 @@ void Inca::reset_position() {
     //pause();
 }
 
-void Inca::recurring(double timeout,
+void jid295::recurring(double timeout,
         const std::function <void (void)>& callback) {
-    SmartPointer<Inca> self = SmartPointer<Inca>(this);
+    SmartPointer<jid295> self = SmartPointer<jid295>(this);
 
     new Event(timeout, [=](void) {
         // Helps keep event queue clean
@@ -149,9 +149,9 @@ void Inca::recurring(double timeout,
     });
 }
 
-void Inca::recurring(const std::function <double (void)>& timeout,
+void jid295::recurring(const std::function <double (void)>& timeout,
         const std::function <void (void)>& callback) {
-    SmartPointer<Inca> self = SmartPointer<Inca>(this);
+    SmartPointer<jid295> self = SmartPointer<jid295>(this);
     
     /* DEBUG */
     //std::cout << "HEALTH: " << health() << std::endl;
@@ -167,8 +167,8 @@ void Inca::recurring(const std::function <double (void)>& timeout,
     });
 }
 
-void Inca::avert_edge() {
-    SmartPointer<Inca> self = SmartPointer<Inca>(this);
+void jid295::avert_edge() {
+    SmartPointer<jid295> self = SmartPointer<jid295>(this);
 
     Vector position = exploration.normalized_position(relative_position);
     // PARAM
@@ -191,18 +191,18 @@ void Inca::avert_edge() {
     }
 }
 
-void Inca::set_direction(const Angle& course) {
+void jid295::set_direction(const Angle& course) {
     update_position();
     direction = course;
     set_course(course.rad());
 }
 
-void Inca::turn(const Angle& delta) {
+void jid295::turn(const Angle& delta) {
     set_direction(direction + delta);
 }
 
-void Inca::set_mspeed(const double& speed) {
-    SmartPointer<Inca> self = SmartPointer<Inca>(this);
+void jid295::set_mspeed(const double& speed) {
+    SmartPointer<jid295> self = SmartPointer<jid295>(this);
     new Event(0, [=](void) { self->update_position(); });
 
     update_position();
@@ -212,7 +212,7 @@ void Inca::set_mspeed(const double& speed) {
     //exploration.reduce(0, 0.999);
 }
 
-void Inca::update_position(void) {
+void jid295::update_position(void) {
     double time_delta = Event::now() - last_update;
     relative_position += Vector(direction, time_delta * get_speed());
     exploration.update_explored(relative_position);
@@ -224,8 +224,8 @@ void Inca::update_position(void) {
     //          << std::endl;
 }
 
-ObjList Inca::sense(double radius) {
-    SmartPointer<Inca> self = SmartPointer<Inca>(this);
+ObjList jid295::sense(double radius) {
+    SmartPointer<jid295> self = SmartPointer<jid295>(this);
 
     auto area_info = perceive(radius);
     for (auto info: area_info) {
@@ -270,8 +270,8 @@ ObjList Inca::sense(double radius) {
     return area_info;
 }
 
-Action Inca::encounter(const ObjInfo& target) {
-    SmartPointer<Inca> self = SmartPointer<Inca>(this);
+Action jid295::encounter(const ObjInfo& target) {
+    SmartPointer<jid295> self = SmartPointer<jid295>(this);
 
     locked_on = false;
 
@@ -297,9 +297,9 @@ Action Inca::encounter(const ObjInfo& target) {
     }
 }
 
-void Inca::action(double radius) {
+void jid295::action(double radius) {
     if (health() == 0.0) { return; }
-    SmartPointer<Inca> self = SmartPointer<Inca>(this);
+    SmartPointer<jid295> self = SmartPointer<jid295>(this);
 
     double timeout;
     double new_speed;
@@ -359,7 +359,7 @@ void Inca::action(double radius) {
     //          << ": " << area_info.size() << std::endl;
 }
 
-double Inca::score_enemy_health(double enemy_health, double my_health) {
+double jid295::score_enemy_health(double enemy_health, double my_health) {
     // TODO: GA
     double A, B, C;
     double D; // might be unsigned
@@ -378,7 +378,7 @@ double Inca::score_enemy_health(double enemy_health, double my_health) {
     return energy_difference / divisor;
 }
 
-double Inca::score_algae_health(double health) {
+double jid295::score_algae_health(double health) {
     // TODO: GA
     double A, B, C;
     A = 1; B = 100; C = 2;
@@ -394,7 +394,7 @@ double Inca::score_algae_health(double health) {
     return real_energy / divisor;
 }
 
-Vector Inca::gen_family_force(ObjInfo family) {
+Vector jid295::gen_family_force(ObjInfo family) {
     double A;
     A = 7;
 
@@ -410,7 +410,7 @@ Vector Inca::gen_family_force(ObjInfo family) {
     return result;
 }
 
-Vector Inca::gen_enemy_force(ObjInfo enemy, double my_health) {
+Vector jid295::gen_enemy_force(ObjInfo enemy, double my_health) {
     double A;
     A = 15;
 
@@ -428,7 +428,7 @@ Vector Inca::gen_enemy_force(ObjInfo enemy, double my_health) {
 }
 
 // Parameter control, no scale factor.
-Vector Inca::gen_algae_force(ObjInfo algae) { 
+Vector jid295::gen_algae_force(ObjInfo algae) { 
     const double A = 20;
     double score_hp = score_algae_health(algae.health);
     double score_distance = pow(algae.distance, -2);
@@ -443,7 +443,7 @@ Vector Inca::gen_algae_force(ObjInfo algae) {
     return result;
 }
 
-Vector Inca::gen_edge_force(Vector norm_pos, double margin_width) {
+Vector jid295::gen_edge_force(Vector norm_pos, double margin_width) {
     const double A = 12.22;
     const double B = 2;
     double score_distance;
@@ -476,7 +476,7 @@ Vector Inca::gen_edge_force(Vector norm_pos, double margin_width) {
     return result;
 }
 
-Vector Inca::potential_fields(ObjList area_info) {
+Vector jid295::potential_fields(ObjList area_info) {
     Vector result{};
 
     for (auto info: area_info) {
@@ -503,7 +503,7 @@ Vector Inca::potential_fields(ObjList area_info) {
     return result;
 }
 
-Inca::Phylum Inca::get_phylum(const ObjInfo& info) {
+jid295::Phylum jid295::get_phylum(const ObjInfo& info) {
     if (is_family(info)) {
         return FAMILY;
     } else if (info.species == "Algae") {
@@ -513,17 +513,17 @@ Inca::Phylum Inca::get_phylum(const ObjInfo& info) {
     }
 }
 
-void Inca::spawn(void) {
+void jid295::spawn(void) {
     // TODO: rand
     Gene* child_gene = new Gene(*gene);
     child_gene->randomize();
-    SmartPointer<Inca> child = new Inca(child_gene);
+    SmartPointer<jid295> child = new jid295(child_gene);
     reproduce(child);
     // times_reproduced++;
 }
 
-bool Inca::is_family(const ObjInfo& info) {
-    String base = "Inca";
+bool jid295::is_family(const ObjInfo& info) {
+    String base = "jid295";
     bool result = false;
 
     if (info.species.compare(0, base.length(), base) == 0) {
@@ -567,7 +567,7 @@ bool Inca::is_family(const ObjInfo& info) {
 }
 
 // TODO: make this faster with std::to_string
-String Inca::serialize() const {
+String jid295::serialize() const {
     std::stringstream sstm;
     sstm << id << ";"
          << relative_position << ";"
@@ -578,7 +578,7 @@ String Inca::serialize() const {
     return sstm.str();
 }
 
-bool Inca::deserialize(String serial,
+bool jid295::deserialize(String serial,
         double& id, Vector& rel_pos,
         Exploration& exp,
         double& course,

@@ -1,5 +1,5 @@
-#if !(_Inca_h)
-#define _Inca_h 1
+#if !(_jid295_h)
+#define _jid295_h 1
 
 #include <memory>
 #include "LifeForm.h"
@@ -10,7 +10,7 @@
 #include "SerialUtils.h"
 #include "Gene.hpp"
 
-class Inca : public LifeForm {
+class jid295 : public LifeForm {
     private:
         enum Phylum {
             FAMILY = 1,
@@ -77,14 +77,14 @@ class Inca : public LifeForm {
         void spawn(void);
         void startup(void);
     public:
-        Inca(void);
-        Inca(Gene*);
-        ~Inca(void);
+        jid295(void);
+        jid295(Gene*);
+        ~jid295(void);
         Color my_color(void) const;
         static SmartPointer<LifeForm> create(void);
         virtual std::string species_name(void) const;
         virtual std::string player_name(void) const;
         virtual Action encounter(const ObjInfo&);
-        friend class Initializer<Inca>;
+        friend class Initializer<jid295>;
 };
-#endif /* !(_Inca_h) */
+#endif /* !(_jid295_h) */
