@@ -35,7 +35,7 @@ public:
 };
 
 void delay(void) {
-    std::this_thread::sleep_for(std::chrono::milliseconds{ 0 });
+    std::this_thread::sleep_for(std::chrono::milliseconds{ 000 });
     new Event(1, &delay);
 }
 

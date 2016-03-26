@@ -321,13 +321,15 @@ void jid295::action(double radius) {
         //    }
         //}
 
-        double A, B;
-        A = 1; B = 20;
+        double A, B, C;
+        A = 1; B = 20; C = 2000;
 
         // TODO: figure out speed -- perhaps f(area_info.counts()) ?
         // PARAM
-        new_speed = max_speed / (A + B * decision.get_magnitude());
+        //new_speed = max_speed / (A + B * decision.get_magnitude());
+        new_speed = C * decision.get_magnitude();
 
+        //std::cout << decision.get_magnitude() << std::endl;
 
         // TODO: figure out radius for potential fields
         radius *= .5;
@@ -343,9 +345,7 @@ void jid295::action(double radius) {
     bound(radius, min_perceive_range, max_perceive_range);
     // TODO: parameterize
     timeout = radius / 3 / get_speed();
-    // PARAM
-    bound(timeout, 0.5, grid_max / 8 / new_speed);
-    bound(timeout, 0.5, 8.88);
+    bound(timeout, 0.5, gene->MIN_ACTIVITY);
 
     action_event = new Event(timeout, [=](void) {
         self->action(radius);
@@ -356,11 +356,12 @@ void jid295::action(double radius) {
     //          << ": " << area_info.size() << std::endl;
 }
 
+// TODO: why is this almoste the same as algae
 double jid295::score_enemy_health(double enemy_health, double my_health) {
     // TODO: GA
     double A, B, C;
     double D; // might be unsigned
-    A = 0.7; B = 180; C = 2; D = -0.2;
+    A = 1; B = 100; C = 2; D = -0.2;
 
     double enemy_energy = enemy_health * start_energy;
     double my_energy = my_health * start_energy;
@@ -392,14 +393,11 @@ double jid295::score_algae_health(double health) {
 }
 
 Vector jid295::gen_family_force(ObjInfo family) {
-    double A;
-    A = 7;
-
     double score_distance = pow(family.distance, -2);
 
     Vector result (Angle(family.bearing + M_PI, Angle::RADIAN),
             score_distance);
-    result *= A; 
+    result *= gene->FORCE_FAMILY_A;
 
     /* DEBUG */
     //std::cout << "ALGAE VECTOR: " << result << std::endl;
@@ -408,15 +406,12 @@ Vector jid295::gen_family_force(ObjInfo family) {
 }
 
 Vector jid295::gen_enemy_force(ObjInfo enemy, double my_health) {
-    double A;
-    A = 15;
-
     double score_hp = score_enemy_health(enemy.health, my_health);
     double score_distance = pow(enemy.distance, -2);
 
     Vector result (Angle(enemy.bearing, Angle::RADIAN),
             score_hp * score_distance);
-    result *= A;
+    result *= gene->FORCE_ENEMY_A;
 
     /* DEBUG */
     //std::cout << "ENEMY VECTOR: " << result << std::endl;
@@ -426,13 +421,12 @@ Vector jid295::gen_enemy_force(ObjInfo enemy, double my_health) {
 
 // Parameter control, no scale factor.
 Vector jid295::gen_algae_force(ObjInfo algae) { 
-    const double A = 20;
     double score_hp = score_algae_health(algae.health);
     double score_distance = pow(algae.distance, -2);
 
     Vector result (Angle(algae.bearing, Angle::RADIAN),
             score_hp * score_distance);
-    result *= A;
+    result *= gene->FORCE_ALGAE_A;
 
     /* DEBUG */
     //std::cout << "ALGAE VECTOR: " << result << std::endl;
@@ -552,7 +546,7 @@ bool jid295::is_family(const ObjInfo& info) {
                       << course << ", " << info.their_course << "); ("
                       << speed << ", " << info.their_speed << ")"
                       << std::endl;
-            pause();
+            //pause();
             result = false;
         }
     }

@@ -504,12 +504,14 @@ void LifeForm::gain_energy(double gain) {
 }
 
 void LifeForm::die_and_clean() {
-    if (border_cross_event) {
-        border_cross_event->cancel();
-    }
-    if (age_event) {
-        age_event->cancel();
-    }
+    SmartPointer<LifeForm> self{ this };
 
-    die();
+//    if (border_cross_event) {
+//        border_cross_event->cancel();
+//    }
+//    if (age_event) {
+//        age_event->cancel();
+//    }
+
+    new Event(0, [=] { self->die(); });
 }
