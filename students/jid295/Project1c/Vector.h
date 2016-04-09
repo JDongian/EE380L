@@ -374,7 +374,7 @@ namespace epl{
                         }
                         const_iterator (const iterator&) {
                         }
-                        const_iterator(vector<T, A>* v, uint64_t i) {
+                        const_iterator(const vector<T, A>* v, uint64_t i) {
                             // copy
                             data = v;
                             index = i;
