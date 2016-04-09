@@ -11,8 +11,12 @@
 namespace epl{
     class invalid_iterator { 
         public:
-            enum { SEVERE = 0, MODERATE = 1, MILD = 2 };
-            int level;
+            enum Level { SEVERE = 0, MODERATE = 1, MILD = 2 };
+            Level level = MILD;
+
+            invalid_iterator(Level severity) {
+                level = severity;
+            }
     };
 
     template <typename T, class A = std::allocator<T>>
@@ -24,6 +28,8 @@ namespace epl{
                 T* tail_data;
                 uint64_t tail_length;
                 uint64_t tail_capacity;
+
+                uint64_t version = 0;
 
                 static constexpr uint64_t default_capacity = 8;
 
@@ -41,8 +47,8 @@ namespace epl{
 
                 void destroy(T* data, uint64_t length) {
                     for (int i = 0; i < length; ++i) {
-                        printf("DEBUG DELETE[%d] (%d/%d) @%lu\n", i, (int)length, (int) size(),
-                                (long) data+i);
+                        //printf("DEBUG DELETE[%d] (%d/%d) @%lu\n", i, (int)length, (int) size(),
+                        //        (long) data+i);
                         data[i].~T();
                     }
                     std::free(data);
@@ -51,7 +57,6 @@ namespace epl{
                 void destroy_all(void) {
                     destroy(head_data, head_length);
                     destroy(tail_data, tail_length);
-                    printf("DEBUG destroy all\n");
                 }
 
                 uint64_t get_head_index(uint64_t i) const {
@@ -71,6 +76,8 @@ namespace epl{
                 }
 
                 void move(vector<T>&& other) {
+                    ++(other.version);
+
                     head_data = other.head_data;
                     head_length = other.head_length;
                     head_capacity = other.head_capacity;
@@ -124,6 +131,7 @@ namespace epl{
 
                 void push(const T& new_value,
                         T*& data, uint64_t& length, uint64_t& capacity) {
+                    ++version;
                     ////printf("DEBUG PUSH (%d/%d) {\n", (int) head_length, (int) tail_length);
                     // deep copy
                     auto insert_value = T{new_value};
@@ -145,6 +153,7 @@ namespace epl{
 
                 void push(T&& new_value,
                         T*& data, uint64_t& length, uint64_t& capacity) {
+                    ++version;
                     // amortized doubling
                     if (length == capacity) {
                         capacity += 1;
@@ -156,7 +165,7 @@ namespace epl{
                     new (data + length) T{std::move(new_value)};
                     length++;
 
-                    printf("DEBUG PUSHr (%d/%d)\n", (int) head_length, (int) tail_length);
+                    ////printf("DEBUG PUSHr (%d/%d)\n", (int) head_length, (int) tail_length);
                 }
 
                 void rotate_one(T*& data, uint64_t& len) {
@@ -165,6 +174,7 @@ namespace epl{
                 }
 
                 void pop(T*& data, uint64_t& data_len, T*& other, uint64_t& other_len) {
+                    ++version;
                     if (size() == 0) {
                         throw std::out_of_range("subscript out of range");
                     }
@@ -195,6 +205,25 @@ namespace epl{
                     private:
                         vector<T, A>* data;
                         uint64_t index;
+                        uint64_t data_version;
+
+                        void bounds_check(void) const {
+                            if (index < 0 || data->size() < index) {
+                                throw invalid_iterator(invalid_iterator::SEVERE);
+                            }
+                        }
+
+                        void version_check(void) const {
+                            if (data->version != data_version) {
+                                throw invalid_iterator(invalid_iterator::MODERATE);
+                            }
+                        }
+
+                        void check(void) const {
+                            ////printf("DEBUG CHECK %lu (%lu)\n", index, data->size());
+                            bounds_check();
+                            version_check();
+                        }
 
                     public:
                         typedef typename A::difference_type difference_type;
@@ -204,22 +233,28 @@ namespace epl{
                         typedef std::random_access_iterator_tag iterator_category;
 
                         iterator() {
-                            printf("DEBUG ITERATOR CONSTRUCTOR DEFAULT (!)\n");
+                            ////printf("DEBUG ITERATOR CONSTRUCTOR DEFAULT (!)\n");
                         }
                         iterator(vector<T, A>* v, uint64_t i) {
-                            printf("DEBUG ITERATOR CONSTRUCTOR (%lu)\n", i);
                             // copy
                             data = v;
                             index = i;
+                            data_version = data->version;
+                            ////printf("DEBUG ITERATOR CONSTRUCTOR (%lu) v%lu\n", i, data_version);
                         }
-                        iterator(const iterator&) {
-                            printf("DEBUG ITERATOR COPY\n");
+                        iterator(const iterator& other) {
+                            index = other.index;
+                            data = other.data;
+                            data_version = data->version;
+                            ////printf("DEBUG ITERATOR COPY\n");
                         }
                         ~iterator() {
-                            printf("DEBUG ITERATOR DESTRUCT\n");
+                            ////printf("DEBUG ITERATOR DESTRUCT\n");
                         }
 
                         iterator& operator=(const iterator& rhs) {
+                            rhs->check();
+                            ////printf("DEBUG ITERATOR ASSIGN (!)\n");
                             if (this != &rhs) {
                                 //destroy_all();
                                 //copy(rhs);
@@ -229,34 +264,57 @@ namespace epl{
                         }
                         // who needs relops
                         bool operator==(const iterator& rhs) const {
-                            printf("DEBUG %lu == %lu\n", index, rhs.index);
+                            check();
+                            //printf("DEBUG %lu == %lu\n", index, rhs.index);
                             return index == rhs.index;
                         }
                         bool operator!=(const iterator& rhs) const {
+                            check();
                             return ! operator==(rhs);
                         }
                         bool operator<(const iterator& rhs) const {
+                            check();
                             return index < rhs.index;
                         }
                         bool operator<=(const iterator& rhs) const {
+                            check();
                             //return index <= rhs.index;
                             return operator<(rhs) || operator==(rhs);
                         }
                         bool operator>(const iterator& rhs) const {
+                            check();
                             return ! operator<=(rhs);
                         }
                         bool operator>=(const iterator& rhs) const {
+                            check();
                             return ! operator<(rhs);
                         }
 
-                        iterator& operator++() {
+                        iterator operator++() {
+                            check();
+                            auto previous = *this;
                             ++index;
-                            printf("DEBUG ++ (%lu)\n", index);
-                            return *this; // TODO
+                            ////printf("DEBUG (%lu)++\n", index);
+                            return previous;
                         }
-                        iterator& operator--() {
+                        iterator operator++(int) {
+                            check();
+                            ++index;
+                            ////printf("DEBUG ++(%lu)\n", index);
+                            return *this;
+                        }
+                        iterator operator--() {
+                            check();
+                            auto previous = *this;
                             --index;
-                            return *this; // TODO
+                            ////printf("DEBUG (%lu)--\n", index);
+                            return previous;
+                        }
+                        iterator operator--(int) {
+                            check();
+                            --index;
+                            ////printf("DEBUG --(%lu)\n", index);
+                            return *this;
                         }
 
                         //iterator& operator+=(size_type); //optional
@@ -267,13 +325,14 @@ namespace epl{
                         //difference_type operator-(iterator) const; //optional
 
                         reference operator*() const {
-                            printf("DEBUG *(%lu)\n", index);
-                            //return (T&) addr;
-                            return (T&) data[index];
+                            check();
+                            ////printf("DEBUG *(%lu) v%lu\n", index, data->version);
+                            return (T&) (data->operator[](index));
                         }
                         pointer operator->() const {
-                            return data[index];
-                            //throw std::out_of_range("not implemented");
+                            check();
+                            //return data[index];
+                            throw std::out_of_range("op-> not implemented");
                             //return nullptr;
                         }
                         //reference operator[](size_type) const; //optional
@@ -283,6 +342,25 @@ namespace epl{
                     private:
                         const vector<T, A>* data;
                         uint64_t index;
+                        uint64_t data_version;
+
+                        void bounds_check(void) const {
+                            if (index < 0 || data->size() < index) {
+                                throw invalid_iterator(invalid_iterator::SEVERE);
+                            }
+                        }
+
+                        void version_check(void) const {
+                            if (data->version != data_version) {
+                                throw invalid_iterator(invalid_iterator::MODERATE);
+                            }
+                        }
+
+                        void check(void) const {
+                            ////printf("DEBUG CHECK %lu (%lu)\n", index, data->size());
+                            bounds_check();
+                            version_check();
+                        }
 
                     public:
                         typedef typename A::difference_type difference_type;
@@ -294,55 +372,90 @@ namespace epl{
 
                         const_iterator() {
                         }
-                        const_iterator(const vector<T, A>* v, uint64_t i) {
+                        const_iterator (const iterator&) {
+                        }
+                        const_iterator(vector<T, A>* v, uint64_t i) {
                             // copy
                             data = v;
                             index = i;
+                            data_version = data->version;
+                            ////printf("DEBUG const_iterator CONSTRUCTOR (%lu) v%lu\n", i, data_version);
                         }
-                        const_iterator(const const_iterator&) {
-                        }
-                        const_iterator (const iterator&) {
+                        const_iterator(const const_iterator& other) {
+                            index = other.index;
+                            data = other.data;
+                            data_version = data->version;
+                            ////printf("DEBUG const_iterator COPY\n");
                         }
                         ~const_iterator() {
+                            ////printf("DEBUG const_iterator DESTRUCT\n");
                         }
 
                         const_iterator& operator=(const const_iterator& rhs) {
+                            rhs->check();
+                            ////printf("DEBUG const_iterator ASSIGN (!)\n");
                             if (this != &rhs) {
                                 //destroy_all();
                                 //copy(rhs);
+                                //TODO
                             }
                             return *this;
                         }
-                        // binary operators
                         // who needs relops
                         bool operator==(const const_iterator& rhs) const {
+                            check();
+                            //printf("DEBUG %lu == %lu\n", index, rhs.index);
                             return index == rhs.index;
                         }
                         bool operator!=(const const_iterator& rhs) const {
+                            check();
                             return ! operator==(rhs);
                         }
                         bool operator<(const const_iterator& rhs) const {
+                            check();
                             return index < rhs.index;
                         }
                         bool operator<=(const const_iterator& rhs) const {
+                            check();
                             //return index <= rhs.index;
                             return operator<(rhs) || operator==(rhs);
                         }
                         bool operator>(const const_iterator& rhs) const {
+                            check();
                             return ! operator<=(rhs);
                         }
                         bool operator>=(const const_iterator& rhs) const {
+                            check();
                             return ! operator<(rhs);
                         }
 
-                        const_iterator& operator++() {
+                        const_iterator operator++() {
+                            check();
+                            auto previous = *this;
                             ++index;
+                            ////printf("DEBUG (%lu)++\n", index);
+                            return previous;
+                        }
+                        const_iterator operator++(int) {
+                            check();
+                            ++index;
+                            ////printf("DEBUG ++(%lu)\n", index);
                             return *this;
                         }
-                        const_iterator& operator--() {
+                        const_iterator operator--() {
+                            check();
+                            auto previous = *this;
                             --index;
+                            ////printf("DEBUG (%lu)--\n", index);
+                            return previous;
+                        }
+                        const_iterator operator--(int) {
+                            check();
+                            --index;
+                            ////printf("DEBUG --(%lu)\n", index);
                             return *this;
                         }
+
                         //const_iterator& operator+=(size_type); //optional
                         //const_iterator operator+(size_type) const; //optional
                         //friend const_iterator operator+(size_type, const const_iterator&); //optional
@@ -350,18 +463,19 @@ namespace epl{
                         //const_iterator operator-(size_type) const; //optional
                         //difference_type operator-(const_iterator) const; //optional
 
-                        T& operator*() const {
-                            throw std::out_of_range("not implemented");
-                            //return (T&) addr;
+                        reference operator*() const {
+                            check();
+                            ////printf("DEBUG *(%lu) v%lu\n", index, data->version);
+                            return (T&) (data->operator[](index));
                         }
-                        T operator->() const {
-                            throw std::out_of_range("not implemented");
+                        T* operator->() const {
+                            check();
+                            //return data[index];
+                            throw std::out_of_range("op-> not implemented");
                             //return nullptr;
                         }
-                        //const_reference operator[](size_type) const; //optional
+                        //reference operator[](size_type) const; //optional
                 };
-
-
 
                 // constructors and destructors
                 /* creates an array with some minimum capacity and length
@@ -469,7 +583,7 @@ namespace epl{
                  * error message (the string is arbitrary). If k is in bounds,
                  * then you must return a reference to the element at position
                  * k */
-                T& operator[](const uint64_t& i) {
+                T& operator[](uint64_t i) {
                     if (i < 0 || size() <= i) {
                         throw std::out_of_range("subscript out of range");
                     } else {
@@ -477,7 +591,7 @@ namespace epl{
                     }
                 }
 
-                const T& operator[](const uint64_t& i) const {
+                const T& operator[](uint64_t i) const {
                     if (i < 0 || size() <= i) {
                         throw std::out_of_range("subscript out of range");
                     } else {
