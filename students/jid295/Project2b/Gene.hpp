@@ -66,12 +66,12 @@ class Gene {
             turn_enabled = uni_rand(0, 0.2);
             reproduce_a = 3.8 + uni_rand(0, 6);
             min_activity = 10 + uni_rand(0, 4);
-            f_family_a = 17 + uni_rand(0, 8);
-            f_algae_a = 26 + uni_rand(0, 8);
-            f_enemy_a = 24 + uni_rand(0, 8);
-            empty_mult = 2;
+            f_family_a = 18 + uni_rand(0, 8);
+            f_algae_a = 25 + uni_rand(0, 8);
+            f_enemy_a = 22 + uni_rand(0, 8);
+            empty_mult = 1.9;
             speed_mult = 2000;
-            rad_reduc = 0.5;
+            rad_reduc = 0.60;
 
             bind();
         }
@@ -209,7 +209,7 @@ class Gene {
             f_algae_a += uni_rand(0, 4);
             f_enemy_a += uni_rand(0, 2);
             empty_mult += uni_rand(0, 0.4);
-            speed_mult += uni_rand(0, 20);
+            speed_mult += uni_rand(0, 40);
             rad_reduc += uni_rand(0, 0.1);
 
             bind();

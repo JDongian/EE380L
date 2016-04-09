@@ -504,7 +504,7 @@ void jid295::spawn(void) {
     // times_reproduced++;
     
     /* DEBUG */
-    std::cout << "PARENT GENES: " << *gene << std::endl;
+   // std::cout << "PARENT GENES: " << *gene << std::endl;
 }
 
 bool jid295::is_family(const ObjInfo& info) {

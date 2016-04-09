@@ -27,7 +27,7 @@ public:
     static void tock(void) {
         std::function<void(void)> callme = [](void) { tock(); };
 #if ALGAE_SPORES    
-//        Algae::create_spontaneously();
+        Algae::create_spontaneously();
 #endif /* ALGAE_SPORES */
         if (Event::num_events() > 1)
             (void) new Event(1, callme);
