@@ -41,8 +41,8 @@ namespace epl{
 
                 void destroy(T* data, uint64_t length) {
                     for (int i = 0; i < length; ++i) {
-                        ////printf("DEBUG DELETE[%d] (%d/%d) @%lu\n", i, (int)length, (int) size(),
-                        ////        (long) data+i);
+                        printf("DEBUG DELETE[%d] (%d/%d) @%lu\n", i, (int)length, (int) size(),
+                                (long) data+i);
                         data[i].~T();
                     }
                     std::free(data);
@@ -51,17 +51,18 @@ namespace epl{
                 void destroy_all(void) {
                     destroy(head_data, head_length);
                     destroy(tail_data, tail_length);
+                    printf("DEBUG destroy all\n");
                 }
 
-                uint64_t get_head_index(uint64_t i) {
+                uint64_t get_head_index(uint64_t i) const {
                     return head_length - i - 1;
                 }
 
-                uint64_t get_tail_index(uint64_t i) {
+                uint64_t get_tail_index(uint64_t i) const {
                     return i - head_length;
                 }
 
-                T& get_data(uint64_t i) {
+                T& get_data(uint64_t i) const {
                     if(i < head_length) {
                         return head_data[get_head_index(i)];
                     } else {
@@ -192,7 +193,7 @@ namespace epl{
 
                 class iterator { 
                     private:
-                        vector<T, A> data;
+                        vector<T, A>* data;
                         uint64_t index;
 
                     public:
@@ -200,12 +201,13 @@ namespace epl{
                         typedef typename A::value_type value_type;
                         typedef typename A::reference reference;
                         typedef typename A::pointer pointer;
-                        typedef std::random_access_iterator_tag iterator_category; //or another tag
+                        typedef std::random_access_iterator_tag iterator_category;
 
                         iterator() {
-                            printf("DEBUG ITERATOR CONSTRUCTOR DEFAULT \n");
+                            printf("DEBUG ITERATOR CONSTRUCTOR DEFAULT (!)\n");
                         }
-                        iterator(const vector<T, A>& v, const uint64_t& i) {
+                        iterator(vector<T, A>* v, uint64_t i) {
+                            printf("DEBUG ITERATOR CONSTRUCTOR (%lu)\n", i);
                             // copy
                             data = v;
                             index = i;
@@ -221,21 +223,23 @@ namespace epl{
                             if (this != &rhs) {
                                 //destroy_all();
                                 //copy(rhs);
+                                //TODO
                             }
                             return *this;
                         }
-                        // binary operators
                         // who needs relops
                         bool operator==(const iterator& rhs) const {
-                            return false; // TODO
+                            printf("DEBUG %lu == %lu\n", index, rhs.index);
+                            return index == rhs.index;
                         }
                         bool operator!=(const iterator& rhs) const {
                             return ! operator==(rhs);
                         }
                         bool operator<(const iterator& rhs) const {
-                            return false;// TODO
+                            return index < rhs.index;
                         }
                         bool operator<=(const iterator& rhs) const {
+                            //return index <= rhs.index;
                             return operator<(rhs) || operator==(rhs);
                         }
                         bool operator>(const iterator& rhs) const {
@@ -246,9 +250,12 @@ namespace epl{
                         }
 
                         iterator& operator++() {
+                            ++index;
+                            printf("DEBUG ++ (%lu)\n", index);
                             return *this; // TODO
                         }
                         iterator& operator--() {
+                            --index;
                             return *this; // TODO
                         }
 
@@ -260,6 +267,7 @@ namespace epl{
                         //difference_type operator-(iterator) const; //optional
 
                         reference operator*() const {
+                            printf("DEBUG *(%lu)\n", index);
                             //return (T&) addr;
                             return (T&) data[index];
                         }
@@ -272,6 +280,10 @@ namespace epl{
                 };
 
                 class const_iterator {
+                    private:
+                        const vector<T, A>* data;
+                        uint64_t index;
+
                     public:
                         typedef typename A::difference_type difference_type;
                         typedef typename A::value_type value_type;
@@ -281,6 +293,11 @@ namespace epl{
 
 
                         const_iterator() {
+                        }
+                        const_iterator(const vector<T, A>* v, uint64_t i) {
+                            // copy
+                            data = v;
+                            index = i;
                         }
                         const_iterator(const const_iterator&) {
                         }
@@ -299,15 +316,16 @@ namespace epl{
                         // binary operators
                         // who needs relops
                         bool operator==(const const_iterator& rhs) const {
-                            return false; // TODO
+                            return index == rhs.index;
                         }
                         bool operator!=(const const_iterator& rhs) const {
                             return ! operator==(rhs);
                         }
                         bool operator<(const const_iterator& rhs) const {
-                            return false;// TODO
+                            return index < rhs.index;
                         }
                         bool operator<=(const const_iterator& rhs) const {
+                            //return index <= rhs.index;
                             return operator<(rhs) || operator==(rhs);
                         }
                         bool operator>(const const_iterator& rhs) const {
@@ -318,9 +336,11 @@ namespace epl{
                         }
 
                         const_iterator& operator++() {
+                            ++index;
                             return *this;
                         }
                         const_iterator& operator--() {
+                            --index;
                             return *this;
                         }
                         //const_iterator& operator+=(size_type); //optional
@@ -423,22 +443,22 @@ namespace epl{
                 }
 
                 iterator begin() {
-                    return iterator();
+                    return iterator(this, 0);
                 }
                 const_iterator begin() const {
-                    return const_iterator();
+                    return const_iterator(this, 0);
                 }
-                const_iterator cbegin() const {
-                    return const_iterator();
+                const_iterator cbegin() const { //TODO: ????
+                    return const_iterator(this, 0);
                 }
                 iterator end() {
-                    return iterator();
+                    return iterator(this, size());
                 }
                 const_iterator end() const {
-                    return const_iterator();
+                    return const_iterator(this, size());
                 }
                 const_iterator cend() const {
-                    return const_iterator();
+                    return const_iterator(this, size());
                 }
 
                 uint64_t size(void) const { return head_length + tail_length; }
@@ -449,7 +469,7 @@ namespace epl{
                  * error message (the string is arbitrary). If k is in bounds,
                  * then you must return a reference to the element at position
                  * k */
-                T& operator[](uint64_t i) {
+                T& operator[](const uint64_t& i) {
                     if (i < 0 || size() <= i) {
                         throw std::out_of_range("subscript out of range");
                     } else {
@@ -457,11 +477,11 @@ namespace epl{
                     }
                 }
 
-                const T& operator[](uint64_t i) const {
+                const T& operator[](const uint64_t& i) const {
                     if (i < 0 || size() <= i) {
                         throw std::out_of_range("subscript out of range");
                     } else {
-                        return (const T&)&(get_data(i));
+                        return (const T&) get_data(i);
                     }
                 }
 
