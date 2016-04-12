@@ -58,6 +58,7 @@ struct random_access_iterator_tag : public bidrectional_iterator_tag {};
 
 template <typename FI, typename Comp>
 FI partition(FI b, FI e, Comp comp, std::forward_iterator_tag _notused) {
+	std::forward<FI>(b);
 	/* this implementation assumes only forward iteration
 	 * to keep the implementation simple, I will use *b as the pivot value */
 
@@ -100,23 +101,36 @@ BI partition(BI begin, BI end, Comp comp,
 std::random_access_iterator_tag _notused) {
 	/* invariant: [b, lo) are all strictly less than pivot
 	* [hi, e) are all not less than pivot
-	* *piv_pos is the pivot value (we put piv_pos at the end
-	* for convenience) */
+	* *piv_pos is the pivot value (we put piv_pos at the end for convenience) */
 
-	if (begin == end) { return begin; } // ill defined
-	--end;
-	cout << "bidirectional\n";
+	if (begin == end) { return begin; } // ill defined case, return value is probably bogus
+
+	cout << "bidirectional\n"; // pointless print statement for illustration, delete me.
 
 	/* I'm being lazy here, we'll use the last element as pivot value */
+	--end;
 	BI piv_pos{ end };
+	/* NOTE: the real pivot value (*piv_pos) will never be inside our large-value range
+	 * recall large values are in [hi, end) and piv_pos == end */
 	BI lo{ begin };
 	BI hi{ end };
 
+	/* Invariant established: [begin, lo) is empty, [hi, end) is empty
+	 * and *piv_pos is our pivot values */
+
+	/* pointless variable assignment (with type deduction) for illustration
+	 * delete the two lines following */
 	using T = typename iterator_traits<BI>::value_type;
 	T piv = *piv_pos;
 
+	/* when lo == hi [begin, lo) is small, [lo, end) is large 
+	 * we can then complete the partition by swapping *piv_pos with lo to get
+	 * [begin, piv_pos) is small, [piv_pos, end] is large (recall we decremented
+	 * end, so the range [piv_pos, end] is closed on top using the current value for end) */
 	while (lo != hi) {
 		while (lo != hi && comp(*lo, *piv_pos)) {
+			/* if *lo < *piv_pos, then [begin, lo] is small
+			 * we can increment lo: [begin, lo) is small */
 			++lo;
 		}
 		while (lo != hi && comp(*piv_pos, *hi)) {

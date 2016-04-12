@@ -121,7 +121,13 @@ SmartPointer<Foo_nonPOD> doit(void) {
 	return p;
 }
 
+class Derived : public Foo_nonPOD {
+public:
+	~Derived(void) { cout << "Derived destructor\n"; }
+};
+
 int main(void) {
 	std::shared_ptr<Foo_nonPOD> p;
-	p = std::make_shared<Foo_nonPOD>();
+	Foo_nonPOD* dptr = new Derived;
+	p = std::shared_ptr<Foo_nonPOD>{ dptr };
 }
