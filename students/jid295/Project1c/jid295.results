@@ -1,0 +1,1223 @@
+====== Summary ======
+make: *** [PHASE_A0_0.tst] Error 1
+make: *** [PHASE_A0_1.tst] Error 1
+make: *** [PHASE_A0_2.tst] Error 1
+make: *** [PHASE_A0_4.tst] Error 1
+make: *** [PHASE_A0_3.tst] Error 1
+make: *** [PHASE_A1_0.tst] Error 1
+make: *** [PHASE_A1_1.tst] Error 1
+make: *** [PHASE_A2_1.tst] Error 1
+make: *** [PHASE_A2_0.tst] Error 1
+make: *** [PHASE_B2_0.tst] Error 1
+make: *** [PHASE_B1_0.tst] Error 1
+make: *** [PHASE_B0_0.tst] Error 1
+make: *** [PHASE_C0_2.tst] Error 1
+make: *** [PHASE_C0_1.tst] Error 1
+make: *** [PHASE_C0_0.tst] Error 1
+make: *** [PHASE_C1_1.tst] Error 1
+make: *** [PHASE_C1_0.tst] Error 1
+make: *** [PHASE_C1_2.tst] Error 1
+make: *** [PHASE_C2_1.tst] Error 1
+make: *** [PHASE_C2_0.tst] Error 1
+make: *** [PHASE_C2_2.tst] Error 1
+make: *** [PHASE_AS1_0.tst] Error 1
+make: *** [PHASE_AS0_0.tst] Error 1
+make: *** [PHASE_AS1_2.tst] Error 1
+make: *** [PHASE_AS1_1.tst] Error 1
+make: *** [PHASE_AS1_3.tst] Error 1
+make: *** [PHASE_AS2_0.tst] Error 1
+make: *** [PHASE_AS2_1.tst] Error 1
+make: *** [PHASE_BS0_0.tst] Error 1
+make: *** [PHASE_BS1_1.tst] Error 1
+make: *** [PHASE_BS1_0.tst] Error 1
+make: *** [PHASE_BS2_0.tst] Error 1
+make: *** [PHASE_CS0_0.tst] Error 1
+make: *** [PHASE_BS2_1.tst] Error 1
+make: *** [PHASE_CS0_2.tst] Error 1
+make: *** [PHASE_CS0_1.tst] Error 1
+make: *** [PHASE_CS0_3.tst] Error 1
+make: *** [PHASE_CS1_1.tst] Error 1
+make: *** [PHASE_CS1_2.tst] Error 1
+make: *** [PHASE_CS1_0.tst] Error 1
+make: *** [PHASE_CS1_5.tst] Error 1
+make: *** [PHASE_CS1_3.tst] Error 1
+make: *** [PHASE_CS1_4.tst] Error 1
+make: *** [PHASE_CS2_0.tst] Error 1
+make: *** [PHASE_CS1_6.tst] Error 1
+make: *** [PHASE_CS2_1.tst] Error 1
+make: *** [PHASE_CS2_3.tst] Error 1
+make: *** [PHASE_CS2_2.tst] Error 1
+make: *** [PHASE_CS2_4.tst] Error 1
+make: *** [PHASE_CS2_5.tst] Error 1
+
+======= Dump========
+In file included from Vector_PhaseB_unittests.cpp:17:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_secret_unittests.cpp:7:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_PhaseC_unittests.cpp:18:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_PhaseA_unittests.cpp:20:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_A0_0 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++11 -fpermissive  -pthread -o PHASE_A0_0.tst
+g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_A0_1 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++11 -fpermissive  -pthread -o PHASE_A0_1.tst
+g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_A0_2 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++11 -fpermissive  -pthread -o PHASE_A0_2.tst
+In file included from Vector_PhaseA_unittests.cpp:20:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_PhaseA_unittests.cpp:20:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_PhaseA_unittests.cpp:20:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_PhaseB_unittests.cpp:17:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_PhaseB_unittests.cpp:17:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_PhaseB_unittests.cpp:17:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_PhaseC_unittests.cpp:18:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_PhaseC_unittests.cpp:18:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_secret_unittests.cpp:7:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+Makefile:27: recipe for target 'PHASE_A0_0.tst' failed
+make: *** [PHASE_A0_0.tst] Error 1
+g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_A0_3 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++11 -fpermissive  -pthread -o PHASE_A0_3.tst
+In file included from Vector_PhaseC_unittests.cpp:18:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_secret_unittests.cpp:7:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+Makefile:27: recipe for target 'PHASE_A0_1.tst' failed
+make: *** [PHASE_A0_1.tst] Error 1
+g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_A0_4 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++11 -fpermissive  -pthread -o PHASE_A0_4.tst
+In file included from Vector_PhaseA_unittests.cpp:20:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_secret_unittests.cpp:7:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+Makefile:27: recipe for target 'PHASE_A0_2.tst' failed
+make: *** [PHASE_A0_2.tst] Error 1
+g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_A1_0 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++11 -fpermissive  -pthread -o PHASE_A1_0.tst
+In file included from Vector_PhaseA_unittests.cpp:20:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_PhaseB_unittests.cpp:17:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_PhaseB_unittests.cpp:17:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_PhaseA_unittests.cpp:20:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_PhaseC_unittests.cpp:18:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+In file included from Vector_PhaseC_unittests.cpp:18:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+compilation terminated.
+In file included from Vector_PhaseB_unittests.cpp:17:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_secret_unittests.cpp:7:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+Makefile:27: recipe for target 'PHASE_A0_4.tst' failed
+make: *** [PHASE_A0_4.tst] Error 1
+g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_A1_1 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++11 -fpermissive  -pthread -o PHASE_A1_1.tst
+In file included from Vector_PhaseC_unittests.cpp:18:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_secret_unittests.cpp:7:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+Makefile:27: recipe for target 'PHASE_A0_3.tst' failed
+make: *** [PHASE_A0_3.tst] Error 1
+g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_A2_0 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++11 -fpermissive  -pthread -o PHASE_A2_0.tst
+In file included from Vector_secret_unittests.cpp:7:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+Makefile:27: recipe for target 'PHASE_A1_0.tst' failed
+make: *** [PHASE_A1_0.tst] Error 1
+g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_A2_1 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++11 -fpermissive  -pthread -o PHASE_A2_1.tst
+In file included from Vector_PhaseA_unittests.cpp:20:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_PhaseB_unittests.cpp:17:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_PhaseA_unittests.cpp:20:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_PhaseA_unittests.cpp:20:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_PhaseB_unittests.cpp:17:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_PhaseC_unittests.cpp:18:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_PhaseB_unittests.cpp:17:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_PhaseC_unittests.cpp:18:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_secret_unittests.cpp:7:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_PhaseC_unittests.cpp:18:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+Makefile:27: recipe for target 'PHASE_A1_1.tst' failed
+make: *** [PHASE_A1_1.tst] Error 1
+g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_B0_0 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++11 -fpermissive  -pthread -o PHASE_B0_0.tst
+In file included from Vector_secret_unittests.cpp:7:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+Makefile:27: recipe for target 'PHASE_A2_1.tst' failed
+make: *** [PHASE_A2_1.tst] Error 1
+g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_B1_0 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++11 -fpermissive  -pthread -o PHASE_B1_0.tst
+In file included from Vector_secret_unittests.cpp:7:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+Makefile:27: recipe for target 'PHASE_A2_0.tst' failed
+make: *** [PHASE_A2_0.tst] Error 1
+g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_B2_0 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++11 -fpermissive  -pthread -o PHASE_B2_0.tst
+In file included from Vector_PhaseA_unittests.cpp:20:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_PhaseA_unittests.cpp:20:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_PhaseB_unittests.cpp:17:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_PhaseA_unittests.cpp:20:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_PhaseB_unittests.cpp:17:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_PhaseB_unittests.cpp:17:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_PhaseC_unittests.cpp:18:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_PhaseC_unittests.cpp:18:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_PhaseC_unittests.cpp:18:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_secret_unittests.cpp:7:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+Makefile:27: recipe for target 'PHASE_B2_0.tst' failed
+make: *** [PHASE_B2_0.tst] Error 1
+g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_C0_0 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++11 -fpermissive  -pthread -o PHASE_C0_0.tst
+In file included from Vector_secret_unittests.cpp:7:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+Makefile:27: recipe for target 'PHASE_B1_0.tst' failed
+make: *** [PHASE_B1_0.tst] Error 1
+g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_C0_1 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++11 -fpermissive  -pthread -o PHASE_C0_1.tst
+In file included from Vector_secret_unittests.cpp:7:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+Makefile:27: recipe for target 'PHASE_B0_0.tst' failed
+make: *** [PHASE_B0_0.tst] Error 1
+g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_C0_2 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++11 -fpermissive  -pthread -o PHASE_C0_2.tst
+In file included from Vector_PhaseA_unittests.cpp:20:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_PhaseA_unittests.cpp:20:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_PhaseA_unittests.cpp:20:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_PhaseB_unittests.cpp:17:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_PhaseB_unittests.cpp:17:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_PhaseB_unittests.cpp:17:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_PhaseC_unittests.cpp:18:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_PhaseC_unittests.cpp:18:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_PhaseC_unittests.cpp:18:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_secret_unittests.cpp:7:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+Makefile:27: recipe for target 'PHASE_C0_2.tst' failed
+make: *** [PHASE_C0_2.tst] Error 1
+g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_C1_0 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++11 -fpermissive  -pthread -o PHASE_C1_0.tst
+In file included from Vector_secret_unittests.cpp:7:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+Makefile:27: recipe for target 'PHASE_C0_1.tst' failed
+make: *** [PHASE_C0_1.tst] Error 1
+g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_C1_1 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++11 -fpermissive  -pthread -o PHASE_C1_1.tst
+In file included from Vector_PhaseA_unittests.cpp:20:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_secret_unittests.cpp:7:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+Makefile:27: recipe for target 'PHASE_C0_0.tst' failed
+make: *** [PHASE_C0_0.tst] Error 1
+g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_C1_2 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++11 -fpermissive  -pthread -o PHASE_C1_2.tst
+In file included from Vector_PhaseA_unittests.cpp:20:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_PhaseB_unittests.cpp:17:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_PhaseB_unittests.cpp:17:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_PhaseA_unittests.cpp:20:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_PhaseC_unittests.cpp:18:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_PhaseC_unittests.cpp:18:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_secret_unittests.cpp:7:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+Makefile:27: recipe for target 'PHASE_C1_1.tst' failed
+make: *** [PHASE_C1_1.tst] Error 1
+g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_C2_0 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++11 -fpermissive  -pthread -o PHASE_C2_0.tst
+In file included from Vector_PhaseB_unittests.cpp:17:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_secret_unittests.cpp:7:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+Makefile:27: recipe for target 'PHASE_C1_0.tst' failed
+make: *** [PHASE_C1_0.tst] Error 1
+g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_C2_1 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++11 -fpermissive  -pthread -o PHASE_C2_1.tst
+In file included from Vector_PhaseA_unittests.cpp:20:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_PhaseC_unittests.cpp:18:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_PhaseA_unittests.cpp:20:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_PhaseB_unittests.cpp:17:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_secret_unittests.cpp:7:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_PhaseB_unittests.cpp:17:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+Makefile:27: recipe for target 'PHASE_C1_2.tst' failed
+compilation terminated.
+make: *** [PHASE_C1_2.tst] Error 1
+g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_C2_2 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++11 -fpermissive  -pthread -o PHASE_C2_2.tst
+In file included from Vector_PhaseC_unittests.cpp:18:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_PhaseA_unittests.cpp:20:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_PhaseC_unittests.cpp:18:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_secret_unittests.cpp:7:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+Makefile:27: recipe for target 'PHASE_C2_1.tst' failed
+make: *** [PHASE_C2_1.tst] Error 1
+g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_AS0_0 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++11 -fpermissive  -pthread -o PHASE_AS0_0.tst
+In file included from Vector_PhaseB_unittests.cpp:17:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_secret_unittests.cpp:7:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+Makefile:27: recipe for target 'PHASE_C2_0.tst' failed
+make: *** [PHASE_C2_0.tst] Error 1
+g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_AS1_0 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++11 -fpermissive  -pthread -o PHASE_AS1_0.tst
+In file included from Vector_PhaseC_unittests.cpp:18:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_PhaseA_unittests.cpp:20:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_PhaseA_unittests.cpp:20:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_secret_unittests.cpp:7:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+Makefile:27: recipe for target 'PHASE_C2_2.tst' failed
+make: *** [PHASE_C2_2.tst] Error 1
+g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_AS1_1 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++11 -fpermissive  -pthread -o PHASE_AS1_1.tst
+In file included from Vector_PhaseB_unittests.cpp:17:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_PhaseB_unittests.cpp:17:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_PhaseC_unittests.cpp:18:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_PhaseA_unittests.cpp:20:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_PhaseC_unittests.cpp:18:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_secret_unittests.cpp:7:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+Makefile:27: recipe for target 'PHASE_AS1_0.tst' failed
+make: *** [PHASE_AS1_0.tst] Error 1
+g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_AS1_2 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++11 -fpermissive  -pthread -o PHASE_AS1_2.tst
+In file included from Vector_PhaseA_unittests.cpp:20:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_PhaseB_unittests.cpp:17:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_secret_unittests.cpp:7:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+Makefile:27: recipe for target 'PHASE_AS0_0.tst' failed
+make: *** [PHASE_AS0_0.tst] Error 1
+g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_AS1_3 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++11 -fpermissive  -pthread -o PHASE_AS1_3.tst
+In file included from Vector_PhaseB_unittests.cpp:17:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_PhaseA_unittests.cpp:20:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_PhaseC_unittests.cpp:18:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_PhaseC_unittests.cpp:18:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_PhaseB_unittests.cpp:17:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_secret_unittests.cpp:7:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+Makefile:27: recipe for target 'PHASE_AS1_2.tst' failed
+make: *** [PHASE_AS1_2.tst] Error 1
+g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_AS2_0 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++11 -fpermissive  -pthread -o PHASE_AS2_0.tst
+In file included from Vector_PhaseA_unittests.cpp:20:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_secret_unittests.cpp:7:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+Makefile:27: recipe for target 'PHASE_AS1_1.tst' failed
+make: *** [PHASE_AS1_1.tst] Error 1
+g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_AS2_1 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++11 -fpermissive  -pthread -o PHASE_AS2_1.tst
+In file included from Vector_PhaseC_unittests.cpp:18:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_PhaseA_unittests.cpp:20:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_PhaseB_unittests.cpp:17:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_secret_unittests.cpp:7:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+Makefile:27: recipe for target 'PHASE_AS1_3.tst' failed
+make: *** [PHASE_AS1_3.tst] Error 1
+g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_BS0_0 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++11 -fpermissive  -pthread -o PHASE_BS0_0.tst
+In file included from Vector_PhaseB_unittests.cpp:17:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_PhaseA_unittests.cpp:20:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_PhaseC_unittests.cpp:18:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_PhaseB_unittests.cpp:17:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_PhaseC_unittests.cpp:18:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_PhaseC_unittests.cpp:18:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_secret_unittests.cpp:7:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+Makefile:27: recipe for target 'PHASE_AS2_0.tst' failed
+make: *** [PHASE_AS2_0.tst] Error 1
+g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_BS1_0 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++11 -fpermissive  -pthread -o PHASE_BS1_0.tst
+In file included from Vector_secret_unittests.cpp:7:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+Makefile:27: recipe for target 'PHASE_AS2_1.tst' failed
+make: *** [PHASE_AS2_1.tst] Error 1
+g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_BS1_1 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++11 -fpermissive  -pthread -o PHASE_BS1_1.tst
+In file included from Vector_secret_unittests.cpp:7:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+Makefile:27: recipe for target 'PHASE_BS0_0.tst' failed
+make: *** [PHASE_BS0_0.tst] Error 1
+g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_BS2_0 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++11 -fpermissive  -pthread -o PHASE_BS2_0.tst
+In file included from Vector_PhaseA_unittests.cpp:20:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_PhaseA_unittests.cpp:20:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_PhaseA_unittests.cpp:20:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+In file included from Vector_PhaseB_unittests.cpp:17:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+compilation terminated.
+In file included from Vector_PhaseB_unittests.cpp:17:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_PhaseC_unittests.cpp:18:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_PhaseC_unittests.cpp:18:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_PhaseB_unittests.cpp:17:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_secret_unittests.cpp:7:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+Makefile:27: recipe for target 'PHASE_BS1_1.tst' failed
+make: *** [PHASE_BS1_1.tst] Error 1
+g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_BS2_1 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++11 -fpermissive  -pthread -o PHASE_BS2_1.tst
+In file included from Vector_secret_unittests.cpp:7:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+Makefile:27: recipe for target 'PHASE_BS1_0.tst' failed
+make: *** [PHASE_BS1_0.tst] Error 1
+g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_CS0_0 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++11 -fpermissive  -pthread -o PHASE_CS0_0.tst
+In file included from Vector_PhaseA_unittests.cpp:20:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+In file included from Vector_PhaseC_unittests.cpp:18:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+compilation terminated.
+In file included from Vector_PhaseA_unittests.cpp:20:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_secret_unittests.cpp:7:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+Makefile:27: recipe for target 'PHASE_BS2_0.tst' failed
+make: *** [PHASE_BS2_0.tst] Error 1
+g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_CS0_1 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++11 -fpermissive  -pthread -o PHASE_CS0_1.tst
+In file included from Vector_PhaseB_unittests.cpp:17:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_PhaseB_unittests.cpp:17:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_PhaseC_unittests.cpp:18:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_PhaseC_unittests.cpp:18:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_PhaseA_unittests.cpp:20:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_secret_unittests.cpp:7:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+Makefile:27: recipe for target 'PHASE_CS0_0.tst' failed
+make: *** [PHASE_CS0_0.tst] Error 1
+g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_CS0_2 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++11 -fpermissive  -pthread -o PHASE_CS0_2.tst
+In file included from Vector_secret_unittests.cpp:7:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_PhaseA_unittests.cpp:20:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+Makefile:27: recipe for target 'PHASE_BS2_1.tst' failed
+make: *** [PHASE_BS2_1.tst] Error 1
+g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_CS0_3 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++11 -fpermissive  -pthread -o PHASE_CS0_3.tst
+In file included from Vector_PhaseB_unittests.cpp:17:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_PhaseB_unittests.cpp:17:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_PhaseA_unittests.cpp:20:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_PhaseC_unittests.cpp:18:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_PhaseC_unittests.cpp:18:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_PhaseB_unittests.cpp:17:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_secret_unittests.cpp:7:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+Makefile:27: recipe for target 'PHASE_CS0_2.tst' failed
+make: *** [PHASE_CS0_2.tst] Error 1
+g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_CS1_0 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++11 -fpermissive  -pthread -o PHASE_CS1_0.tst
+In file included from Vector_PhaseC_unittests.cpp:18:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_secret_unittests.cpp:7:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+Makefile:27: recipe for target 'PHASE_CS0_1.tst' failed
+make: *** [PHASE_CS0_1.tst] Error 1
+g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_CS1_1 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++11 -fpermissive  -pthread -o PHASE_CS1_1.tst
+In file included from Vector_PhaseA_unittests.cpp:20:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_PhaseA_unittests.cpp:20:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_secret_unittests.cpp:7:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+Makefile:27: recipe for target 'PHASE_CS0_3.tst' failed
+make: *** [PHASE_CS0_3.tst] Error 1
+g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_CS1_2 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++11 -fpermissive  -pthread -o PHASE_CS1_2.tst
+In file included from Vector_PhaseB_unittests.cpp:17:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_PhaseA_unittests.cpp:20:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_PhaseB_unittests.cpp:17:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_PhaseC_unittests.cpp:18:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_PhaseB_unittests.cpp:17:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_PhaseC_unittests.cpp:18:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_PhaseC_unittests.cpp:18:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_secret_unittests.cpp:7:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+Makefile:27: recipe for target 'PHASE_CS1_1.tst' failed
+make: *** [PHASE_CS1_1.tst] Error 1
+g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_CS1_3 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++11 -fpermissive  -pthread -o PHASE_CS1_3.tst
+In file included from Vector_secret_unittests.cpp:7:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+Makefile:27: recipe for target 'PHASE_CS1_2.tst' failed
+make: *** [PHASE_CS1_2.tst] Error 1
+g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_CS1_4 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++11 -fpermissive  -pthread -o PHASE_CS1_4.tst
+In file included from Vector_secret_unittests.cpp:7:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+Makefile:27: recipe for target 'PHASE_CS1_0.tst' failed
+make: *** [PHASE_CS1_0.tst] Error 1
+g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_CS1_5 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++11 -fpermissive  -pthread -o PHASE_CS1_5.tst
+In file included from Vector_PhaseA_unittests.cpp:20:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_PhaseA_unittests.cpp:20:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_PhaseA_unittests.cpp:20:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_PhaseB_unittests.cpp:17:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_PhaseB_unittests.cpp:17:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_PhaseB_unittests.cpp:17:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_PhaseC_unittests.cpp:18:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_PhaseC_unittests.cpp:18:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_PhaseC_unittests.cpp:18:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_secret_unittests.cpp:7:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+Makefile:27: recipe for target 'PHASE_CS1_5.tst' failed
+make: *** [PHASE_CS1_5.tst] Error 1
+g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_CS1_6 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++11 -fpermissive  -pthread -o PHASE_CS1_6.tst
+In file included from Vector_secret_unittests.cpp:7:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+Makefile:27: recipe for target 'PHASE_CS1_3.tst' failed
+make: *** [PHASE_CS1_3.tst] Error 1
+g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_CS2_0 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++11 -fpermissive  -pthread -o PHASE_CS2_0.tst
+In file included from Vector_PhaseA_unittests.cpp:20:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_secret_unittests.cpp:7:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+Makefile:27: recipe for target 'PHASE_CS1_4.tst' failed
+make: *** [PHASE_CS1_4.tst] Error 1
+g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_CS2_1 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++11 -fpermissive  -pthread -o PHASE_CS2_1.tst
+In file included from Vector_PhaseA_unittests.cpp:20:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_PhaseB_unittests.cpp:17:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_PhaseB_unittests.cpp:17:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_PhaseC_unittests.cpp:18:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_PhaseA_unittests.cpp:20:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_PhaseC_unittests.cpp:18:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_secret_unittests.cpp:7:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+Makefile:27: recipe for target 'PHASE_CS2_0.tst' failed
+make: *** [PHASE_CS2_0.tst] Error 1
+g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_CS2_2 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++11 -fpermissive  -pthread -o PHASE_CS2_2.tst
+In file included from Vector_PhaseB_unittests.cpp:17:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_secret_unittests.cpp:7:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+Makefile:27: recipe for target 'PHASE_CS1_6.tst' failed
+make: *** [PHASE_CS1_6.tst] Error 1
+g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_CS2_3 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++11 -fpermissive  -pthread -o PHASE_CS2_3.tst
+In file included from Vector_PhaseA_unittests.cpp:20:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_PhaseA_unittests.cpp:20:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_PhaseC_unittests.cpp:18:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_PhaseB_unittests.cpp:17:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_PhaseB_unittests.cpp:17:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_PhaseC_unittests.cpp:18:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_secret_unittests.cpp:7:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+Makefile:27: recipe for target 'PHASE_CS2_1.tst' failed
+make: *** [PHASE_CS2_1.tst] Error 1
+g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_CS2_4 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++11 -fpermissive  -pthread -o PHASE_CS2_4.tst
+In file included from Vector_PhaseC_unittests.cpp:18:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_secret_unittests.cpp:7:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+Makefile:27: recipe for target 'PHASE_CS2_3.tst' failed
+make: *** [PHASE_CS2_3.tst] Error 1
+g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_CS2_5 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++11 -fpermissive  -pthread -o PHASE_CS2_5.tst
+In file included from Vector_secret_unittests.cpp:7:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+Makefile:27: recipe for target 'PHASE_CS2_2.tst' failed
+make: *** [PHASE_CS2_2.tst] Error 1
+In file included from Vector_PhaseA_unittests.cpp:20:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_PhaseA_unittests.cpp:20:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_PhaseB_unittests.cpp:17:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_PhaseB_unittests.cpp:17:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_PhaseC_unittests.cpp:18:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_PhaseC_unittests.cpp:18:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+In file included from Vector_secret_unittests.cpp:7:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+Makefile:27: recipe for target 'PHASE_CS2_4.tst' failed
+make: *** [PHASE_CS2_4.tst] Error 1
+In file included from Vector_secret_unittests.cpp:7:0:
+Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
+ #include "iterator.hpp"
+                        ^
+compilation terminated.
+Makefile:27: recipe for target 'PHASE_CS2_5.tst' failed
+make: *** [PHASE_CS2_5.tst] Error 1
