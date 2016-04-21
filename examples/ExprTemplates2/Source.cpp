@@ -18,9 +18,9 @@ template <typename T> struct choose_ref {
 	using type = T;
 };
 
-template<> struct choose_ref<SmartString> {
-	using type = SmartString const&;
-};
+//template<> struct choose_ref<SmartString> {
+//	using type = SmartString const&;
+//};
 
 template <typename T> using ChooseRef = typename choose_ref<T>::type;
 
@@ -42,57 +42,68 @@ public:
 	}
 
 	void print(std::ostream& out) const {
-		out << s1;
-		out << s2;
+		s1.print(out);
+		s2.print(out);
 	}
 };
 
+template <typename S>
+struct Wrap : public S {
+	using S::S;
+	Wrap(const S& s) : S(s) {}
+};
 
+using string = Wrap<SmartString>;
 
-ConcatString<SmartString,SmartString>
-operator+(SmartString const& lhs, SmartString const& rhs) {
-	return ConcatString<SmartString, SmartString>{ lhs, rhs };
+template<typename S1, typename S2>
+Wrap<ConcatString<S1,S2>>
+operator+(Wrap<S1> const& lhs, Wrap<S2> const& rhs) {
+	S1 const& left{ lhs };
+	S2 const& right{ rhs };
+	ConcatString<S1, S2> result{ left, right };
+
+	Wrap<ConcatString<S1, S2>> wrapped_result{ result };
+
+	return wrapped_result;
 }
 
-template <typename LHSType, typename RHSType>
-ConcatString<ConcatString<LHSType, RHSType>, SmartString>
-operator+(ConcatString<LHSType, RHSType> const& lhs, SmartString const& rhs) {
-	return ConcatString<ConcatString<LHSType, RHSType>, SmartString>{ lhs, rhs };
+
+class CStringWrapper {
+	const char* ptr;
+public:
+	CStringWrapper(const char* ptr) { this->ptr = ptr; }
+	char operator[](uint64_t k) const { return ptr[k]; }
+	uint64_t size(void) const { return strlen(ptr); }
+	void print(std::ostream& out) const {
+		out << ptr;
+	}
+};
+
+template <typename S>
+Wrap<ConcatString<CStringWrapper, S>>
+operator+(const char* left, Wrap<S> const& right) {
+	return Wrap<ConcatString<CStringWrapper, S>>{CStringWrapper{ left }, right};
 }
 
-template <typename LHSType, typename RHSType>
-ConcatString<SmartString, ConcatString<LHSType, RHSType>>
-operator+(SmartString const& lhs, ConcatString<LHSType, RHSType> const& rhs) {
-	return ConcatString<SmartString, ConcatString<LHSType, RHSType>>{ lhs, rhs };
+template <typename S>
+Wrap<ConcatString<S, CStringWrapper>>
+operator+(Wrap<S> const& left, const char* right) {
+	return Wrap<ConcatString<S, CStringWrapper>>{left, CStringWrapper{ right }};
 }
-
-template <typename LHS1Type, typename RHS1Type, typename LHS2Type, typename RHS2Type>
-ConcatString<ConcatString<LHS1Type, RHS1Type>, ConcatString<LHS2Type, RHS2Type>>
-operator+(ConcatString<LHS1Type, RHS1Type> const& lhs, 
-	ConcatString<LHS2Type, RHS2Type> const& rhs) 
-{
-	return ConcatString<ConcatString<LHS1Type, RHS1Type>, 
-		ConcatString<LHS2Type, RHS2Type>>{ lhs, rhs };
-}
-
 
 template <typename T>
-std::ostream& operator<<(std::ostream& out, T const& str) {
+std::ostream& operator<<(std::ostream& out, Wrap<T> const& str) {
 	str.print(out);
 	return out;
 }
 
 
 /* --- client code here --- */
-using string = SmartString;
 
 int main(void) {
 	string first = "Craig";
 	string last = "Chase";
 	string greeting = "Hello ";
-	cout << greeting + first + last << endl;
-	auto t1 = greeting + first;
-	auto t2 = t1 + last;
-	cout << t2;
-
+	cout << ((greeting + first) + last) << endl;
+	cout << ("Hello " + first) + " " + last << endl;
 }
