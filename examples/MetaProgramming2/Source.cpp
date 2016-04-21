@@ -53,8 +53,8 @@ void case1(void) {
 
 
 
-template <typename T>
-void bracket(T const&, ...) {
+template <typename T, typename... Args>
+void bracket(T const&, Args...) {
 	cout << "general\n";
 }
 
@@ -64,19 +64,35 @@ void bracket(T const& x) {
 	cout << "specific to types with op[]\n";
 }
 
+template <bool p, typename T>
+struct enable_if {
+	using type = T;
+};
 
-void doit(int x) {
 
-}
+template <typename T>
+struct like_it {
+	static constexpr bool value = false; 
+};
 
-void doit(int x, ...) {
+template <> struct like_it<int> { static constexpr bool value = true; };
+template <> struct like_it<float> : public std::true_type {};
+template <> struct like_it<double> : public std::true_type {};
 
-}
+template <bool p, typename T>
+using EnableIf = typename enable_if<p, T>::type;
+
+template <typename T>
+EnableIf<!like_it<T>::value, T> fred(T const& x) { cout << "general\n";  return x; }
+
+
+/* use only if T::foo exists as a non-static method with zero arguments */
+template <typename T>
+EnableIf<like_it<T>::value, T> fred(T const& x) { cout << "second!\n";  return x; }
 
 int main(void) {
-	doit(42);
 
-	//bracket(42);
-	//int x[10];
-	//bracket(x);
+	bracket(42);
+	int x[10];
+	bracket(x);
 }
