@@ -92,8 +92,8 @@ struct get_component<0, Tuple<tuple_args...>> {
 template <int index, typename FirstArg, typename... tuple_args>
 struct get_component<index, Tuple<FirstArg, tuple_args...>> {
 	static auto extract(Tuple<FirstArg,tuple_args...>& tuple) 
-		-> decltype(get_component < index - 1, Tuple<tuple_args...>(tuple))& {
-		return get_component < index - 1, Tuple<tuple_args...>(tuple);
+		-> decltype(get_component < index - 1, Tuple<tuple_args...>>(tuple))& {
+		return get_component < index - 1, Tuple<tuple_args...>>(tuple);
 	}
 };
 
