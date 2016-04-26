@@ -86,7 +86,27 @@ valarray<T> operator+(valarray<T> const& lhs, valarray<T> const& rhs) {
         apply_op<std::plus<T>>(result, lhs, rhs);
         return result;
 }
- 
+
+template <typename T>
+valarray<T> operator-(valarray<T> const& lhs, valarray<T> const& rhs) {
+        valarray<T> result(std::min(lhs.size(), rhs.size()));
+        apply_op<std::minus<T>>(result, lhs, rhs);
+        return result;
+}
+
+template <typename T>
+valarray<T> operator*(valarray<T> const& lhs, valarray<T> const& rhs) {
+        valarray<T> result(std::min(lhs.size(), rhs.size()));
+        apply_op<std::multiplies<T>>(result, lhs, rhs);
+        return result;
+}
+template <typename T>
+valarray<T> operator/(valarray<T> const& lhs, valarray<T> const& rhs) {
+        valarray<T> result(std::min(lhs.size(), rhs.size()));
+        apply_op<std::divides<T>>(result, lhs, rhs);
+        return result;
+}
+
 template <typename T>
 inline std::ostream& operator<<(std::ostream& ost, const valarray<T>& arr) {
     for (auto val: arr) {
