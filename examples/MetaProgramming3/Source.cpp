@@ -65,15 +65,46 @@ struct Tuple<T> {
 };
 
 template <typename T, typename... OtherArgs>
-struct Tuple<T, OtherArgs> : public Tuple<OtherArgs...> {
+struct Tuple<T, OtherArgs...> : public Tuple<OtherArgs...> {
 	T val;
 };
 
 
-int main(void) {
+void test2(void) {
 	Tuple<int> x;
 	x.val = 42;
-	Tuple<int, int> y;
+	Tuple<int, std::string> y;
+	y.val = 0;
+	Tuple<std::string>& y_tail = y;
+	y_tail.val = "Hello World";
+}
+
+template <int index, typename tuple>
+struct get_component;
+
+template <typename... tuple_args>
+struct get_component<0, Tuple<tuple_args...>> {
+	static auto extract(Tuple<tuple_args...>& tuple) -> decltype(tuple.val)& {
+		return tuple.val;
+	}
+};
+
+template <int index, typename FirstArg, typename... tuple_args>
+struct get_component<index, Tuple<FirstArg, tuple_args...>> {
+	static auto extract(Tuple<FirstArg,tuple_args...>& tuple) 
+		-> decltype(get_component < index - 1, Tuple<tuple_args...>(tuple))& {
+		return get_component < index - 1, Tuple<tuple_args...>(tuple);
+	}
+};
+
+int main(void) {
+	using T = Tuple<int, std::string>;
+	T x;
+	get_component<0, T>(x) = 42;
+	get_component<1, T>(x) = "Hello World";
+
+
+
 }
 
 
