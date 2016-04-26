@@ -100,8 +100,8 @@ struct get_component<index, Tuple<FirstArg, tuple_args...>> {
 int main(void) {
 	using T = Tuple<int, std::string>;
 	T x;
-	get_component<0, T>(x) = 42;
-	get_component<1, T>(x) = "Hello World";
+	get_component<0, T>::extract(x) = 42;
+	get_component<1, T>::extract(x) = "Hello World";
 
 
 
