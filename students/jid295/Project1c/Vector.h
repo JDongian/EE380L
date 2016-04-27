@@ -5,7 +5,6 @@
 
 #include <iostream>
 #include <cstring>
-#include "iterator.hpp"
 
 
 namespace epl{
@@ -30,6 +29,7 @@ namespace epl{
                 uint64_t tail_capacity;
 
                 uint64_t version = 0;
+                uint64_t allocations = 0;
 
                 static constexpr uint64_t default_capacity = 8;
 
@@ -41,6 +41,8 @@ namespace epl{
                     tail_data = (T*) std::malloc(sizeof(T) * (default_capacity / 2));
                     tail_length = 0;
                     tail_capacity = default_capacity / 2;
+
+                    ++allocations;
                     ////printf("DEBUG: INIT(void) (%d/%d) @%lu\n",
                     ////        (int) head_length, (int) tail_length, (long) this);
                 }
@@ -97,6 +99,7 @@ namespace epl{
                         head_data = nullptr;
                     } else {
                         head_data = (T*) std::malloc(sizeof(T) * other.head_length);
+                        ++allocations;
                         for (int i = 0; i < other.head_length; ++i) {
                             // copy construct data
                             new (head_data + i) T{other.head_data[i]};
@@ -108,11 +111,14 @@ namespace epl{
                         tail_data = nullptr;
                     } else {
                         tail_data = (T*) std::malloc(sizeof(T) * other.tail_length);
+                        ++allocations;
                         for (int i = 0; i < other.tail_length; ++i) {
                             // copy construct data
                             new (tail_data + i) T{other.tail_data[i]};
                         }
                     }
+
+                    ++version;
                 }
 
                 //                void swap(T& first, T& second) {
@@ -141,6 +147,7 @@ namespace epl{
                         capacity *= 3;
                         // same as malloc if nullptr
                         data = (T*) std::realloc(data, sizeof(T) * capacity);
+                        ++allocations;
                         ////printf("DEBUG capacity doubled.\n");
                     }
                     // insert new element using copy constructor,
@@ -160,6 +167,7 @@ namespace epl{
                         capacity *= 2;
                         // same as malloc if nullptr
                         data = (T*) std::realloc(data, sizeof(T) * capacity);
+                        ++allocations;
                     }
                     // insert new element using move constructor
                     new (data + length) T{std::move(new_value)};
@@ -206,22 +214,30 @@ namespace epl{
                         vector<T, A>* data;
                         uint64_t index;
                         uint64_t data_version;
+                        uint64_t allocations;
 
                         void bounds_check(void) const {
-                            if (index < 0 || data->size() < index) {
+                            if (index < 0 || data->size() < index || data->size() == 0) {
                                 throw invalid_iterator(invalid_iterator::SEVERE);
+                            }
+                        }
+
+                        void alloc_check(void) const {
+                            if (data->allocations != allocations) {
+                                throw invalid_iterator(invalid_iterator::MODERATE);
                             }
                         }
 
                         void version_check(void) const {
                             if (data->version != data_version) {
-                                throw invalid_iterator(invalid_iterator::MODERATE);
+                                throw invalid_iterator(invalid_iterator::MILD);
                             }
                         }
 
                         void check(void) const {
                             ////printf("DEBUG CHECK %lu (%lu)\n", index, data->size());
                             bounds_check();
+                            alloc_check();
                             version_check();
                         }
 
@@ -240,12 +256,14 @@ namespace epl{
                             data = v;
                             index = i;
                             data_version = data->version;
+                            allocations = data->allocations;
                             ////printf("DEBUG ITERATOR CONSTRUCTOR (%lu) v%lu\n", i, data_version);
                         }
                         iterator(const iterator& other) {
                             index = other.index;
                             data = other.data;
                             data_version = data->version;
+                            allocations = data->allocations;
                             ////printf("DEBUG ITERATOR COPY\n");
                         }
                         ~iterator() {
@@ -343,12 +361,20 @@ namespace epl{
                         const vector<T, A>* data;
                         uint64_t index;
                         uint64_t data_version;
+                        uint64_t allocations;
 
                         void bounds_check(void) const {
-                            if (index < 0 || data->size() < index) {
+                            if (index < 0 || data->size() < index || data->size() == 0) {
                                 throw invalid_iterator(invalid_iterator::SEVERE);
                             }
                         }
+
+                        void alloc_check(void) const {
+                            if (data->allocations != allocations) {
+                                throw invalid_iterator(invalid_iterator::MODERATE);
+                            }
+                        }
+
 
                         void version_check(void) const {
                             if (data->version != data_version) {
@@ -359,6 +385,7 @@ namespace epl{
                         void check(void) const {
                             ////printf("DEBUG CHECK %lu (%lu)\n", index, data->size());
                             bounds_check();
+                            alloc_check();
                             version_check();
                         }
 
@@ -379,12 +406,14 @@ namespace epl{
                             data = v;
                             index = i;
                             data_version = data->version;
+                            allocations = data->allocations;
                             ////printf("DEBUG const_iterator CONSTRUCTOR (%lu) v%lu\n", i, data_version);
                         }
                         const_iterator(const const_iterator& other) {
                             index = other.index;
                             data = other.data;
                             data_version = data->version;
+                            allocations = data->allocations;
                             ////printf("DEBUG const_iterator COPY\n");
                         }
                         ~const_iterator() {
@@ -497,6 +526,7 @@ namespace epl{
                         tail_length = n;
                         // allocate T(void) n times
                         tail_data = (T*) std::malloc(sizeof(T) * n);
+                        ++allocations;
                         //tail_data = new T[n];
 
                         for (int i = 0; i < tail_length; ++i) {
