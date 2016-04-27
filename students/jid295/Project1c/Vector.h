@@ -503,7 +503,9 @@ namespace epl{
                             throw std::out_of_range("op-> not implemented");
                             //return nullptr;
                         }
-                        //reference operator[](size_type) const; //optional
+                        reference operator[](int offset) const {
+                            return (data->operator[](index + offset));
+                        }
                 };
 
                 // constructors and destructors
