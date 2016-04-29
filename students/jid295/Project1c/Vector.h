@@ -335,12 +335,38 @@ namespace epl{
                             return *this;
                         }
 
-                        //iterator& operator+=(size_type); //optional
-                        //iterator operator+(size_type) const; //optional
+                        iterator& operator+=(uint64_t n) {
+                            check();
+                            index += n;
+                            return *this;
+                        }
+
+                        iterator operator+(uint64_t n) const {
+                            check();
+                            index += n;
+                            return *this;
+                        }
+
                         //friend iterator operator+(size_type, const iterator&); //optional
-                        //iterator& operator-=(size_type); //optional            
-                        //iterator operator-(size_type) const; //optional
-                        //difference_type operator-(iterator) const; //optional
+
+                        iterator& operator-=(uint64_t n) {
+                            check();
+                            index -= n;
+                            return *this;
+                        }
+
+                        iterator operator-(uint64_t n) const {
+                            check();
+                            index -= n;
+                            return *this;
+                        }
+
+                        iterator& operator-(iterator& other) const {
+                            check();
+                            uint64_t d = this->position - other.position;
+                            this->position = this->position - d;
+                            return *this;
+                        }
 
                         reference operator*() const {
                             check();
@@ -350,7 +376,7 @@ namespace epl{
                         pointer operator->() const {
                             check();
                             //return data[index];
-                            throw std::out_of_range("op-> not implemented");
+                            throw std::out_of_range("op-> not implemented"); // herp
                             //return nullptr;
                         }
                         reference operator[](int offset) const {
@@ -487,12 +513,40 @@ namespace epl{
                             return *this;
                         }
 
-                        //const_iterator& operator+=(size_type); //optional
-                        //const_iterator operator+(size_type) const; //optional
+                        const_iterator& operator+=(uint64_t n) {
+                            check();
+                            index += n;
+                            return *this;
+                        }
+
+                        const_iterator operator+(uint64_t n) const {
+                            check();
+                            index += n;
+                            return *this;
+                        }
+
+                        //friend iterator operator+(size_type, const iterator&); //optional
+
+                        const_iterator& operator-=(uint64_t n) {
+                            check();
+                            index -= n;
+                            return *this;
+                        }
+
+                        const_iterator operator-(uint64_t n) const {
+                            check();
+                            index -= n;
+                            return *this;
+                        }
+
+                        const_iterator& operator-(iterator& other) const {
+                            check();
+                            uint64_t d = this->position - other.position;
+                            this->position = this->position - d;
+                            return *this;
+                        }
+
                         //friend const_iterator operator+(size_type, const const_iterator&); //optional
-                        //const_iterator& operator-=(size_type); //optional            
-                        //const_iterator operator-(size_type) const; //optional
-                        //difference_type operator-(const_iterator) const; //optional
 
                         reference operator*() const {
                             check();
