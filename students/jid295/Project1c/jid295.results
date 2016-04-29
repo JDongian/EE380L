@@ -1,1223 +1,1034 @@
 ====== Summary ======
-make: *** [PHASE_A0_0.tst] Error 1
-make: *** [PHASE_A0_1.tst] Error 1
-make: *** [PHASE_A0_2.tst] Error 1
-make: *** [PHASE_A0_4.tst] Error 1
-make: *** [PHASE_A0_3.tst] Error 1
-make: *** [PHASE_A1_0.tst] Error 1
-make: *** [PHASE_A1_1.tst] Error 1
-make: *** [PHASE_A2_1.tst] Error 1
-make: *** [PHASE_A2_0.tst] Error 1
-make: *** [PHASE_B2_0.tst] Error 1
-make: *** [PHASE_B1_0.tst] Error 1
-make: *** [PHASE_B0_0.tst] Error 1
 make: *** [PHASE_C0_2.tst] Error 1
-make: *** [PHASE_C0_1.tst] Error 1
-make: *** [PHASE_C0_0.tst] Error 1
-make: *** [PHASE_C1_1.tst] Error 1
-make: *** [PHASE_C1_0.tst] Error 1
 make: *** [PHASE_C1_2.tst] Error 1
-make: *** [PHASE_C2_1.tst] Error 1
-make: *** [PHASE_C2_0.tst] Error 1
-make: *** [PHASE_C2_2.tst] Error 1
-make: *** [PHASE_AS1_0.tst] Error 1
-make: *** [PHASE_AS0_0.tst] Error 1
-make: *** [PHASE_AS1_2.tst] Error 1
-make: *** [PHASE_AS1_1.tst] Error 1
-make: *** [PHASE_AS1_3.tst] Error 1
-make: *** [PHASE_AS2_0.tst] Error 1
-make: *** [PHASE_AS2_1.tst] Error 1
-make: *** [PHASE_BS0_0.tst] Error 1
-make: *** [PHASE_BS1_1.tst] Error 1
-make: *** [PHASE_BS1_0.tst] Error 1
-make: *** [PHASE_BS2_0.tst] Error 1
 make: *** [PHASE_CS0_0.tst] Error 1
-make: *** [PHASE_BS2_1.tst] Error 1
-make: *** [PHASE_CS0_2.tst] Error 1
-make: *** [PHASE_CS0_1.tst] Error 1
-make: *** [PHASE_CS0_3.tst] Error 1
+make: *** [PHASE_CS1_0.tst] Error 1
 make: *** [PHASE_CS1_1.tst] Error 1
 make: *** [PHASE_CS1_2.tst] Error 1
-make: *** [PHASE_CS1_0.tst] Error 1
-make: *** [PHASE_CS1_5.tst] Error 1
-make: *** [PHASE_CS1_3.tst] Error 1
-make: *** [PHASE_CS1_4.tst] Error 1
-make: *** [PHASE_CS2_0.tst] Error 1
-make: *** [PHASE_CS1_6.tst] Error 1
 make: *** [PHASE_CS2_1.tst] Error 1
-make: *** [PHASE_CS2_3.tst] Error 1
 make: *** [PHASE_CS2_2.tst] Error 1
-make: *** [PHASE_CS2_4.tst] Error 1
-make: *** [PHASE_CS2_5.tst] Error 1
+make: *** [PHASE_CS2_3.tst] Error 1
+[       OK ] PhaseA.push_back (0 ms)
+[       OK ] PhaseA.bracket_operator (0 ms)
+[       OK ] PhaseA.pop_back (0 ms)
+[       OK ] PhaseA.constructors (1 ms)
+[       OK ] PhaseA.range_checks (0 ms)
+[       OK ] PhaseA1.PushBackFront (0 ms)
+[       OK ] PhaseA1.CopyConstruct (0 ms)
+[       OK ] PhaseA2.FooCtorDtor (0 ms)
+[       OK ] PhaseA2.ReallocCopy (0 ms)
+[       OK ] PhaseASecret.<censored>
+[       OK ] PhaseA1Secret.<censored>
+[  FAILED  ] PhaseA1Secret.<censored>
+[       OK ] PhaseA1Secret.<censored>
+[       OK ] PhaseA1Secret.<censored>
+[       OK ] PhaseA2Secret.<censored>
+[       OK ] PhaseA2Secret.<censored>
+[       OK ] PhaseB.MoveCtor (0 ms)
+[  FAILED  ] PhaseB1.PushBackMove (0 ms)
+[       OK ] PhaseB1.ReallocCopy (0 ms)
+[       OK ] PhaseB0Secret.<censored>
+[       OK ] PhaseB1Secret.<censored>
+[       OK ] PhaseB1Secret.<censored>
+[       OK ] PhaseB2Secret.<censored>
+[  FAILED  ] PhaseB2Secret.<censored>
+[       OK ] PhaseC.direct_init_list (0 ms)
+[       OK ] PhaseC.begin_vector (0 ms)
+[       OK ] PhaseC1.range_for_loop (0 ms)
+[       OK ] PhaseC1.invalid_iterator (1 ms)
+[  FAILED  ] PhaseC2.ItrExceptMild1 (0 ms)
+[       OK ] PhaseC2.ItrExceptModerate (0 ms)
+[       OK ] PhaseC2.ItrExceptMild2 (0 ms)
+[       OK ] PhaseC0Secret.<censored>
+[       OK ] PhaseC0Secret.<censored>
+[  FAILED  ] PhaseC0Secret.<censored>
+[       OK ] PhaseC1Secret.<censored>
+[  FAILED  ] PhaseC1Secret.<censored>
+[       OK ] PhaseC1Secret.<censored>
+[       OK ] PhaseC1Secret.<censored>
+[  FAILED  ] PhaseC2Secret.<censored>
+[  FAILED  ] PhaseC2Secret.<censored>
+[  FAILED  ] PhaseC2Secret.<censored>
 
 ======= Dump========
-In file included from Vector_PhaseB_unittests.cpp:17:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-In file included from Vector_secret_unittests.cpp:7:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
+g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_A0_0 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++14 -fpermissive  -pthread -o PHASE_A0_0.tst
+g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_A0_1 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++14 -fpermissive  -pthread -o PHASE_A0_1.tst
+g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_A0_2 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++14 -fpermissive  -pthread -o PHASE_A0_2.tst
+g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_A0_3 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++14 -fpermissive  -pthread -o PHASE_A0_3.tst
+g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_A0_4 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++14 -fpermissive  -pthread -o PHASE_A0_4.tst
+g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_A1_0 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++14 -fpermissive  -pthread -o PHASE_A1_0.tst
+g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_A1_1 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++14 -fpermissive  -pthread -o PHASE_A1_1.tst
+g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_A2_0 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++14 -fpermissive  -pthread -o PHASE_A2_0.tst
+g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_A2_1 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++14 -fpermissive  -pthread -o PHASE_A2_1.tst
+g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_B0_0 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++14 -fpermissive  -pthread -o PHASE_B0_0.tst
+g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_B1_0 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++14 -fpermissive  -pthread -o PHASE_B1_0.tst
+g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_B2_0 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++14 -fpermissive  -pthread -o PHASE_B2_0.tst
+g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_C0_0 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++14 -fpermissive  -pthread -o PHASE_C0_0.tst
+g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_C0_1 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++14 -fpermissive  -pthread -o PHASE_C0_1.tst
+g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_C0_2 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++14 -fpermissive  -pthread -o PHASE_C0_2.tst
+In file included from ../../gtest/include/gtest/gtest.h:1929:0,
+                 from Vector_PhaseC_unittests.cpp:17:
+Vector_PhaseC_unittests.cpp: In member function ‘virtual void PhaseC_RandIteOperations_Test::TestBody()’:
+Vector_PhaseC_unittests.cpp:63:20: error: no match for ‘operator-’ (operand types are ‘epl::vector<int>::const_iterator’ and ‘epl::vector<int>::const_iterator’)
+     EXPECT_EQ(ite2 - ite1, 2);
+                    ^
+../../gtest/include/gtest/gtest_pred_impl.h:77:52: note: in definition of macro ‘GTEST_ASSERT_’
+   if (const ::testing::AssertionResult gtest_ar = (expression)) \
+                                                    ^
+../../gtest/include/gtest/gtest_pred_impl.h:162:3: note: in expansion of macro ‘GTEST_PRED_FORMAT2_’
+   GTEST_PRED_FORMAT2_(pred_format, v1, v2, GTEST_NONFATAL_FAILURE_)
+   ^
+../../gtest/include/gtest/gtest.h:1978:3: note: in expansion of macro ‘EXPECT_PRED_FORMAT2’
+   EXPECT_PRED_FORMAT2(::testing::internal:: \
+   ^
+../../gtest/include/gtest/gtest.h:1979:32: note: in expansion of macro ‘GTEST_IS_NULL_LITERAL_’
+                       EqHelper<GTEST_IS_NULL_LITERAL_(expected)>::Compare, \
+                                ^
+Vector_PhaseC_unittests.cpp:63:5: note: in expansion of macro ‘EXPECT_EQ’
+     EXPECT_EQ(ite2 - ite1, 2);
+     ^
 In file included from Vector_PhaseC_unittests.cpp:18:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-In file included from Vector_PhaseA_unittests.cpp:20:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_A0_0 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++11 -fpermissive  -pthread -o PHASE_A0_0.tst
-g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_A0_1 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++11 -fpermissive  -pthread -o PHASE_A0_1.tst
-g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_A0_2 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++11 -fpermissive  -pthread -o PHASE_A0_2.tst
-In file included from Vector_PhaseA_unittests.cpp:20:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-In file included from Vector_PhaseA_unittests.cpp:20:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-In file included from Vector_PhaseA_unittests.cpp:20:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-In file included from Vector_PhaseB_unittests.cpp:17:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-In file included from Vector_PhaseB_unittests.cpp:17:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-In file included from Vector_PhaseB_unittests.cpp:17:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
+Vector.h:537:40: note: candidate: epl::vector<T, A>::const_iterator epl::vector<T, A>::const_iterator::operator-(uint64_t) const [with T = int; A = std::allocator<int>; uint64_t = long unsigned int]
+                         const_iterator operator-(uint64_t n) const {
+                                        ^
+Vector.h:537:40: note:   no known conversion for argument 1 from ‘epl::vector<int>::const_iterator’ to ‘uint64_t {aka long unsigned int}’
+Vector.h:543:41: note: candidate: epl::vector<T, A>::const_iterator& epl::vector<T, A>::const_iterator::operator-(epl::vector<T, A>::iterator&) const [with T = int; A = std::allocator<int>]
+                         const_iterator& operator-(iterator& other) const {
+                                         ^
+Vector.h:543:41: note:   no known conversion for argument 1 from ‘epl::vector<int>::const_iterator’ to ‘epl::vector<int>::iterator&’
+In file included from ../../gtest/include/gtest/gtest.h:1929:0,
+                 from Vector_PhaseC_unittests.cpp:17:
+../../gtest/include/gtest/gtest.h:1979:64: error: template argument 1 is invalid
+                       EqHelper<GTEST_IS_NULL_LITERAL_(expected)>::Compare, \
+                                                                ^
+../../gtest/include/gtest/gtest_pred_impl.h:77:52: note: in definition of macro ‘GTEST_ASSERT_’
+   if (const ::testing::AssertionResult gtest_ar = (expression)) \
+                                                    ^
+../../gtest/include/gtest/gtest_pred_impl.h:162:3: note: in expansion of macro ‘GTEST_PRED_FORMAT2_’
+   GTEST_PRED_FORMAT2_(pred_format, v1, v2, GTEST_NONFATAL_FAILURE_)
+   ^
+../../gtest/include/gtest/gtest.h:1978:3: note: in expansion of macro ‘EXPECT_PRED_FORMAT2’
+   EXPECT_PRED_FORMAT2(::testing::internal:: \
+   ^
+Vector_PhaseC_unittests.cpp:63:5: note: in expansion of macro ‘EXPECT_EQ’
+     EXPECT_EQ(ite2 - ite1, 2);
+     ^
+Vector_PhaseC_unittests.cpp:63:20: error: no match for ‘operator-’ (operand types are ‘epl::vector<int>::const_iterator’ and ‘epl::vector<int>::const_iterator’)
+     EXPECT_EQ(ite2 - ite1, 2);
+                    ^
+../../gtest/include/gtest/gtest_pred_impl.h:77:52: note: in definition of macro ‘GTEST_ASSERT_’
+   if (const ::testing::AssertionResult gtest_ar = (expression)) \
+                                                    ^
+../../gtest/include/gtest/gtest_pred_impl.h:162:3: note: in expansion of macro ‘GTEST_PRED_FORMAT2_’
+   GTEST_PRED_FORMAT2_(pred_format, v1, v2, GTEST_NONFATAL_FAILURE_)
+   ^
+../../gtest/include/gtest/gtest.h:1978:3: note: in expansion of macro ‘EXPECT_PRED_FORMAT2’
+   EXPECT_PRED_FORMAT2(::testing::internal:: \
+   ^
+Vector_PhaseC_unittests.cpp:63:5: note: in expansion of macro ‘EXPECT_EQ’
+     EXPECT_EQ(ite2 - ite1, 2);
+     ^
 In file included from Vector_PhaseC_unittests.cpp:18:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
+Vector.h:537:40: note: candidate: epl::vector<T, A>::const_iterator epl::vector<T, A>::const_iterator::operator-(uint64_t) const [with T = int; A = std::allocator<int>; uint64_t = long unsigned int]
+                         const_iterator operator-(uint64_t n) const {
+                                        ^
+Vector.h:537:40: note:   no known conversion for argument 1 from ‘epl::vector<int>::const_iterator’ to ‘uint64_t {aka long unsigned int}’
+Vector.h:543:41: note: candidate: epl::vector<T, A>::const_iterator& epl::vector<T, A>::const_iterator::operator-(epl::vector<T, A>::iterator&) const [with T = int; A = std::allocator<int>]
+                         const_iterator& operator-(iterator& other) const {
+                                         ^
+Vector.h:543:41: note:   no known conversion for argument 1 from ‘epl::vector<int>::const_iterator’ to ‘epl::vector<int>::iterator&’
+In file included from ../../gtest/include/gtest/gtest.h:1929:0,
+                 from Vector_PhaseC_unittests.cpp:17:
+Vector_PhaseC_unittests.cpp:66:20: error: no match for ‘operator-’ (operand types are ‘epl::vector<int>::const_iterator’ and ‘epl::vector<int>::const_iterator’)
+     EXPECT_EQ(ite2 - ite1, 0);
+                    ^
+../../gtest/include/gtest/gtest_pred_impl.h:77:52: note: in definition of macro ‘GTEST_ASSERT_’
+   if (const ::testing::AssertionResult gtest_ar = (expression)) \
+                                                    ^
+../../gtest/include/gtest/gtest_pred_impl.h:162:3: note: in expansion of macro ‘GTEST_PRED_FORMAT2_’
+   GTEST_PRED_FORMAT2_(pred_format, v1, v2, GTEST_NONFATAL_FAILURE_)
+   ^
+../../gtest/include/gtest/gtest.h:1978:3: note: in expansion of macro ‘EXPECT_PRED_FORMAT2’
+   EXPECT_PRED_FORMAT2(::testing::internal:: \
+   ^
+../../gtest/include/gtest/gtest.h:1979:32: note: in expansion of macro ‘GTEST_IS_NULL_LITERAL_’
+                       EqHelper<GTEST_IS_NULL_LITERAL_(expected)>::Compare, \
+                                ^
+Vector_PhaseC_unittests.cpp:66:5: note: in expansion of macro ‘EXPECT_EQ’
+     EXPECT_EQ(ite2 - ite1, 0);
+     ^
 In file included from Vector_PhaseC_unittests.cpp:18:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-In file included from Vector_secret_unittests.cpp:7:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-Makefile:27: recipe for target 'PHASE_A0_0.tst' failed
-make: *** [PHASE_A0_0.tst] Error 1
-g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_A0_3 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++11 -fpermissive  -pthread -o PHASE_A0_3.tst
+Vector.h:537:40: note: candidate: epl::vector<T, A>::const_iterator epl::vector<T, A>::const_iterator::operator-(uint64_t) const [with T = int; A = std::allocator<int>; uint64_t = long unsigned int]
+                         const_iterator operator-(uint64_t n) const {
+                                        ^
+Vector.h:537:40: note:   no known conversion for argument 1 from ‘epl::vector<int>::const_iterator’ to ‘uint64_t {aka long unsigned int}’
+Vector.h:543:41: note: candidate: epl::vector<T, A>::const_iterator& epl::vector<T, A>::const_iterator::operator-(epl::vector<T, A>::iterator&) const [with T = int; A = std::allocator<int>]
+                         const_iterator& operator-(iterator& other) const {
+                                         ^
+Vector.h:543:41: note:   no known conversion for argument 1 from ‘epl::vector<int>::const_iterator’ to ‘epl::vector<int>::iterator&’
+In file included from ../../gtest/include/gtest/gtest.h:1929:0,
+                 from Vector_PhaseC_unittests.cpp:17:
+../../gtest/include/gtest/gtest.h:1979:64: error: template argument 1 is invalid
+                       EqHelper<GTEST_IS_NULL_LITERAL_(expected)>::Compare, \
+                                                                ^
+../../gtest/include/gtest/gtest_pred_impl.h:77:52: note: in definition of macro ‘GTEST_ASSERT_’
+   if (const ::testing::AssertionResult gtest_ar = (expression)) \
+                                                    ^
+../../gtest/include/gtest/gtest_pred_impl.h:162:3: note: in expansion of macro ‘GTEST_PRED_FORMAT2_’
+   GTEST_PRED_FORMAT2_(pred_format, v1, v2, GTEST_NONFATAL_FAILURE_)
+   ^
+../../gtest/include/gtest/gtest.h:1978:3: note: in expansion of macro ‘EXPECT_PRED_FORMAT2’
+   EXPECT_PRED_FORMAT2(::testing::internal:: \
+   ^
+Vector_PhaseC_unittests.cpp:66:5: note: in expansion of macro ‘EXPECT_EQ’
+     EXPECT_EQ(ite2 - ite1, 0);
+     ^
+Vector_PhaseC_unittests.cpp:66:20: error: no match for ‘operator-’ (operand types are ‘epl::vector<int>::const_iterator’ and ‘epl::vector<int>::const_iterator’)
+     EXPECT_EQ(ite2 - ite1, 0);
+                    ^
+../../gtest/include/gtest/gtest_pred_impl.h:77:52: note: in definition of macro ‘GTEST_ASSERT_’
+   if (const ::testing::AssertionResult gtest_ar = (expression)) \
+                                                    ^
+../../gtest/include/gtest/gtest_pred_impl.h:162:3: note: in expansion of macro ‘GTEST_PRED_FORMAT2_’
+   GTEST_PRED_FORMAT2_(pred_format, v1, v2, GTEST_NONFATAL_FAILURE_)
+   ^
+../../gtest/include/gtest/gtest.h:1978:3: note: in expansion of macro ‘EXPECT_PRED_FORMAT2’
+   EXPECT_PRED_FORMAT2(::testing::internal:: \
+   ^
+Vector_PhaseC_unittests.cpp:66:5: note: in expansion of macro ‘EXPECT_EQ’
+     EXPECT_EQ(ite2 - ite1, 0);
+     ^
 In file included from Vector_PhaseC_unittests.cpp:18:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-In file included from Vector_secret_unittests.cpp:7:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-Makefile:27: recipe for target 'PHASE_A0_1.tst' failed
-make: *** [PHASE_A0_1.tst] Error 1
-g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_A0_4 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++11 -fpermissive  -pthread -o PHASE_A0_4.tst
-In file included from Vector_PhaseA_unittests.cpp:20:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-In file included from Vector_secret_unittests.cpp:7:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-Makefile:27: recipe for target 'PHASE_A0_2.tst' failed
-make: *** [PHASE_A0_2.tst] Error 1
-g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_A1_0 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++11 -fpermissive  -pthread -o PHASE_A1_0.tst
-In file included from Vector_PhaseA_unittests.cpp:20:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-In file included from Vector_PhaseB_unittests.cpp:17:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-In file included from Vector_PhaseB_unittests.cpp:17:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-In file included from Vector_PhaseA_unittests.cpp:20:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-In file included from Vector_PhaseC_unittests.cpp:18:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-In file included from Vector_PhaseC_unittests.cpp:18:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-compilation terminated.
-In file included from Vector_PhaseB_unittests.cpp:17:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-In file included from Vector_secret_unittests.cpp:7:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-Makefile:27: recipe for target 'PHASE_A0_4.tst' failed
-make: *** [PHASE_A0_4.tst] Error 1
-g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_A1_1 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++11 -fpermissive  -pthread -o PHASE_A1_1.tst
-In file included from Vector_PhaseC_unittests.cpp:18:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-In file included from Vector_secret_unittests.cpp:7:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-Makefile:27: recipe for target 'PHASE_A0_3.tst' failed
-make: *** [PHASE_A0_3.tst] Error 1
-g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_A2_0 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++11 -fpermissive  -pthread -o PHASE_A2_0.tst
-In file included from Vector_secret_unittests.cpp:7:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-Makefile:27: recipe for target 'PHASE_A1_0.tst' failed
-make: *** [PHASE_A1_0.tst] Error 1
-g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_A2_1 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++11 -fpermissive  -pthread -o PHASE_A2_1.tst
-In file included from Vector_PhaseA_unittests.cpp:20:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-In file included from Vector_PhaseB_unittests.cpp:17:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-In file included from Vector_PhaseA_unittests.cpp:20:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-In file included from Vector_PhaseA_unittests.cpp:20:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-In file included from Vector_PhaseB_unittests.cpp:17:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-In file included from Vector_PhaseC_unittests.cpp:18:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-In file included from Vector_PhaseB_unittests.cpp:17:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-In file included from Vector_PhaseC_unittests.cpp:18:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-In file included from Vector_secret_unittests.cpp:7:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-In file included from Vector_PhaseC_unittests.cpp:18:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-Makefile:27: recipe for target 'PHASE_A1_1.tst' failed
-make: *** [PHASE_A1_1.tst] Error 1
-g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_B0_0 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++11 -fpermissive  -pthread -o PHASE_B0_0.tst
-In file included from Vector_secret_unittests.cpp:7:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-Makefile:27: recipe for target 'PHASE_A2_1.tst' failed
-make: *** [PHASE_A2_1.tst] Error 1
-g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_B1_0 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++11 -fpermissive  -pthread -o PHASE_B1_0.tst
-In file included from Vector_secret_unittests.cpp:7:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-Makefile:27: recipe for target 'PHASE_A2_0.tst' failed
-make: *** [PHASE_A2_0.tst] Error 1
-g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_B2_0 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++11 -fpermissive  -pthread -o PHASE_B2_0.tst
-In file included from Vector_PhaseA_unittests.cpp:20:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-In file included from Vector_PhaseA_unittests.cpp:20:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-In file included from Vector_PhaseB_unittests.cpp:17:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-In file included from Vector_PhaseA_unittests.cpp:20:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-In file included from Vector_PhaseB_unittests.cpp:17:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-In file included from Vector_PhaseB_unittests.cpp:17:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-In file included from Vector_PhaseC_unittests.cpp:18:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-In file included from Vector_PhaseC_unittests.cpp:18:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-In file included from Vector_PhaseC_unittests.cpp:18:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-In file included from Vector_secret_unittests.cpp:7:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-Makefile:27: recipe for target 'PHASE_B2_0.tst' failed
-make: *** [PHASE_B2_0.tst] Error 1
-g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_C0_0 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++11 -fpermissive  -pthread -o PHASE_C0_0.tst
-In file included from Vector_secret_unittests.cpp:7:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-Makefile:27: recipe for target 'PHASE_B1_0.tst' failed
-make: *** [PHASE_B1_0.tst] Error 1
-g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_C0_1 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++11 -fpermissive  -pthread -o PHASE_C0_1.tst
-In file included from Vector_secret_unittests.cpp:7:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-Makefile:27: recipe for target 'PHASE_B0_0.tst' failed
-make: *** [PHASE_B0_0.tst] Error 1
-g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_C0_2 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++11 -fpermissive  -pthread -o PHASE_C0_2.tst
-In file included from Vector_PhaseA_unittests.cpp:20:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-In file included from Vector_PhaseA_unittests.cpp:20:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-In file included from Vector_PhaseA_unittests.cpp:20:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-In file included from Vector_PhaseB_unittests.cpp:17:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-In file included from Vector_PhaseB_unittests.cpp:17:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-In file included from Vector_PhaseB_unittests.cpp:17:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-In file included from Vector_PhaseC_unittests.cpp:18:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-In file included from Vector_PhaseC_unittests.cpp:18:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-In file included from Vector_PhaseC_unittests.cpp:18:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-In file included from Vector_secret_unittests.cpp:7:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
+Vector.h:537:40: note: candidate: epl::vector<T, A>::const_iterator epl::vector<T, A>::const_iterator::operator-(uint64_t) const [with T = int; A = std::allocator<int>; uint64_t = long unsigned int]
+                         const_iterator operator-(uint64_t n) const {
+                                        ^
+Vector.h:537:40: note:   no known conversion for argument 1 from ‘epl::vector<int>::const_iterator’ to ‘uint64_t {aka long unsigned int}’
+Vector.h:543:41: note: candidate: epl::vector<T, A>::const_iterator& epl::vector<T, A>::const_iterator::operator-(epl::vector<T, A>::iterator&) const [with T = int; A = std::allocator<int>]
+                         const_iterator& operator-(iterator& other) const {
+                                         ^
+Vector.h:543:41: note:   no known conversion for argument 1 from ‘epl::vector<int>::const_iterator’ to ‘epl::vector<int>::iterator&’
+Vector.h: In instantiation of ‘epl::vector<T, A>::reference epl::vector<T, A>::const_iterator::operator[](int) const [with T = int; A = std::allocator<int>; epl::vector<T, A>::reference = int&]’:
+Vector_PhaseC_unittests.cpp:52:5:   required from here
+Vector.h:565:69: error: binding ‘const int’ to reference of type ‘epl::vector<int>::reference {aka int&}’ discards qualifiers
+                             return (data->operator[](index + offset));
+                                                                     ^
+Vector.h: In instantiation of ‘epl::vector<T, A>::const_iterator epl::vector<T, A>::const_iterator::operator+(uint64_t) const [with T = int; A = std::allocator<int>; uint64_t = long unsigned int]’:
+Vector_PhaseC_unittests.cpp:55:19:   required from here
+Vector.h:525:35: error: assignment of member ‘epl::vector<int>::const_iterator::index’ in read-only object
+                             index += n;
+                                   ^
+Vector.h: In instantiation of ‘epl::vector<T, A>::const_iterator& epl::vector<T, A>::const_iterator::operator=(const epl::vector<T, A>::const_iterator&) [with T = int; A = std::allocator<int>]’:
+Vector_PhaseC_unittests.cpp:55:10:   required from here
+Vector.h:453:29: error: request for member ‘check’ in ‘*(& rhs)->epl::vector<T, A>::const_iterator::operator-><int, std::allocator<int> >()’, which is of non-class type ‘int’
+                             rhs->check();
+                             ^
+Vector.h: In instantiation of ‘epl::vector<T, A>::const_iterator epl::vector<T, A>::const_iterator::operator-(uint64_t) const [with T = int; A = std::allocator<int>; uint64_t = long unsigned int]’:
+Vector_PhaseC_unittests.cpp:64:19:   required from here
+Vector.h:539:35: error: assignment of member ‘epl::vector<int>::const_iterator::index’ in read-only object
+                             index -= n;
+                                   ^
+Vector.h: In instantiation of ‘T* epl::vector<T, A>::const_iterator::operator->() const [with T = int; A = std::allocator<int>]’:
+Vector.h:453:29:   required from ‘epl::vector<T, A>::const_iterator& epl::vector<T, A>::const_iterator::operator=(const epl::vector<T, A>::const_iterator&) [with T = int; A = std::allocator<int>]’
+Vector_PhaseC_unittests.cpp:55:10:   required from here
+Vector.h:560:65: warning: cast to pointer from integer of different size [-Wint-to-pointer-cast]
+                             return (T*) (data->operator[](index));
+                                                                 ^
 Makefile:27: recipe for target 'PHASE_C0_2.tst' failed
 make: *** [PHASE_C0_2.tst] Error 1
-g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_C1_0 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++11 -fpermissive  -pthread -o PHASE_C1_0.tst
-In file included from Vector_secret_unittests.cpp:7:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-Makefile:27: recipe for target 'PHASE_C0_1.tst' failed
-make: *** [PHASE_C0_1.tst] Error 1
-g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_C1_1 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++11 -fpermissive  -pthread -o PHASE_C1_1.tst
-In file included from Vector_PhaseA_unittests.cpp:20:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-In file included from Vector_secret_unittests.cpp:7:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-Makefile:27: recipe for target 'PHASE_C0_0.tst' failed
-make: *** [PHASE_C0_0.tst] Error 1
-g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_C1_2 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++11 -fpermissive  -pthread -o PHASE_C1_2.tst
-In file included from Vector_PhaseA_unittests.cpp:20:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-In file included from Vector_PhaseB_unittests.cpp:17:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-In file included from Vector_PhaseB_unittests.cpp:17:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-In file included from Vector_PhaseA_unittests.cpp:20:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
+g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_C1_0 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++14 -fpermissive  -pthread -o PHASE_C1_0.tst
+g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_C1_1 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++14 -fpermissive  -pthread -o PHASE_C1_1.tst
+g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_C1_2 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++14 -fpermissive  -pthread -o PHASE_C1_2.tst
+Vector_PhaseC_unittests.cpp: In member function ‘virtual void PhaseC1_RandIteConstructor_Test::TestBody()’:
+Vector_PhaseC_unittests.cpp:116:29: error: no matching function for call to ‘epl::vector<int>::vector(epl::vector<int>::const_iterator&, epl::vector<int>::const_iterator&)’
+     vector<int> y(ite2, ite1);
+                             ^
 In file included from Vector_PhaseC_unittests.cpp:18:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-In file included from Vector_PhaseC_unittests.cpp:18:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-In file included from Vector_secret_unittests.cpp:7:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-Makefile:27: recipe for target 'PHASE_C1_1.tst' failed
-make: *** [PHASE_C1_1.tst] Error 1
-g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_C2_0 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++11 -fpermissive  -pthread -o PHASE_C2_0.tst
-In file included from Vector_PhaseB_unittests.cpp:17:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-In file included from Vector_secret_unittests.cpp:7:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-Makefile:27: recipe for target 'PHASE_C1_0.tst' failed
-make: *** [PHASE_C1_0.tst] Error 1
-g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_C2_1 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++11 -fpermissive  -pthread -o PHASE_C2_1.tst
-In file included from Vector_PhaseA_unittests.cpp:20:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-In file included from Vector_PhaseC_unittests.cpp:18:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-In file included from Vector_PhaseA_unittests.cpp:20:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-In file included from Vector_PhaseB_unittests.cpp:17:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-In file included from Vector_secret_unittests.cpp:7:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-In file included from Vector_PhaseB_unittests.cpp:17:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
+Vector.h:611:17: note: candidate: epl::vector<T, A>::vector(std::initializer_list<_Tp>) [with T = int; A = std::allocator<int>]
+                 vector(std::initializer_list<T> values) {
+                 ^
+Vector.h:611:17: note:   candidate expects 1 argument, 2 provided
+Vector.h:607:17: note: candidate: epl::vector<T, A>::vector(epl::vector<T, A>&&) [with T = int; A = std::allocator<int>]
+                 vector(vector&& v) {
+                 ^
+Vector.h:607:17: note:   candidate expects 1 argument, 2 provided
+Vector.h:601:17: note: candidate: epl::vector<T, A>::vector(const epl::vector<T, A>&) [with T = int; A = std::allocator<int>]
+                 vector(const vector& other) {
+                 ^
+Vector.h:601:17: note:   candidate expects 1 argument, 2 provided
+Vector.h:577:17: note: candidate: epl::vector<T, A>::vector(uint64_t) [with T = int; A = std::allocator<int>; uint64_t = long unsigned int]
+                 vector(uint64_t n) {
+                 ^
+Vector.h:577:17: note:   candidate expects 1 argument, 2 provided
+Vector.h:574:17: note: candidate: epl::vector<T, A>::vector() [with T = int; A = std::allocator<int>]
+                 vector(void) {
+                 ^
+Vector.h:574:17: note:   candidate expects 0 arguments, 2 provided
 Makefile:27: recipe for target 'PHASE_C1_2.tst' failed
-compilation terminated.
 make: *** [PHASE_C1_2.tst] Error 1
-g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_C2_2 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++11 -fpermissive  -pthread -o PHASE_C2_2.tst
-In file included from Vector_PhaseC_unittests.cpp:18:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-In file included from Vector_PhaseA_unittests.cpp:20:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-In file included from Vector_PhaseC_unittests.cpp:18:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
+g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_C2_0 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++14 -fpermissive  -pthread -o PHASE_C2_0.tst
+g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_C2_1 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++14 -fpermissive  -pthread -o PHASE_C2_1.tst
+g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_C2_2 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++14 -fpermissive  -pthread -o PHASE_C2_2.tst
+g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_AS0_0 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++14 -fpermissive  -pthread -o PHASE_AS0_0.tst
+g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_AS1_0 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++14 -fpermissive  -pthread -o PHASE_AS1_0.tst
+g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_AS1_1 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++14 -fpermissive  -pthread -o PHASE_AS1_1.tst
+g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_AS1_2 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++14 -fpermissive  -pthread -o PHASE_AS1_2.tst
+g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_AS1_3 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++14 -fpermissive  -pthread -o PHASE_AS1_3.tst
+g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_AS2_0 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++14 -fpermissive  -pthread -o PHASE_AS2_0.tst
+g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_AS2_1 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++14 -fpermissive  -pthread -o PHASE_AS2_1.tst
+g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_BS0_0 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++14 -fpermissive  -pthread -o PHASE_BS0_0.tst
+g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_BS1_0 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++14 -fpermissive  -pthread -o PHASE_BS1_0.tst
+g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_BS1_1 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++14 -fpermissive  -pthread -o PHASE_BS1_1.tst
+g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_BS2_0 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++14 -fpermissive  -pthread -o PHASE_BS2_0.tst
+g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_BS2_1 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++14 -fpermissive  -pthread -o PHASE_BS2_1.tst
+g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_CS0_0 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++14 -fpermissive  -pthread -o PHASE_CS0_0.tst
+g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_CS0_1 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++14 -fpermissive  -pthread -o PHASE_CS0_1.tst
+g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_CS0_2 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++14 -fpermissive  -pthread -o PHASE_CS0_2.tst
 In file included from Vector_secret_unittests.cpp:7:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-Makefile:27: recipe for target 'PHASE_C2_1.tst' failed
-make: *** [PHASE_C2_1.tst] Error 1
-g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_AS0_0 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++11 -fpermissive  -pthread -o PHASE_AS0_0.tst
-In file included from Vector_PhaseB_unittests.cpp:17:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-In file included from Vector_secret_unittests.cpp:7:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-Makefile:27: recipe for target 'PHASE_C2_0.tst' failed
-make: *** [PHASE_C2_0.tst] Error 1
-g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_AS1_0 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++11 -fpermissive  -pthread -o PHASE_AS1_0.tst
-In file included from Vector_PhaseC_unittests.cpp:18:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-In file included from Vector_PhaseA_unittests.cpp:20:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-In file included from Vector_PhaseA_unittests.cpp:20:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-In file included from Vector_secret_unittests.cpp:7:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-Makefile:27: recipe for target 'PHASE_C2_2.tst' failed
-make: *** [PHASE_C2_2.tst] Error 1
-g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_AS1_1 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++11 -fpermissive  -pthread -o PHASE_AS1_1.tst
-In file included from Vector_PhaseB_unittests.cpp:17:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-In file included from Vector_PhaseB_unittests.cpp:17:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-In file included from Vector_PhaseC_unittests.cpp:18:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-In file included from Vector_PhaseA_unittests.cpp:20:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-In file included from Vector_PhaseC_unittests.cpp:18:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-In file included from Vector_secret_unittests.cpp:7:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-Makefile:27: recipe for target 'PHASE_AS1_0.tst' failed
-make: *** [PHASE_AS1_0.tst] Error 1
-g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_AS1_2 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++11 -fpermissive  -pthread -o PHASE_AS1_2.tst
-In file included from Vector_PhaseA_unittests.cpp:20:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-In file included from Vector_PhaseB_unittests.cpp:17:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-In file included from Vector_secret_unittests.cpp:7:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-Makefile:27: recipe for target 'PHASE_AS0_0.tst' failed
-make: *** [PHASE_AS0_0.tst] Error 1
-g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_AS1_3 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++11 -fpermissive  -pthread -o PHASE_AS1_3.tst
-In file included from Vector_PhaseB_unittests.cpp:17:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-In file included from Vector_PhaseA_unittests.cpp:20:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-In file included from Vector_PhaseC_unittests.cpp:18:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-In file included from Vector_PhaseC_unittests.cpp:18:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-In file included from Vector_PhaseB_unittests.cpp:17:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-In file included from Vector_secret_unittests.cpp:7:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-Makefile:27: recipe for target 'PHASE_AS1_2.tst' failed
-make: *** [PHASE_AS1_2.tst] Error 1
-g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_AS2_0 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++11 -fpermissive  -pthread -o PHASE_AS2_0.tst
-In file included from Vector_PhaseA_unittests.cpp:20:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-In file included from Vector_secret_unittests.cpp:7:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-Makefile:27: recipe for target 'PHASE_AS1_1.tst' failed
-make: *** [PHASE_AS1_1.tst] Error 1
-g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_AS2_1 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++11 -fpermissive  -pthread -o PHASE_AS2_1.tst
-In file included from Vector_PhaseC_unittests.cpp:18:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-In file included from Vector_PhaseA_unittests.cpp:20:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-In file included from Vector_PhaseB_unittests.cpp:17:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-In file included from Vector_secret_unittests.cpp:7:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-Makefile:27: recipe for target 'PHASE_AS1_3.tst' failed
-make: *** [PHASE_AS1_3.tst] Error 1
-g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_BS0_0 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++11 -fpermissive  -pthread -o PHASE_BS0_0.tst
-In file included from Vector_PhaseB_unittests.cpp:17:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-In file included from Vector_PhaseA_unittests.cpp:20:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-In file included from Vector_PhaseC_unittests.cpp:18:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-In file included from Vector_PhaseB_unittests.cpp:17:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-In file included from Vector_PhaseC_unittests.cpp:18:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-In file included from Vector_PhaseC_unittests.cpp:18:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-In file included from Vector_secret_unittests.cpp:7:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-Makefile:27: recipe for target 'PHASE_AS2_0.tst' failed
-make: *** [PHASE_AS2_0.tst] Error 1
-g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_BS1_0 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++11 -fpermissive  -pthread -o PHASE_BS1_0.tst
-In file included from Vector_secret_unittests.cpp:7:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-Makefile:27: recipe for target 'PHASE_AS2_1.tst' failed
-make: *** [PHASE_AS2_1.tst] Error 1
-g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_BS1_1 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++11 -fpermissive  -pthread -o PHASE_BS1_1.tst
-In file included from Vector_secret_unittests.cpp:7:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-Makefile:27: recipe for target 'PHASE_BS0_0.tst' failed
-make: *** [PHASE_BS0_0.tst] Error 1
-g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_BS2_0 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++11 -fpermissive  -pthread -o PHASE_BS2_0.tst
-In file included from Vector_PhaseA_unittests.cpp:20:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-In file included from Vector_PhaseA_unittests.cpp:20:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-In file included from Vector_PhaseA_unittests.cpp:20:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-In file included from Vector_PhaseB_unittests.cpp:17:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-compilation terminated.
-In file included from Vector_PhaseB_unittests.cpp:17:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-In file included from Vector_PhaseC_unittests.cpp:18:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-In file included from Vector_PhaseC_unittests.cpp:18:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-In file included from Vector_PhaseB_unittests.cpp:17:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-In file included from Vector_secret_unittests.cpp:7:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-Makefile:27: recipe for target 'PHASE_BS1_1.tst' failed
-make: *** [PHASE_BS1_1.tst] Error 1
-g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_BS2_1 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++11 -fpermissive  -pthread -o PHASE_BS2_1.tst
-In file included from Vector_secret_unittests.cpp:7:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-Makefile:27: recipe for target 'PHASE_BS1_0.tst' failed
-make: *** [PHASE_BS1_0.tst] Error 1
-g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_CS0_0 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++11 -fpermissive  -pthread -o PHASE_CS0_0.tst
-In file included from Vector_PhaseA_unittests.cpp:20:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-In file included from Vector_PhaseC_unittests.cpp:18:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-compilation terminated.
-In file included from Vector_PhaseA_unittests.cpp:20:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-In file included from Vector_secret_unittests.cpp:7:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-Makefile:27: recipe for target 'PHASE_BS2_0.tst' failed
-make: *** [PHASE_BS2_0.tst] Error 1
-g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_CS0_1 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++11 -fpermissive  -pthread -o PHASE_CS0_1.tst
-In file included from Vector_PhaseB_unittests.cpp:17:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-In file included from Vector_PhaseB_unittests.cpp:17:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-In file included from Vector_PhaseC_unittests.cpp:18:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-In file included from Vector_PhaseC_unittests.cpp:18:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-In file included from Vector_PhaseA_unittests.cpp:20:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-In file included from Vector_secret_unittests.cpp:7:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
+Vector.h: In instantiation of ‘epl::vector<T, A>::iterator epl::vector<T, A>::iterator::operator+(uint64_t) const [with T = int; A = std::allocator<int>; uint64_t = long unsigned int]’:
+Vector_secret_unittests.cpp:376:3:   required from here
+Vector.h:346:35: error: assignment of member ‘epl::vector<int>::iterator::index’ in read-only object
+                             index += n;
+                                   ^
+Vector.h: In instantiation of ‘epl::vector<T, A>::iterator& epl::vector<T, A>::iterator::operator=(const epl::vector<T, A>::iterator&) [with T = int; A = std::allocator<int>]’:
+Vector_secret_unittests.cpp:383:9:   required from here
+Vector.h:274:29: error: request for member ‘check’ in ‘*(& rhs)->epl::vector<T, A>::iterator::operator-><int, std::allocator<int> >()’, which is of non-class type ‘int’
+                             rhs->check();
+                             ^
+Vector.h: In instantiation of ‘epl::vector<T, A>::iterator::pointer epl::vector<T, A>::iterator::operator->() const [with T = int; A = std::allocator<int>; epl::vector<T, A>::iterator::pointer = int*]’:
+Vector.h:274:29:   required from ‘epl::vector<T, A>::iterator& epl::vector<T, A>::iterator::operator=(const epl::vector<T, A>::iterator&) [with T = int; A = std::allocator<int>]’
+Vector_secret_unittests.cpp:383:9:   required from here
+Vector.h:379:65: warning: cast to pointer from integer of different size [-Wint-to-pointer-cast]
+                             return (T*) (data->operator[](index));
+                                                                 ^
 Makefile:27: recipe for target 'PHASE_CS0_0.tst' failed
 make: *** [PHASE_CS0_0.tst] Error 1
-g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_CS0_2 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++11 -fpermissive  -pthread -o PHASE_CS0_2.tst
+g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_CS0_3 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++14 -fpermissive  -pthread -o PHASE_CS0_3.tst
+g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_CS1_0 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++14 -fpermissive  -pthread -o PHASE_CS1_0.tst
+g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_CS1_1 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++14 -fpermissive  -pthread -o PHASE_CS1_1.tst
+In file included from ../../gtest/include/gtest/gtest.h:1929:0,
+                 from Vector_secret_unittests.cpp:6:
+Vector_secret_unittests.cpp: In member function ‘virtual void PhaseC1Secret.<censored>
+Vector_secret_unittests.cpp:473:35: error: invalid initialization of non-const reference of type ‘epl::vector<int>::iterator&’ from an rvalue of type ‘epl::vector<int>::iterator’
+     EXPECT_EQ(*cit, cit - v2.begin());
+                                   ^
+../../gtest/include/gtest/gtest_pred_impl.h:77:52: note: in definition of macro ‘GTEST_ASSERT_’
+   if (const ::testing::AssertionResult gtest_ar = (expression)) \
+                                                    ^
+../../gtest/include/gtest/gtest_pred_impl.h:162:3: note: in expansion of macro ‘GTEST_PRED_FORMAT2_’
+   GTEST_PRED_FORMAT2_(pred_format, v1, v2, GTEST_NONFATAL_FAILURE_)
+   ^
+../../gtest/include/gtest/gtest.h:1978:3: note: in expansion of macro ‘EXPECT_PRED_FORMAT2’
+   EXPECT_PRED_FORMAT2(::testing::internal:: \
+   ^
+Vector_secret_unittests.cpp:473:5: note: in expansion of macro ‘EXPECT_EQ’
+     EXPECT_EQ(*cit, cit - v2.begin());
+     ^
 In file included from Vector_secret_unittests.cpp:7:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-In file included from Vector_PhaseA_unittests.cpp:20:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-Makefile:27: recipe for target 'PHASE_BS2_1.tst' failed
-make: *** [PHASE_BS2_1.tst] Error 1
-g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_CS0_3 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++11 -fpermissive  -pthread -o PHASE_CS0_3.tst
-In file included from Vector_PhaseB_unittests.cpp:17:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-In file included from Vector_PhaseB_unittests.cpp:17:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-In file included from Vector_PhaseA_unittests.cpp:20:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-In file included from Vector_PhaseC_unittests.cpp:18:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-In file included from Vector_PhaseC_unittests.cpp:18:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-In file included from Vector_PhaseB_unittests.cpp:17:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
+Vector.h:543:41: note:   initializing argument 1 of ‘epl::vector<T, A>::const_iterator& epl::vector<T, A>::const_iterator::operator-(epl::vector<T, A>::iterator&) const [with T = int; A = std::allocator<int>]’
+                         const_iterator& operator-(iterator& other) const {
+                                         ^
+In file included from ../../gtest/include/gtest/gtest.h:1929:0,
+                 from Vector_secret_unittests.cpp:6:
+Vector_secret_unittests.cpp:480:35: error: invalid initialization of non-const reference of type ‘epl::vector<int>::iterator&’ from an rvalue of type ‘epl::vector<int>::iterator’
+     EXPECT_EQ(*cit, cit - v3.begin());
+                                   ^
+../../gtest/include/gtest/gtest_pred_impl.h:77:52: note: in definition of macro ‘GTEST_ASSERT_’
+   if (const ::testing::AssertionResult gtest_ar = (expression)) \
+                                                    ^
+../../gtest/include/gtest/gtest_pred_impl.h:162:3: note: in expansion of macro ‘GTEST_PRED_FORMAT2_’
+   GTEST_PRED_FORMAT2_(pred_format, v1, v2, GTEST_NONFATAL_FAILURE_)
+   ^
+../../gtest/include/gtest/gtest.h:1978:3: note: in expansion of macro ‘EXPECT_PRED_FORMAT2’
+   EXPECT_PRED_FORMAT2(::testing::internal:: \
+   ^
+Vector_secret_unittests.cpp:480:5: note: in expansion of macro ‘EXPECT_EQ’
+     EXPECT_EQ(*cit, cit - v3.begin());
+     ^
 In file included from Vector_secret_unittests.cpp:7:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-Makefile:27: recipe for target 'PHASE_CS0_2.tst' failed
-make: *** [PHASE_CS0_2.tst] Error 1
-g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_CS1_0 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++11 -fpermissive  -pthread -o PHASE_CS1_0.tst
-In file included from Vector_PhaseC_unittests.cpp:18:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-In file included from Vector_secret_unittests.cpp:7:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-Makefile:27: recipe for target 'PHASE_CS0_1.tst' failed
-make: *** [PHASE_CS0_1.tst] Error 1
-g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_CS1_1 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++11 -fpermissive  -pthread -o PHASE_CS1_1.tst
-In file included from Vector_PhaseA_unittests.cpp:20:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-In file included from Vector_PhaseA_unittests.cpp:20:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-In file included from Vector_secret_unittests.cpp:7:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-Makefile:27: recipe for target 'PHASE_CS0_3.tst' failed
-make: *** [PHASE_CS0_3.tst] Error 1
-g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_CS1_2 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++11 -fpermissive  -pthread -o PHASE_CS1_2.tst
-In file included from Vector_PhaseB_unittests.cpp:17:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-In file included from Vector_PhaseA_unittests.cpp:20:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-In file included from Vector_PhaseB_unittests.cpp:17:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-In file included from Vector_PhaseC_unittests.cpp:18:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-In file included from Vector_PhaseB_unittests.cpp:17:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-In file included from Vector_PhaseC_unittests.cpp:18:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-In file included from Vector_PhaseC_unittests.cpp:18:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-In file included from Vector_secret_unittests.cpp:7:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-Makefile:27: recipe for target 'PHASE_CS1_1.tst' failed
-make: *** [PHASE_CS1_1.tst] Error 1
-g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_CS1_3 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++11 -fpermissive  -pthread -o PHASE_CS1_3.tst
-In file included from Vector_secret_unittests.cpp:7:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-Makefile:27: recipe for target 'PHASE_CS1_2.tst' failed
-make: *** [PHASE_CS1_2.tst] Error 1
-g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_CS1_4 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++11 -fpermissive  -pthread -o PHASE_CS1_4.tst
-In file included from Vector_secret_unittests.cpp:7:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
+Vector.h:543:41: note:   initializing argument 1 of ‘epl::vector<T, A>::const_iterator& epl::vector<T, A>::const_iterator::operator-(epl::vector<T, A>::iterator&) const [with T = int; A = std::allocator<int>]’
+                         const_iterator& operator-(iterator& other) const {
+                                         ^
+g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_CS1_2 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++14 -fpermissive  -pthread -o PHASE_CS1_2.tst
 Makefile:27: recipe for target 'PHASE_CS1_0.tst' failed
 make: *** [PHASE_CS1_0.tst] Error 1
-g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_CS1_5 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++11 -fpermissive  -pthread -o PHASE_CS1_5.tst
-In file included from Vector_PhaseA_unittests.cpp:20:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-In file included from Vector_PhaseA_unittests.cpp:20:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-In file included from Vector_PhaseA_unittests.cpp:20:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-In file included from Vector_PhaseB_unittests.cpp:17:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-In file included from Vector_PhaseB_unittests.cpp:17:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-In file included from Vector_PhaseB_unittests.cpp:17:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-In file included from Vector_PhaseC_unittests.cpp:18:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-In file included from Vector_PhaseC_unittests.cpp:18:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-In file included from Vector_PhaseC_unittests.cpp:18:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
+g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_CS1_3 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++14 -fpermissive  -pthread -o PHASE_CS1_3.tst
 In file included from Vector_secret_unittests.cpp:7:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-Makefile:27: recipe for target 'PHASE_CS1_5.tst' failed
-make: *** [PHASE_CS1_5.tst] Error 1
-g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_CS1_6 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++11 -fpermissive  -pthread -o PHASE_CS1_6.tst
+Vector.h: In instantiation of ‘epl::vector<T, A>::iterator epl::vector<T, A>::iterator::operator+(uint64_t) const [with T = int; A = std::allocator<int>; uint64_t = long unsigned int]’:
+Vector_secret_unittests.cpp:491:9:   required from here
+Vector.h:346:35: error: assignment of member ‘epl::vector<int>::iterator::index’ in read-only object
+                             index += n;
+                                   ^
+Makefile:27: recipe for target 'PHASE_CS1_1.tst' failed
+make: *** [PHASE_CS1_1.tst] Error 1
+g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_CS1_4 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++14 -fpermissive  -pthread -o PHASE_CS1_4.tst
 In file included from Vector_secret_unittests.cpp:7:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-Makefile:27: recipe for target 'PHASE_CS1_3.tst' failed
-make: *** [PHASE_CS1_3.tst] Error 1
-g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_CS2_0 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++11 -fpermissive  -pthread -o PHASE_CS2_0.tst
-In file included from Vector_PhaseA_unittests.cpp:20:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
+Vector.h: In instantiation of ‘epl::vector<T, A>::const_iterator& epl::vector<T, A>::const_iterator::operator=(const epl::vector<T, A>::const_iterator&) [with T = int; A = std::allocator<int>]’:
+Vector_secret_unittests.cpp:511:6:   required from here
+Vector.h:453:29: error: request for member ‘check’ in ‘*(& rhs)->epl::vector<T, A>::const_iterator::operator-><int, std::allocator<int> >()’, which is of non-class type ‘int’
+                             rhs->check();
+                             ^
+Vector.h: In instantiation of ‘T* epl::vector<T, A>::const_iterator::operator->() const [with T = int; A = std::allocator<int>]’:
+Vector.h:453:29:   required from ‘epl::vector<T, A>::const_iterator& epl::vector<T, A>::const_iterator::operator=(const epl::vector<T, A>::const_iterator&) [with T = int; A = std::allocator<int>]’
+Vector_secret_unittests.cpp:511:6:   required from here
+Vector.h:560:65: warning: cast to pointer from integer of different size [-Wint-to-pointer-cast]
+                             return (T*) (data->operator[](index));
+                                                                 ^
+Makefile:27: recipe for target 'PHASE_CS1_2.tst' failed
+make: *** [PHASE_CS1_2.tst] Error 1
+g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_CS1_5 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++14 -fpermissive  -pthread -o PHASE_CS1_5.tst
+g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_CS1_6 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++14 -fpermissive  -pthread -o PHASE_CS1_6.tst
+g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_CS2_0 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++14 -fpermissive  -pthread -o PHASE_CS2_0.tst
+g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_CS2_1 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++14 -fpermissive  -pthread -o PHASE_CS2_1.tst
+g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_CS2_2 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++14 -fpermissive  -pthread -o PHASE_CS2_2.tst
+g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_CS2_3 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++14 -fpermissive  -pthread -o PHASE_CS2_3.tst
+Vector_secret_unittests.cpp: In member function ‘virtual void PhaseC2Secret.<censored>
+Vector_secret_unittests.cpp:646:23: error: no matching function for call to ‘epl::vector<int>::vector(PhaseC_Test::CountingIterator<int>&, PhaseC_Test::CountingIterator<int>&)’
+     vector<int> y(b, e);
+                       ^
 In file included from Vector_secret_unittests.cpp:7:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-Makefile:27: recipe for target 'PHASE_CS1_4.tst' failed
-make: *** [PHASE_CS1_4.tst] Error 1
-g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_CS2_1 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++11 -fpermissive  -pthread -o PHASE_CS2_1.tst
-In file included from Vector_PhaseA_unittests.cpp:20:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-In file included from Vector_PhaseB_unittests.cpp:17:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-In file included from Vector_PhaseB_unittests.cpp:17:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-In file included from Vector_PhaseC_unittests.cpp:18:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-In file included from Vector_PhaseA_unittests.cpp:20:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-In file included from Vector_PhaseC_unittests.cpp:18:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
+Vector.h:611:17: note: candidate: epl::vector<T, A>::vector(std::initializer_list<_Tp>) [with T = int; A = std::allocator<int>]
+                 vector(std::initializer_list<T> values) {
+                 ^
+Vector.h:611:17: note:   candidate expects 1 argument, 2 provided
+Vector.h:607:17: note: candidate: epl::vector<T, A>::vector(epl::vector<T, A>&&) [with T = int; A = std::allocator<int>]
+                 vector(vector&& v) {
+                 ^
+Vector.h:607:17: note:   candidate expects 1 argument, 2 provided
+Vector.h:601:17: note: candidate: epl::vector<T, A>::vector(const epl::vector<T, A>&) [with T = int; A = std::allocator<int>]
+                 vector(const vector& other) {
+                 ^
+Vector.h:601:17: note:   candidate expects 1 argument, 2 provided
+Vector.h:577:17: note: candidate: epl::vector<T, A>::vector(uint64_t) [with T = int; A = std::allocator<int>; uint64_t = long unsigned int]
+                 vector(uint64_t n) {
+                 ^
+Vector.h:577:17: note:   candidate expects 1 argument, 2 provided
+Vector.h:574:17: note: candidate: epl::vector<T, A>::vector() [with T = int; A = std::allocator<int>]
+                 vector(void) {
+                 ^
+Vector.h:574:17: note:   candidate expects 0 arguments, 2 provided
+Vector_secret_unittests.cpp: In member function ‘virtual void PhaseC2Secret.<censored>
+Vector_secret_unittests.cpp:660:35: error: no matching function for call to ‘epl::vector<int>::vector(int*, int*)’
+     vector<int> y(&(x[1]), &(x[3]));
+                                   ^
 In file included from Vector_secret_unittests.cpp:7:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-Makefile:27: recipe for target 'PHASE_CS2_0.tst' failed
-make: *** [PHASE_CS2_0.tst] Error 1
-g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_CS2_2 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++11 -fpermissive  -pthread -o PHASE_CS2_2.tst
-In file included from Vector_PhaseB_unittests.cpp:17:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-In file included from Vector_secret_unittests.cpp:7:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-Makefile:27: recipe for target 'PHASE_CS1_6.tst' failed
-make: *** [PHASE_CS1_6.tst] Error 1
-g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_CS2_3 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++11 -fpermissive  -pthread -o PHASE_CS2_3.tst
-In file included from Vector_PhaseA_unittests.cpp:20:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-In file included from Vector_PhaseA_unittests.cpp:20:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-In file included from Vector_PhaseC_unittests.cpp:18:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-In file included from Vector_PhaseB_unittests.cpp:17:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-In file included from Vector_PhaseB_unittests.cpp:17:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-In file included from Vector_PhaseC_unittests.cpp:18:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-In file included from Vector_secret_unittests.cpp:7:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
+Vector.h:611:17: note: candidate: epl::vector<T, A>::vector(std::initializer_list<_Tp>) [with T = int; A = std::allocator<int>]
+                 vector(std::initializer_list<T> values) {
+                 ^
+Vector.h:611:17: note:   candidate expects 1 argument, 2 provided
+Vector.h:607:17: note: candidate: epl::vector<T, A>::vector(epl::vector<T, A>&&) [with T = int; A = std::allocator<int>]
+                 vector(vector&& v) {
+                 ^
+Vector.h:607:17: note:   candidate expects 1 argument, 2 provided
+Vector.h:601:17: note: candidate: epl::vector<T, A>::vector(const epl::vector<T, A>&) [with T = int; A = std::allocator<int>]
+                 vector(const vector& other) {
+                 ^
+Vector.h:601:17: note:   candidate expects 1 argument, 2 provided
+Vector.h:577:17: note: candidate: epl::vector<T, A>::vector(uint64_t) [with T = int; A = std::allocator<int>; uint64_t = long unsigned int]
+                 vector(uint64_t n) {
+                 ^
+Vector.h:577:17: note:   candidate expects 1 argument, 2 provided
+Vector.h:574:17: note: candidate: epl::vector<T, A>::vector() [with T = int; A = std::allocator<int>]
+                 vector(void) {
+                 ^
+Vector.h:574:17: note:   candidate expects 0 arguments, 2 provided
 Makefile:27: recipe for target 'PHASE_CS2_1.tst' failed
 make: *** [PHASE_CS2_1.tst] Error 1
-g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_CS2_4 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++11 -fpermissive  -pthread -o PHASE_CS2_4.tst
-In file included from Vector_PhaseC_unittests.cpp:18:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-In file included from Vector_secret_unittests.cpp:7:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-Makefile:27: recipe for target 'PHASE_CS2_3.tst' failed
-make: *** [PHASE_CS2_3.tst] Error 1
-g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_CS2_5 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++11 -fpermissive  -pthread -o PHASE_CS2_5.tst
-In file included from Vector_secret_unittests.cpp:7:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
+g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_CS2_4 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++14 -fpermissive  -pthread -o PHASE_CS2_4.tst
 Makefile:27: recipe for target 'PHASE_CS2_2.tst' failed
 make: *** [PHASE_CS2_2.tst] Error 1
-In file included from Vector_PhaseA_unittests.cpp:20:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-In file included from Vector_PhaseA_unittests.cpp:20:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-In file included from Vector_PhaseB_unittests.cpp:17:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-In file included from Vector_PhaseB_unittests.cpp:17:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-In file included from Vector_PhaseC_unittests.cpp:18:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-In file included from Vector_PhaseC_unittests.cpp:18:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
+g++ Vector_PhaseA_unittests.cpp Vector_PhaseB_unittests.cpp Vector_PhaseC_unittests.cpp Vector_secret_unittests.cpp -DPHASE_CS2_5 ../../gtest/lib/gtest64.a -I ../../gtest/include -std=c++14 -fpermissive  -pthread -o PHASE_CS2_5.tst
+Vector_secret_unittests.cpp: In member function ‘virtual void PhaseC2Secret.<censored>
+Vector_secret_unittests.cpp:685:37: error: no matching function for call to ‘epl::vector<{anonymous}::Foo>::vector(epl::vector<{anonymous}::Foo>::iterator, epl::vector<{anonymous}::Foo>::iterator)’
+     vector<Foo> w(x.begin(), x.end());
+                                     ^
 In file included from Vector_secret_unittests.cpp:7:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-Makefile:27: recipe for target 'PHASE_CS2_4.tst' failed
-make: *** [PHASE_CS2_4.tst] Error 1
-In file included from Vector_secret_unittests.cpp:7:0:
-Vector.h:8:24: fatal error: iterator.hpp: No such file or directory
- #include "iterator.hpp"
-                        ^
-compilation terminated.
-Makefile:27: recipe for target 'PHASE_CS2_5.tst' failed
-make: *** [PHASE_CS2_5.tst] Error 1
+Vector.h:611:17: note: candidate: epl::vector<T, A>::vector(std::initializer_list<_Tp>) [with T = {anonymous}::Foo; A = std::allocator<{anonymous}::Foo>]
+                 vector(std::initializer_list<T> values) {
+                 ^
+Vector.h:611:17: note:   candidate expects 1 argument, 2 provided
+Vector.h:607:17: note: candidate: epl::vector<T, A>::vector(epl::vector<T, A>&&) [with T = {anonymous}::Foo; A = std::allocator<{anonymous}::Foo>]
+                 vector(vector&& v) {
+                 ^
+Vector.h:607:17: note:   candidate expects 1 argument, 2 provided
+Vector.h:601:17: note: candidate: epl::vector<T, A>::vector(const epl::vector<T, A>&) [with T = {anonymous}::Foo; A = std::allocator<{anonymous}::Foo>]
+                 vector(const vector& other) {
+                 ^
+Vector.h:601:17: note:   candidate expects 1 argument, 2 provided
+Vector.h:577:17: note: candidate: epl::vector<T, A>::vector(uint64_t) [with T = {anonymous}::Foo; A = std::allocator<{anonymous}::Foo>; uint64_t = long unsigned int]
+                 vector(uint64_t n) {
+                 ^
+Vector.h:577:17: note:   candidate expects 1 argument, 2 provided
+Vector.h:574:17: note: candidate: epl::vector<T, A>::vector() [with T = {anonymous}::Foo; A = std::allocator<{anonymous}::Foo>]
+                 vector(void) {
+                 ^
+Vector.h:574:17: note:   candidate expects 0 arguments, 2 provided
+Makefile:27: recipe for target 'PHASE_CS2_3.tst' failed
+make: *** [PHASE_CS2_3.tst] Error 1
+
+Testing: PHASE_A0_0.tst
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from PhaseA
+[ RUN      ] PhaseA.push_back
+[       OK ] PhaseA.push_back (0 ms)
+[----------] 1 test from PhaseA (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (1 ms total)
+[  PASSED  ] 1 test.
+
+Testing: PHASE_A0_1.tst
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from PhaseA
+[ RUN      ] PhaseA.bracket_operator
+[       OK ] PhaseA.bracket_operator (0 ms)
+[----------] 1 test from PhaseA (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (0 ms total)
+[  PASSED  ] 1 test.
+
+Testing: PHASE_A0_2.tst
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from PhaseA
+[ RUN      ] PhaseA.pop_back
+[       OK ] PhaseA.pop_back (0 ms)
+[----------] 1 test from PhaseA (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (0 ms total)
+[  PASSED  ] 1 test.
+
+Testing: PHASE_A0_3.tst
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from PhaseA
+[ RUN      ] PhaseA.constructors
+[       OK ] PhaseA.constructors (1 ms)
+[----------] 1 test from PhaseA (1 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (1 ms total)
+[  PASSED  ] 1 test.
+
+Testing: PHASE_A0_4.tst
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from PhaseA
+[ RUN      ] PhaseA.range_checks
+[       OK ] PhaseA.range_checks (0 ms)
+[----------] 1 test from PhaseA (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (0 ms total)
+[  PASSED  ] 1 test.
+
+Testing: PHASE_A1_0.tst
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from PhaseA1
+[ RUN      ] PhaseA1.PushBackFront
+[       OK ] PhaseA1.PushBackFront (0 ms)
+[----------] 1 test from PhaseA1 (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (0 ms total)
+[  PASSED  ] 1 test.
+
+Testing: PHASE_A1_1.tst
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from PhaseA1
+[ RUN      ] PhaseA1.CopyConstruct
+[       OK ] PhaseA1.CopyConstruct (0 ms)
+[----------] 1 test from PhaseA1 (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (0 ms total)
+[  PASSED  ] 1 test.
+
+Testing: PHASE_A2_0.tst
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from PhaseA2
+[ RUN      ] PhaseA2.FooCtorDtor
+[       OK ] PhaseA2.FooCtorDtor (0 ms)
+[----------] 1 test from PhaseA2 (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (0 ms total)
+[  PASSED  ] 1 test.
+
+Testing: PHASE_A2_1.tst
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from PhaseA2
+[ RUN      ] PhaseA2.ReallocCopy
+[       OK ] PhaseA2.ReallocCopy (0 ms)
+[----------] 1 test from PhaseA2 (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (0 ms total)
+[  PASSED  ] 1 test.
+
+Testing: PHASE_AS0_0.tst
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from PhaseASecret.<censored>
+[ RUN      ] PhaseASecret.<censored>
+[       OK ] PhaseASecret.<censored>
+[----------] 1 test from PhaseASecret.<censored>
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (0 ms total)
+[  PASSED  ] 1 test.
+
+Testing: PHASE_AS1_0.tst
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from PhaseA1Secret.<censored>
+[ RUN      ] PhaseA1Secret.<censored>
+[       OK ] PhaseA1Secret.<censored>
+[----------] 1 test from PhaseA1Secret.<censored>
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (1 ms total)
+[  PASSED  ] 1 test.
+
+Testing: PHASE_AS1_1.tst
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from PhaseA1Secret.<censored>
+[ RUN      ] PhaseA1Secret.<censored>
+Vector_secret_unittests.cpp:179: Failure
+Value of: status
+  Actual: 4-byte object <01-00 00-00>
+Expected: std::future_status::ready
+Which is: 4-byte object <00-00 00-00>
+Vector_secret_unittests.cpp:184: Failure
+Expected: (1.9) < (float(bigPush_cnt) / float(smallPush_cnt)), actual: 1.9 vs -nan
+[  FAILED  ] PhaseA1Secret.<censored>
+[----------] 1 test from PhaseA1Secret.<censored>
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (1186 ms total)
+[  PASSED  ] 0 tests.
+[  FAILED  ] 1 test, listed below:
+[  FAILED  ] PhaseA1Secret.<censored>
+
+ 1 FAILED TEST
+
+Testing: PHASE_AS1_2.tst
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from PhaseA1Secret.<censored>
+[ RUN      ] PhaseA1Secret.<censored>
+[       OK ] PhaseA1Secret.<censored>
+[----------] 1 test from PhaseA1Secret.<censored>
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (0 ms total)
+[  PASSED  ] 1 test.
+
+Testing: PHASE_AS1_3.tst
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from PhaseA1Secret.<censored>
+[ RUN      ] PhaseA1Secret.<censored>
+[       OK ] PhaseA1Secret.<censored>
+[----------] 1 test from PhaseA1Secret.<censored>
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (0 ms total)
+[  PASSED  ] 1 test.
+
+Testing: PHASE_AS2_0.tst
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from PhaseA2Secret.<censored>
+[ RUN      ] PhaseA2Secret.<censored>
+[       OK ] PhaseA2Secret.<censored>
+[----------] 1 test from PhaseA2Secret.<censored>
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (0 ms total)
+[  PASSED  ] 1 test.
+
+Testing: PHASE_AS2_1.tst
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from PhaseA2Secret.<censored>
+[ RUN      ] PhaseA2Secret.<censored>
+[       OK ] PhaseA2Secret.<censored>
+[----------] 1 test from PhaseA2Secret.<censored>
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (1 ms total)
+[  PASSED  ] 1 test.
+
+Testing: PHASE_B0_0.tst
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from PhaseB
+[ RUN      ] PhaseB.MoveCtor
+[       OK ] PhaseB.MoveCtor (0 ms)
+[----------] 1 test from PhaseB (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (1 ms total)
+[  PASSED  ] 1 test.
+
+Testing: PHASE_B1_0.tst
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from PhaseB1
+[ RUN      ] PhaseB1.PushBackMove
+Vector_PhaseB_unittests.cpp:80: Failure
+Expected: (21) <= (Foo::moves), actual: 21 vs 11
+[  FAILED  ] PhaseB1.PushBackMove (0 ms)
+[----------] 1 test from PhaseB1 (1 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (1 ms total)
+[  PASSED  ] 0 tests.
+[  FAILED  ] 1 test, listed below:
+[  FAILED  ] PhaseB1.PushBackMove
+
+ 1 FAILED TEST
+
+Testing: PHASE_B2_0.tst
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from PhaseB1
+[ RUN      ] PhaseB1.ReallocCopy
+[       OK ] PhaseB1.ReallocCopy (0 ms)
+[----------] 1 test from PhaseB1 (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (0 ms total)
+[  PASSED  ] 1 test.
+
+Testing: PHASE_BS0_0.tst
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from PhaseB0Secret.<censored>
+[ RUN      ] PhaseB0Secret.<censored>
+[       OK ] PhaseB0Secret.<censored>
+[----------] 1 test from PhaseB0Secret.<censored>
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (0 ms total)
+[  PASSED  ] 1 test.
+
+Testing: PHASE_BS1_0.tst
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from PhaseB1Secret.<censored>
+[ RUN      ] PhaseB1Secret.<censored>
+[       OK ] PhaseB1Secret.<censored>
+[----------] 1 test from PhaseB1Secret.<censored>
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (1 ms total)
+[  PASSED  ] 1 test.
+
+Testing: PHASE_BS1_1.tst
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from PhaseB1Secret.<censored>
+[ RUN      ] PhaseB1Secret.<censored>
+[       OK ] PhaseB1Secret.<censored>
+[----------] 1 test from PhaseB1Secret.<censored>
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (0 ms total)
+[  PASSED  ] 1 test.
+
+Testing: PHASE_BS2_0.tst
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from PhaseB2Secret.<censored>
+[ RUN      ] PhaseB2Secret.<censored>
+[       OK ] PhaseB2Secret.<censored>
+[----------] 1 test from PhaseB2Secret.<censored>
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (0 ms total)
+[  PASSED  ] 1 test.
+
+Testing: PHASE_BS2_1.tst
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from PhaseB2Secret.<censored>
+[ RUN      ] PhaseB2Secret.<censored>
+Vector_secret_unittests.cpp:359: Failure
+Value of: status
+  Actual: 4-byte object <01-00 00-00>
+Expected: std::future_status::ready
+Which is: 4-byte object <00-00 00-00>
+[  FAILED  ] PhaseB2Secret.<censored>
+[----------] 1 test from PhaseB2Secret.<censored>
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (1197 ms total)
+[  PASSED  ] 0 tests.
+[  FAILED  ] 1 test, listed below:
+[  FAILED  ] PhaseB2Secret.<censored>
+
+ 1 FAILED TEST
+
+Testing: PHASE_C0_0.tst
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from PhaseC
+[ RUN      ] PhaseC.direct_init_list
+[       OK ] PhaseC.direct_init_list (0 ms)
+[----------] 1 test from PhaseC (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (1 ms total)
+[  PASSED  ] 1 test.
+
+Testing: PHASE_C0_1.tst
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from PhaseC
+[ RUN      ] PhaseC.begin_vector
+[       OK ] PhaseC.begin_vector (0 ms)
+[----------] 1 test from PhaseC (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (0 ms total)
+[  PASSED  ] 1 test.
+
+Testing: PHASE_C1_0.tst
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from PhaseC1
+[ RUN      ] PhaseC1.range_for_loop
+[       OK ] PhaseC1.range_for_loop (0 ms)
+[----------] 1 test from PhaseC1 (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (0 ms total)
+[  PASSED  ] 1 test.
+
+Testing: PHASE_C1_1.tst
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from PhaseC1
+[ RUN      ] PhaseC1.invalid_iterator
+[       OK ] PhaseC1.invalid_iterator (1 ms)
+[----------] 1 test from PhaseC1 (1 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (1 ms total)
+[  PASSED  ] 1 test.
+
+Testing: PHASE_C2_0.tst
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from PhaseC2
+[ RUN      ] PhaseC2.ItrExceptMild1
+Vector_PhaseC_unittests.cpp:138: Failure
+Value of: epl::invalid_iterator::MILD
+  Actual: 2
+Expected: ii.level
+Which is: 0
+[  FAILED  ] PhaseC2.ItrExceptMild1 (0 ms)
+[----------] 1 test from PhaseC2 (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (0 ms total)
+[  PASSED  ] 0 tests.
+[  FAILED  ] 1 test, listed below:
+[  FAILED  ] PhaseC2.ItrExceptMild1
+
+ 1 FAILED TEST
+
+Testing: PHASE_C2_1.tst
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from PhaseC2
+[ RUN      ] PhaseC2.ItrExceptModerate
+[       OK ] PhaseC2.ItrExceptModerate (0 ms)
+[----------] 1 test from PhaseC2 (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (0 ms total)
+[  PASSED  ] 1 test.
+
+Testing: PHASE_C2_2.tst
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from PhaseC2
+[ RUN      ] PhaseC2.ItrExceptMild2
+[       OK ] PhaseC2.ItrExceptMild2 (0 ms)
+[----------] 1 test from PhaseC2 (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (0 ms total)
+[  PASSED  ] 1 test.
+
+Testing: PHASE_CS0_1.tst
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from PhaseC0Secret.<censored>
+[ RUN      ] PhaseC0Secret.<censored>
+[       OK ] PhaseC0Secret.<censored>
+[----------] 1 test from PhaseC0Secret.<censored>
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (1 ms total)
+[  PASSED  ] 1 test.
+
+Testing: PHASE_CS0_2.tst
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from PhaseC0Secret.<censored>
+[ RUN      ] PhaseC0Secret.<censored>
+[       OK ] PhaseC0Secret.<censored>
+[----------] 1 test from PhaseC0Secret.<censored>
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (0 ms total)
+[  PASSED  ] 1 test.
+
+Testing: PHASE_CS0_3.tst
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from PhaseC0Secret.<censored>
+[ RUN      ] PhaseC0Secret.<censored>
+Vector_secret_unittests.cpp:453: Failure
+Value of: endCt - startCt
+  Actual: 0
+Expected: 1
+[  FAILED  ] PhaseC0Secret.<censored>
+[----------] 1 test from PhaseC0Secret.<censored>
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (0 ms total)
+[  PASSED  ] 0 tests.
+[  FAILED  ] 1 test, listed below:
+[  FAILED  ] PhaseC0Secret.<censored>
+
+ 1 FAILED TEST
+
+Testing: PHASE_CS1_3.tst
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from PhaseC1Secret.<censored>
+[ RUN      ] PhaseC1Secret.<censored>
+[       OK ] PhaseC1Secret.<censored>
+[----------] 1 test from PhaseC1Secret.<censored>
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (0 ms total)
+[  PASSED  ] 1 test.
+
+Testing: PHASE_CS1_4.tst
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from PhaseC1Secret.<censored>
+[ RUN      ] PhaseC1Secret.<censored>
+Vector_secret_unittests.cpp:547: Failure
+Value of: reallocations
+  Actual: 0
+Expected: 1
+[  FAILED  ] PhaseC1Secret.<censored>
+[----------] 1 test from PhaseC1Secret.<censored>
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (0 ms total)
+[  PASSED  ] 0 tests.
+[  FAILED  ] 1 test, listed below:
+[  FAILED  ] PhaseC1Secret.<censored>
+
+ 1 FAILED TEST
+
+Testing: PHASE_CS1_5.tst
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from PhaseC1Secret.<censored>
+[ RUN      ] PhaseC1Secret.<censored>
+[       OK ] PhaseC1Secret.<censored>
+[----------] 1 test from PhaseC1Secret.<censored>
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (1 ms total)
+[  PASSED  ] 1 test.
+
+Testing: PHASE_CS1_6.tst
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from PhaseC1Secret.<censored>
+[ RUN      ] PhaseC1Secret.<censored>
+[       OK ] PhaseC1Secret.<censored>
+[----------] 1 test from PhaseC1Secret.<censored>
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (0 ms total)
+[  PASSED  ] 1 test.
+
+Testing: PHASE_CS2_0.tst
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from PhaseC2Secret.<censored>
+[ RUN      ] PhaseC2Secret.<censored>
+Vector_secret_unittests.cpp:612: Failure
+Value of: value
+  Actual: true
+Expected: false
+[  FAILED  ] PhaseC2Secret.<censored>
+[----------] 1 test from PhaseC2Secret.<censored>
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (1 ms total)
+[  PASSED  ] 0 tests.
+[  FAILED  ] 1 test, listed below:
+[  FAILED  ] PhaseC2Secret.<censored>
+
+ 1 FAILED TEST
+
+Testing: PHASE_CS2_4.tst
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from PhaseC2Secret.<censored>
+[ RUN      ] PhaseC2Secret.<censored>
+Vector_secret_unittests.cpp:702: Failure
+Value of: reallocations
+  Actual: 0
+Expected: 1
+[  FAILED  ] PhaseC2Secret.<censored>
+[----------] 1 test from PhaseC2Secret.<censored>
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (0 ms total)
+[  PASSED  ] 0 tests.
+[  FAILED  ] 1 test, listed below:
+[  FAILED  ] PhaseC2Secret.<censored>
+
+ 1 FAILED TEST
+
+Testing: PHASE_CS2_5.tst
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from PhaseC2Secret.<censored>
+[ RUN      ] PhaseC2Secret.<censored>
+Vector_secret_unittests.cpp:729: Failure
+Value of: ii.level
+  Actual: 1
+Expected: epl::invalid_iterator::MILD
+Which is: 2
+[  FAILED  ] PhaseC2Secret.<censored>
+[----------] 1 test from PhaseC2Secret.<censored>
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (1 ms total)
+[  PASSED  ] 0 tests.
+[  FAILED  ] 1 test, listed below:
+[  FAILED  ] PhaseC2Secret.<censored>
+
+ 1 FAILED TEST
