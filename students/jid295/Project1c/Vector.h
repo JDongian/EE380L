@@ -376,6 +376,7 @@ namespace epl{
                         pointer operator->() const {
                             check();
                             //return data[index];
+                            return (T*) (data->operator[](index));
                             throw std::out_of_range("op-> not implemented"); // herp
                             //return nullptr;
                         }
@@ -556,6 +557,7 @@ namespace epl{
                         T* operator->() const {
                             check();
                             //return data[index];
+                            return (T*) (data->operator[](index));
                             throw std::out_of_range("op-> not implemented");
                             //return nullptr;
                         }
