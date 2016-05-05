@@ -8,7 +8,11 @@ using std::string;
 
 class ObservableString : public std::string {
 public:
-	using std::string::string;
+	ObservableString(const char* s) : std::string{ s } {}
+	ObservableString(void) {}
+	ObservableString(ObservableString const& rhs) : std::string{ rhs } {
+		cout << "copy of \"" << rhs << "\"\n";
+	}
 	~ObservableString(void) {
 		cout << "string \"" << *this << "\" destroyed\n";
 	}
@@ -83,7 +87,7 @@ int main(void) {
 	cout << x << endl; // prints "Hello World";
 
 	cout << (int)x << endl;
-	cout << (string)x << endl;
+	cout << (ObservableString)x << endl;
 
 
 	/* independent of whether this last assignment statement is performed,
