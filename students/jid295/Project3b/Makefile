@@ -7,8 +7,8 @@ GTEST_LIB = $(GTEST_DIR)/lib/gtest64.a          #class virtual machine uses this
 #GTEST_LIB = $(GTEST_DIR)/lib/gtest_yosemite.a  #for Apple users
 
 CXX = g++
-CXXFLAGS = -g -I $(GTEST_INC) -std=c++11 -Werror #-fmax-errors=1 #-Wall -Wno-sign-compare -Werror -fmax-errors=1
-DEFS?= -DPHASE_A -DPHASE_B
+CXXFLAGS = -g -I $(GTEST_INC) -std=c++14 -Wall -Wno-sign-compare -Werror -fmax-errors=1
+DEFS?= -DPHASE_A -DPHASE_B -DPHASE_AS -DPHASE_BS
 
 SRCS = $(shell ls *.cpp)
 OBJS = $(patsubst %.cpp, %.o, $(SRCS))
@@ -21,7 +21,7 @@ test: $(TEST)
 	@./$(TEST)
 
 $(TEST): $(OBJS)
-	$(CXX) $^ $(EXTRA_TESTS) $(GTEST_LIB) $(DEFS) $(CXXFLAGS)  -pthread -o $@
+	$(CXX) $^ $(EXTRA_TESTS) $(GTEST_LIB) $(DEFS) $(CXXFLAGS)  -o $@
 
 #<Automatic Dependency Generation>
 -include $(DEPS)
