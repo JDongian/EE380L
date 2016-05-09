@@ -7,6 +7,7 @@
 #include <algorithm>
 #include <complex>
 #include <vector>
+#include <math.h>
 #include "Vector.h"
 
 //using std::vector;
@@ -136,6 +137,13 @@ public:
     }
 };
 
+template <typename T>
+struct squareRoot {
+    constexpr auto operator() (T const& x) const {
+        return sqrt(x);
+    }
+};
+
 // vector expr wrapper
 template <typename V>
 class VExpression : public V {
@@ -144,8 +152,11 @@ using T_V = typename V::value_type;
 
 public:
     VExpression(void) : V{} {}
+    VExpression(int) : V{} {}
+    VExpression(double) : V{} {}
     VExpression(V const& other) : V{ other } {}
     VExpression(VExpression const& other) : V{ other } {}
+    
 
     template <typename T>
     VExpression(VExpression<T> const& other) : V(other.size()) {
@@ -181,14 +192,69 @@ public:
     auto operator-(void) const { // needed to add this
         return apply(std::negate<void>{});
     }
+
+    class iterator {
+    public:
+        using value_type = typename VExpression::value_type;
+        using iterator_category = std::random_access_iterator_tag;
+        using difference_type = std::ptrdiff_t;
+        using reference = value_type;
+        using pointer = value_type*;
+
+        VExpression v;
+        uint64_t index;
+
+        iterator(VExpression b, uint64_t n) : v(b), index(n) {}
+        iterator(const iterator& it) : v(it.v), index(it.index) {}
+        iterator& operator=(const iterator& it) { v = it.v; index = it.index; return *this; }
+        bool operator==(const iterator& it) const { return index == it.index; }
+        bool operator!=(const iterator& it) const { return ! this->operator==(it); }
+        bool operator<(const iterator& it)  const { return index < it.index; }
+        bool operator>(const iterator& it)  const { return index > it.index; }
+        bool operator<=(const iterator& it) const { return index <= it.index; }
+        bool operator>=(const iterator& it) const { return index >= it.index; }
+        iterator& operator++() { index++; return *this; }
+        iterator& operator--() { index--; return *this; }
+        iterator operator++(int) { iterator t{*this}; this->operator++(); return t; }
+        iterator operator--(int) { iterator t{*this}; this->operator--(); return t; }
+        iterator& operator+=(uint64_t d) { index += d; return *this; }
+        iterator& operator-=(uint64_t d) { index -= d; return *this; }
+        iterator operator+(uint64_t d) const { iterator t{*this}; t.index += d; return t; }
+        iterator operator-(uint64_t d) const { iterator t{*this}; t.index -= d; return t; }
+        int64_t operator-(iterator it) const { return index - it.index; }
+        value_type operator*() const { return v.operator[](index); }
+        value_type operator[](size_t n) const { return v.operator[](index + n); }
+    };
+
+    iterator begin() {
+        return iterator(VExpression {}, 0);
+    }
+
+    iterator end() {
+        auto x = VExpression {};
+        return iterator(x, x.size());
+    }
     
-//    template <typename T>
-//    friend std::ostream& operator<<(std::ostream& ost, const valarray<T>& arr) {
-//        for (auto val: arr) {
-//            ost << val << " ";
-//        }
-//        return ost;
-//    }
+    template <typename Op>
+    auto accumulate(Op op) const {
+        if (!this->size()) {
+            return 0;
+        } else {
+            typename V::value_type result{ (*this)[0] };
+            for (auto i = 1; i < this->size(); ++i) {
+                result = op(result, (*this)[i]);
+            }
+            return result;
+        }
+    }
+
+    auto sum(void) const {
+        return accumulate(std::plus<void>{});
+    }
+
+    auto sqrt(void) const {
+        return apply(squareRoot<typename V::value_type>{});
+    }
 };
 //
 
@@ -244,9 +310,10 @@ public:
 
 template <typename T>
 inline std::ostream& operator<<(std::ostream& ost, VExpression<T> const& arr) {
-    for (auto val: arr) {
-        ost << val << " ";
-    }
+    //for (auto val: arr) {
+    //    ost << val << " ";
+    //}
+    ost << "derp ";
     return ost;
 }
 #endif /* _Valarray_h */
